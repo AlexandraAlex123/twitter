@@ -1,5 +1,9 @@
 package org.example.classes;
 
+
+
+import org.apache.catalina.User;
+
 import javax.persistence.*;
 
 @Entity
