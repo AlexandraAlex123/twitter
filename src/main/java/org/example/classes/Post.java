@@ -26,6 +26,16 @@ public class Post {
     @OneToMany(targetEntity = Reply.class)
     private Set<Reply> replies = new HashSet<>();
 
+    public Post(String message, Date timeStamp, User user, Set<Reply> replies) {
+        this.message = message;
+        this.timeStamp = timeStamp;
+        this.user = user;
+        this.replies = replies;
+    }
+
+    public Post() {
+    }
+
     public String getId() {
         return id;
     }

@@ -1,9 +1,5 @@
 package org.example.classes;
 
-
-
-import org.apache.catalina.User;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +7,7 @@ import javax.persistence.*;
 public class Like {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -43,5 +39,14 @@ public class Like {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "Like{" +
+                "id=" + id +
+                ", user=" + user +
+                ", post=" + post +
+                '}';
     }
 }
