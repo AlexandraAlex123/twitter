@@ -1,0 +1,916 @@
+Index: src/main/java/org/example/classService/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/classService/UserService.java b/src/main/java/org/example/classService/UserService.java
+new file mode 100644
+--- /dev/null	(date 1672740000187)
++++ b/src/main/java/org/example/classService/UserService.java	(date 1672740000187)
+@@ -0,0 +1,23 @@
++package org.example.classService;
++
++import org.example.classes.User;
++import org.example.repository.UserRepository;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.web.bind.annotation.PostMapping;
++import org.springframework.web.bind.annotation.RequestBody;
++
++public class UserService {
++
++    @Autowired
++    private final UserRepository userRepository;
++
++    public UserService(UserRepository userRepository) {
++        this.userRepository = userRepository;
++    }
++
++    @PostMapping(path = "/addUser")
++    public String addUser(@RequestBody User user) {
++        userRepository.save(user);
++        return "Saved";
++    }
++}
+Index: src/main/java/org/example/classes/Mention.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/classes/Mention.java b/src/main/java/org/example/classes/Mention.java
+new file mode 100644
+--- /dev/null	(date 1672749197278)
++++ b/src/main/java/org/example/classes/Mention.java	(date 1672749197278)
+@@ -0,0 +1,42 @@
++package org.example.classes;
++
++import javax.persistence.*;
++
++@Entity
++public class Mention {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    @Column(name = "id")
++    private Long id;
++
++    @OneToOne
++    private User user;
++
++    @OneToOne
++    private Post post;
++
++    public Long getId() {
++        return id;
++    }
++
++    public void setId(Long id) {
++        this.id = id;
++    }
++
++    public User getUser() {
++        return user;
++    }
++
++    public void setUser(User user) {
++        this.user = user;
++    }
++
++    public Post getPost() {
++        return post;
++    }
++
++    public void setPost(Post post) {
++        this.post = post;
++    }
++}
+Index: src/main/java/org/example/classes/Like.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/classes/Like.java b/src/main/java/org/example/classes/Like.java
+new file mode 100644
+--- /dev/null	(date 1672749197269)
++++ b/src/main/java/org/example/classes/Like.java	(date 1672749197269)
+@@ -0,0 +1,43 @@
++package org.example.classes;
++
++import javax.persistence.*;
++
++@Entity
++@Table(name = "like")
++public class Like {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    @Column(name = "id")
++    private Long id;
++
++    @OneToOne
++    private User user;
++
++    @ManyToOne
++    private Post post;
++
++    public Long getId() {
++        return id;
++    }
++
++    public void setId(Long id) {
++        this.id = id;
++    }
++
++    public User getUser() {
++        return user;
++    }
++
++    public void setUser(User user) {
++        this.user = user;
++    }
++
++    public Post getPost() {
++        return post;
++    }
++
++    public void setPost(Post post) {
++        this.post = post;
++    }
++}
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+new file mode 100644
+--- /dev/null	(date 1671795658898)
++++ b/.idea/encodings.xml	(date 1671795658898)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding">
++    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/org/example/classes/Reply.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/classes/Reply.java b/src/main/java/org/example/classes/Reply.java
+new file mode 100644
+--- /dev/null	(date 1672749197259)
++++ b/src/main/java/org/example/classes/Reply.java	(date 1672749197259)
+@@ -0,0 +1,12 @@
++package org.example.classes;
++
++import javax.persistence.*;
++
++@Entity
++public class Reply extends Post {
++
++    @Column(name = "available")
++    private boolean available;
++
++
++}
+Index: .idea/jpa-buddy.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jpa-buddy.xml b/.idea/jpa-buddy.xml
+new file mode 100644
+--- /dev/null	(date 1671795762441)
++++ b/.idea/jpa-buddy.xml	(date 1671795762441)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="JpaBuddyIdeaProjectConfig">
++    <option name="defaultUnitInitialized" value="true" />
++    <option name="renamerInitialized" value="true" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/org/example/classes/Post.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/classes/Post.java b/src/main/java/org/example/classes/Post.java
+new file mode 100644
+--- /dev/null	(date 1672749197298)
++++ b/src/main/java/org/example/classes/Post.java	(date 1672749197298)
+@@ -0,0 +1,68 @@
++package org.example.classes;
++
++import javax.persistence.*;
++import java.util.Date;
++import java.util.HashSet;
++import java.util.Set;
++
++@Entity
++@Table(name = "post")
++public class Post {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.AUTO)
++    @Column(name = "id")
++    private String id;
++
++    @Column(name = "message", nullable = false, length = 300)
++    private String message;
++
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Date timeStamp;
++
++    @OneToOne
++    private User user;
++
++    @OneToMany(targetEntity = Reply.class)
++    private Set<Reply> replies = new HashSet<>();
++
++    public String getId() {
++        return id;
++    }
++
++    public void setId(String id) {
++        this.id = id;
++    }
++
++    public String getMessage() {
++        return message;
++    }
++
++    public void setMessage(String message) {
++        this.message = message;
++    }
++
++    public Date getTimeStamp() {
++        return timeStamp;
++    }
++
++    public void setTimeStamp(Date timeStamp) {
++        this.timeStamp = timeStamp;
++    }
++
++    public User getUser() {
++        return user;
++    }
++
++    public void setUser(User user) {
++        this.user = user;
++    }
++
++    public Set<Reply> getReplies() {
++        return replies;
++    }
++
++    public void setReplies(Set<Reply> replies) {
++        this.replies = replies;
++    }
++}
+\ No newline at end of file
+Index: src/test/java/org/example/AppTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/org/example/AppTest.java b/src/test/java/org/example/AppTest.java
+new file mode 100644
+--- /dev/null	(date 1672749267504)
++++ b/src/test/java/org/example/AppTest.java	(date 1672749267504)
+@@ -0,0 +1,21 @@
++package org.example;
++
++
++import static org.junit.jupiter.api.Assertions.assertTrue;
++
++import org.junit.jupiter.api.Test;
++
++/**
++ * Unit test for simple App.
++ */
++public class AppTest 
++{
++    /**
++     * Rigorous Test :-)
++     */
++    @Test
++    public void shouldAnswerWithTrue()
++    {
++        assertTrue( true );
++    }
++}
+Index: src/main/java/org/example/TwitterDemoApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/TwitterDemoApplication.java b/src/main/java/org/example/TwitterDemoApplication.java
+new file mode 100644
+--- /dev/null	(date 1672677331400)
++++ b/src/main/java/org/example/TwitterDemoApplication.java	(date 1672677331400)
+@@ -0,0 +1,15 @@
++package org.example;
++
++
++import org.springframework.boot.SpringApplication;
++import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
++
++@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
++public class TwitterDemoApplication {
++
++    public static void main(String[] args) {
++        SpringApplication.run(TwitterDemoApplication.class, args);
++    }
++
++}
+\ No newline at end of file
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1672740938956)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1672740938956)
+@@ -0,0 +1,16 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="FieldCanBeLocal" enabled="true" level="WARNING" enabled_by_default="true">
++      <option name="EXCLUDE_ANNOS">
++        <value>
++          <list size="1">
++            <item index="0" class="java.lang.String" itemvalue="org.springframework.beans.factory.annotation.Autowired" />
++          </list>
++        </value>
++      </option>
++      <option name="IGNORE_FIELDS_USED_IN_MULTIPLE_METHODS" value="true" />
++    </inspection_tool>
++    <inspection_tool class="MavenModelInspection" enabled="false" level="ERROR" enabled_by_default="false" />
++  </profile>
++</component>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+new file mode 100644
+--- /dev/null	(date 1672740499755)
++++ b/.idea/workspace.xml	(date 1672740499755)
+@@ -0,0 +1,128 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
++  <component name="ChangeListManager">
++    <list default="true" id="c45cdb1b-14cf-43b2-954c-fc9223c60a2f" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/TwitterDemoApplication.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/UserService.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classes/Like.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classes/Mention.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classes/Post.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classes/Reply.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/FollowRepository.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/LikeRepository.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/MentionRepository.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/PostRepository.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/ReplyRepos.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/UserRepository.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
++    </list>
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Interface" />
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
++  </component>
++  <component name="ProjectId" id="2JJUMB3msjKGEdGkWLzFulMuJpy" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
++  </component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
++  }
++}</component>
++  <component name="RecentsManager">
++    <key name="CreateClassDialog.RecentsKey">
++      <recent name="org.example.classes" />
++    </key>
++  </component>
++  <component name="RunManager" selected="Application.TwitterDemoApplication">
++    <configuration name="TwitterDemoApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="org.example.TwitterDemoApplication" />
++      <module name="twitter" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="org.example.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="org.example.TwitterDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="org.example.TwitterDemo" />
++      <module name="twitter" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="org.example.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Application.TwitterDemoApplication" />
++        <item itemvalue="Application.org.example.TwitterDemo" />
++      </list>
++    </recent_temporary>
++  </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
++  <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="c45cdb1b-14cf-43b2-954c-fc9223c60a2f" name="Changes" comment="" />
++      <created>1671795629661</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1671795629661</updated>
++    </task>
++    <servers />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/org/example/repository/PostRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/repository/PostRepository.java b/src/main/java/org/example/repository/PostRepository.java
+new file mode 100644
+--- /dev/null	(date 1672656059228)
++++ b/src/main/java/org/example/repository/PostRepository.java	(date 1672656059228)
+@@ -0,0 +1,7 @@
++package org.example.repository;
++
++import org.example.classes.Post;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface PostRepository extends JpaRepository<Post, Long> {
++}
+Index: src/main/java/org/example/repository/MentionRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/repository/MentionRepository.java b/src/main/java/org/example/repository/MentionRepository.java
+new file mode 100644
+--- /dev/null	(date 1672655681235)
++++ b/src/main/java/org/example/repository/MentionRepository.java	(date 1672655681235)
+@@ -0,0 +1,7 @@
++package org.example.repository;
++
++import org.example.classes.Mention;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface MentionRepository extends JpaRepository<Mention, Long> {
++}
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1671795632653)
++++ b/.idea/vcs.xml	(date 1671795632653)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/org/example/repository/LikeRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/repository/LikeRepository.java b/src/main/java/org/example/repository/LikeRepository.java
+new file mode 100644
+--- /dev/null	(date 1672655681251)
++++ b/src/main/java/org/example/repository/LikeRepository.java	(date 1672655681251)
+@@ -0,0 +1,7 @@
++package org.example.repository;
++
++import org.example.classes.Like;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface LikeRepository extends JpaRepository<Like, Long> {
++}
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1672682777060)
++++ b/.idea/misc.xml	(date 1672682777060)
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="EntryPointsManager">
++    <list size="1">
++      <item index="0" class="java.lang.String" itemvalue="org.springframework.beans.factory.annotation.Autowired" />
++    </list>
++  </component>
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/pom.xml" />
++      </list>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="corretto-11" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++  <component name="ProjectType">
++    <option name="id" value="jpab" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/org/example/repository/FollowRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/repository/FollowRepository.java b/src/main/java/org/example/repository/FollowRepository.java
+new file mode 100644
+--- /dev/null	(date 1672392327392)
++++ b/src/main/java/org/example/repository/FollowRepository.java	(date 1672392327392)
+@@ -0,0 +1,9 @@
++package org.example.repository;
++
++import org.example.classes.Follow;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface FollowRepository extends JpaRepository<Follow, Long> {
++
++
++}
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+new file mode 100644
+--- /dev/null	(date 1672751720909)
++++ b/src/main/resources/application.properties	(date 1672751720909)
+@@ -0,0 +1,7 @@
++spring.datasource.url=jdbc:mysql://localhost:3306/exercitii
++spring.datasource.username=root
++spring.datasource.password=alexandra
++spring.jpa.hibernate.ddl-auto=create
++spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
++spring.jpa.show-sql=true
++spring.jpa.properties.hibernate.format_sql=true
+\ No newline at end of file
+Index: .idea/uiDesigner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/uiDesigner.xml b/.idea/uiDesigner.xml
+new file mode 100644
+--- /dev/null	(date 1672654818691)
++++ b/.idea/uiDesigner.xml	(date 1672654818691)
+@@ -0,0 +1,124 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Palette2">
++    <group name="Swing">
++      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
++      </item>
++      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.svg" removable="false" auto-create-binding="false" can-attach-label="true">
++        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
++        <initial-values>
++          <property name="text" value="Button" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="RadioButton" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="CheckBox" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="Label" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
++          <preferred-size width="-1" height="20" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
++      </item>
++    </group>
++  </component>
++</project>
+\ No newline at end of file
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+--- /dev/null	(date 1671795628322)
++++ b/.gitignore	(date 1671795628322)
+@@ -0,0 +1,38 @@
++target/
++!.mvn/wrapper/maven-wrapper.jar
++!**/src/main/**/target/
++!**/src/test/**/target/
++
++### IntelliJ IDEA ###
++.idea/modules.xml
++.idea/jarRepositories.xml
++.idea/compiler.xml
++.idea/libraries/
++*.iws
++*.iml
++*.ipr
++
++### Eclipse ###
++.apt_generated
++.classpath
++.factorypath
++.project
++.settings
++.springBeans
++.sts4-cache
++
++### NetBeans ###
++/nbproject/private/
++/nbbuild/
++/dist/
++/nbdist/
++/.nb-gradle/
++build/
++!**/src/main/**/build/
++!**/src/test/**/build/
++
++### VS Code ###
++.vscode/
++
++### Mac OS ###
++.DS_Store
+\ No newline at end of file
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+new file mode 100644
+--- /dev/null	(date 1672748933876)
++++ b/pom.xml	(date 1672748933876)
+@@ -0,0 +1,51 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
++  <modelVersion>4.0.0</modelVersion>
++  <parent>
++    <groupId>org.springframework.boot</groupId>
++    <artifactId>spring-boot-starter-parent</artifactId>
++    <version>2.7.0</version>
++    <relativePath/> <!-- lookup parent from repository -->
++  </parent>
++  <groupId>com.example</groupId>
++  <artifactId>accessing-data-mysql</artifactId>
++  <version>0.0.1-SNAPSHOT</version>
++  <name>accessing-data-mysql</name>
++  <description>Demo project for Spring Boot</description>
++  <properties>
++    <java.version>11</java.version>
++  </properties>
++  <dependencies>
++    <dependency>
++      <groupId>org.springframework.boot</groupId>
++      <artifactId>spring-boot-starter-data-jpa</artifactId>
++    </dependency>
++    <dependency>
++      <groupId>org.springframework.boot</groupId>
++      <artifactId>spring-boot-starter-web</artifactId>
++    </dependency>
++
++    <dependency>
++      <groupId>mysql</groupId>
++      <artifactId>mysql-connector-java</artifactId>
++      <version>8.0.31</version>
++    </dependency>
++
++    <dependency>
++      <groupId>org.springframework.boot</groupId>
++      <artifactId>spring-boot-starter-test</artifactId>
++      <scope>test</scope>
++    </dependency>
++  </dependencies>
++
++  <build>
++    <plugins>
++      <plugin>
++        <groupId>org.springframework.boot</groupId>
++        <artifactId>spring-boot-maven-plugin</artifactId>
++      </plugin>
++    </plugins>
++  </build>
++
++</project>
+Index: src/main/java/org/example/repository/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/repository/UserRepository.java b/src/main/java/org/example/repository/UserRepository.java
+new file mode 100644
+--- /dev/null	(date 1672738653161)
++++ b/src/main/java/org/example/repository/UserRepository.java	(date 1672738653161)
+@@ -0,0 +1,8 @@
++package org.example.repository;
++
++import org.example.classes.User;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface UserRepository extends JpaRepository<User, Long> {
++
++}
+Index: src/main/java/org/example/repository/ReplyRepos.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/repository/ReplyRepos.java b/src/main/java/org/example/repository/ReplyRepos.java
+new file mode 100644
+--- /dev/null	(date 1672656059212)
++++ b/src/main/java/org/example/repository/ReplyRepos.java	(date 1672656059212)
+@@ -0,0 +1,7 @@
++package org.example.repository;
++
++import org.example.classes.Reply;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface ReplyRepos extends JpaRepository<Reply, Long> {
++}
