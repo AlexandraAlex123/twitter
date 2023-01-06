@@ -1,4 +1,4 @@
-package org.example.classes;
+package org.example.objectClassAndRepository.model;
 
 
 import javax.persistence.*;
@@ -9,21 +9,26 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
     @Column(name = "firstName", nullable = false, length = 300)
     private String firstName;
 
     @Column(name = "lastName", nullable = false, length = 300)
-    private String lastname;
+    private String lastName;
 
     @Column(name = "email", nullable = false, length = 300, unique = true)
     private String email;
 
-    public User(String firstName, String lastname, String email) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private TwitterUser twitterUser;
+
+
+    public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -46,12 +51,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -62,13 +67,22 @@ public class User {
         this.email = email;
     }
 
+    public TwitterUser getTwitterUser() {
+        return twitterUser;
+    }
+
+    public void setTwitterUser(TwitterUser twitterUser) {
+        this.twitterUser = twitterUser;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", twitterUser=" + twitterUser +
                 '}';
     }
 }

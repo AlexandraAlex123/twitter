@@ -1,9 +1,10 @@
-package org.example.classes;
+package org.example.objectClassAndRepository.model;
 
 import javax.persistence.*;
 
 @Entity
-public class Mention {
+@Table(name = "likeAPost")
+public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,18 +12,11 @@ public class Mention {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     private Post post;
-
-    public Mention(User user, Post post) {
-        this.user = user;
-        this.post = post;
-    }
-
-    public Mention() {
-    }
 
     public Long getId() {
         return id;
@@ -50,7 +44,7 @@ public class Mention {
 
     @Override
     public String toString() {
-        return "Mention{" +
+        return "Like{" +
                 "id=" + id +
                 ", user=" + user +
                 ", post=" + post +

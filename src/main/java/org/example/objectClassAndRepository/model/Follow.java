@@ -1,4 +1,4 @@
-package org.example.classes;
+package org.example.objectClassAndRepository.model;
 
 
 import javax.persistence.*;
@@ -13,18 +13,8 @@ public class Follow {
     @Column(name = "id")
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "timestamp")
+    @Column(name = "timeStamp")
     private Timestamp timestamp;
-
-
-    @OneToOne
-    private User user;
-
-    public Follow(Timestamp timestamp, User user) {
-        this.timestamp = timestamp;
-        this.user = user;
-    }
 
     public Follow() {
     }
@@ -45,20 +35,11 @@ public class Follow {
         this.timestamp = timestamp;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "Follow{" +
                 "id=" + id +
                 ", timestamp=" + timestamp +
-                ", user=" + user +
                 '}';
     }
 }
