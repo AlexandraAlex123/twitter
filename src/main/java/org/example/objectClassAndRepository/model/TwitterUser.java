@@ -7,38 +7,38 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "twitter_user")
+@Table
 public class TwitterUser {
 
     @Id
-    @Column(name = "userName", length = 300, unique = true)
-    private String userName;
+    @Column(name = "username", length = 300, unique = true)
+    private String username;
 
     @Column(name = "password", length = 300)
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "userName" )
-    private Set<Follow> follows = new HashSet<>();
+    @JoinColumn(name = "username", referencedColumnName = "username" )
+    private List<Follow> follows = new ArrayList<>();
 
     @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "userName" )
+    @JoinColumn(name = "username", referencedColumnName = "username" )
     private List<Post> posts = new ArrayList<>();
 
-    public TwitterUser(String userName, String password) {
-        this.userName = userName;
+    public TwitterUser(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
     public TwitterUser() {
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -49,11 +49,11 @@ public class TwitterUser {
         this.password = password;
     }
 
-    public Set<Follow> getFollows() {
+    public List<Follow> getFollows() {
         return follows;
     }
 
-    public void setFollows(Set<Follow> follows) {
+    public void setFollows(List<Follow> follows) {
         this.follows = follows;
     }
 
@@ -68,7 +68,7 @@ public class TwitterUser {
     @Override
     public String toString() {
         return "TwitterUser{" +
-                "userName='" + userName + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

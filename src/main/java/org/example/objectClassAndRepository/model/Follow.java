@@ -5,26 +5,42 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "follow")
+@Table
 public class Follow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "followId")
+    private Long followId;
 
-    @Column(name = "timeStamp")
+    @Column(name = "usernameWhoFollowYou")
+    private String usernameWhoFollowYou;
+
+    @Column(name = "timestamp")
     private Timestamp timestamp;
+
+    public Follow(String usernameWhoFollowYou, Timestamp timestamp) {
+        this.usernameWhoFollowYou = usernameWhoFollowYou;
+        this.timestamp = timestamp;
+    }
 
     public Follow() {
     }
 
-    public Long getId() {
-        return id;
+    public String getUsernameWhoFollowYou() {
+        return usernameWhoFollowYou;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUsernameWhoFollowYou(String usernameWhoFollowYou) {
+        this.usernameWhoFollowYou = usernameWhoFollowYou;
+    }
+
+    public Long getFollowId() {
+        return followId;
+    }
+
+    public void setFollowId(Long followId) {
+        this.followId = followId;
     }
 
     public Timestamp getTimestamp() {
@@ -38,7 +54,8 @@ public class Follow {
     @Override
     public String toString() {
         return "Follow{" +
-                "id=" + id +
+                "followId=" + followId +
+                ", usernameWhoFollowYou='" + usernameWhoFollowYou + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }

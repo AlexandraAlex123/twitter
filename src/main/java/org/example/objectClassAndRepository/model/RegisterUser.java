@@ -4,8 +4,8 @@ package org.example.objectClassAndRepository.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table
+public class RegisterUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,13 +26,13 @@ public class User {
     private TwitterUser twitterUser;
 
 
-    public User(String firstName, String lastName, String email) {
+    public RegisterUser(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public User() {
+    public RegisterUser() {
     }
 
     public Long getId() {
@@ -77,7 +77,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "RegisterUser{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

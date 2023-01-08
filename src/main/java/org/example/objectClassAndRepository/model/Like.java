@@ -3,20 +3,18 @@ package org.example.objectClassAndRepository.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "likeAPost")
+@Table(name = "likePost")
 public class Like {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "likeId")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private TwitterUser twitterUser;
 
-    @ManyToOne
-    private Post post;
 
     public Long getId() {
         return id;
@@ -26,28 +24,19 @@ public class Like {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public TwitterUser getTwitterUser() {
+        return twitterUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
+    public void setTwitterUser(TwitterUser twitterUser) {
+        this.twitterUser = twitterUser;
     }
 
     @Override
     public String toString() {
         return "Like{" +
                 "id=" + id +
-                ", user=" + user +
-                ", post=" + post +
+                ", twitterUser=" + twitterUser +
                 '}';
     }
 }

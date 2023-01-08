@@ -3,23 +3,24 @@ package org.example.objectClassAndRepository.model;
 import javax.persistence.*;
 
 @Entity
+@Table
 public class Mention {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "mentionId")
+    private Long mentionId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username")
     private TwitterUser twitterUser;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "fkPostId")
     private Post post;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "reply_id")
+    @JoinColumn(name = "fkReplyId")
     private Reply reply;
 
     public Mention(TwitterUser twitterUser, Post post, Reply reply) {
@@ -31,12 +32,12 @@ public class Mention {
     public Mention() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getMentionId() {
+        return mentionId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMentionId(Long mentionId) {
+        this.mentionId = mentionId;
     }
 
     public TwitterUser getTwitterUser() {
@@ -55,10 +56,18 @@ public class Mention {
         this.post = post;
     }
 
+    public Reply getReply() {
+        return reply;
+    }
+
+    public void setReply(Reply reply) {
+        this.reply = reply;
+    }
+
     @Override
     public String toString() {
         return "Mention{" +
-                "id=" + id +
+                "mentionId=" + mentionId +
                 ", twitterUser=" + twitterUser +
                 ", post=" + post +
                 ", reply=" + reply +

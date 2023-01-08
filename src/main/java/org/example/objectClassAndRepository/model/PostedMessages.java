@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class PostedMessages {
 
@@ -16,8 +15,8 @@ public class PostedMessages {
     @Column(name = "message", length = 100000)
     private String message;
 
-    @Column(name = "timeStamp")
-    private Timestamp timeStamp;
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
 
     @Column(name = "onlyMe")
     private boolean onlyMe;
@@ -26,9 +25,9 @@ public class PostedMessages {
     @JoinColumn(name = "username")
     private TwitterUser twitterUser;
 
-    public PostedMessages(String message, Timestamp timeStamp, boolean onlyMe, TwitterUser twitterUser) {
+    public PostedMessages(String message, Timestamp timestamp, boolean onlyMe, TwitterUser twitterUser) {
         this.message = message;
-        this.timeStamp = timeStamp;
+        this.timestamp = timestamp;
         this.onlyMe = onlyMe;
         this.twitterUser = twitterUser;
     }
@@ -52,12 +51,12 @@ public class PostedMessages {
         this.message = message;
     }
 
-    public Timestamp getTimeStamp() {
-        return timeStamp;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
@@ -65,7 +64,7 @@ public class PostedMessages {
         return "PostedMessages{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
-                ", timeStamp=" + timeStamp +
+                ", timestamp=" + timestamp +
                 ", onlyMe=" + onlyMe +
                 ", twitterUser=" + twitterUser +
                 '}';
