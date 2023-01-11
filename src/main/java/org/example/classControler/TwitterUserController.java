@@ -1,22 +1,38 @@
 package org.example.classControler;
 
 
-import org.example.classService.TwitterUserService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
+import org.example.classService.service.classDtO.TwitterUserDtO;
+import org.example.classService.service.TwitterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 public class TwitterUserController {
     @Autowired
-    private TwitterUserService twitterUserService;
+    private TwitterUserService tUs;
 
     @GetMapping(path = "/login")
     public String login(@RequestParam String username, @RequestParam String password) {
-        return twitterUserService.login(username, password);
+        return tUs.login(username, password);
     }
 
-    @PostMapping(path = "/saveFollow")
-    public String saveFollow(@RequestParam String usernameToFollow, @RequestParam String usernameWhoFollowYou) {
-        return twitterUserService.saveFollow(usernameToFollow, usernameWhoFollowYou);
+    @JsonIgnore
+    @GetMapping(path = "/searchTwitterAccount")
+    public Set<TwitterUserDtO> searchTwitterAccount(@RequestParam String keyWord) {
+        return tUs.searchTwitterAccount(keyWord);
+    }
+
+    @PutMapping(path = "/whoYouFollow")
+    public String whoYouFollow(@RequestParam String usernameWhoFollow, @RequestParam String usernameFollow) {
+        return tUs.whoYouFollow(usernameWhoFollow, usernameFollow);
+    }
+
+    @PutMapping(path = "/addAPost")
+    public String addAPost(@RequestParam String username, @RequestParam String message, @RequestParam boolean onlyMe) {
+        return tUs.addAPost(username, message, onlyMe);
     }
 }

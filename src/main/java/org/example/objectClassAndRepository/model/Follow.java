@@ -13,26 +13,26 @@ public class Follow {
     @Column(name = "followId")
     private Long followId;
 
-    @Column(name = "usernameWhoFollowYou")
-    private String usernameWhoFollowYou;
+    @Column(name = "usernameFollow")
+    private String usernameFollow;
 
     @Column(name = "timestamp")
     private Timestamp timestamp;
 
-    public Follow(String usernameWhoFollowYou, Timestamp timestamp) {
-        this.usernameWhoFollowYou = usernameWhoFollowYou;
+    public Follow(String usernameFollow, Timestamp timestamp) {
+        this.usernameFollow = usernameFollow;
         this.timestamp = timestamp;
     }
 
     public Follow() {
     }
 
-    public String getUsernameWhoFollowYou() {
-        return usernameWhoFollowYou;
+    public String getUsernameFollow() {
+        return usernameFollow;
     }
 
-    public void setUsernameWhoFollowYou(String usernameWhoFollowYou) {
-        this.usernameWhoFollowYou = usernameWhoFollowYou;
+    public void setUsernameFollow(String usernameFollow) {
+        this.usernameFollow = usernameFollow;
     }
 
     public Long getFollowId() {
@@ -55,7 +55,7 @@ public class Follow {
     public String toString() {
         return "Follow{" +
                 "followId=" + followId +
-                ", usernameWhoFollowYou='" + usernameWhoFollowYou + '\'' +
+                ", usernameFollow='" + usernameFollow + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }

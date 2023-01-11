@@ -11,12 +11,10 @@ import java.util.List;
 @Repository
 public interface RegisterUserRepository extends JpaRepository<RegisterUser, Long> {
 
-    @Query(value = "SELECT * FROM RegisterUser ru WHERE ru.email = :email")
-    RegisterUser findUserByEmail(@Param("email") String email);
+    RegisterUser findUserByEmail(String email);
 
+    @Query(value = "SELECT ru FROM RegisterUser ru WHERE username = :username")
+    RegisterUser findUserByUsername(@Param("username") String username);
 
-
-    @Query(value = "SELECT email FROM RegisterUser ru")
-    List<String> GetAllEmails();
 
 }

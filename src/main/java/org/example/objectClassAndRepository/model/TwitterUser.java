@@ -1,10 +1,10 @@
 package org.example.objectClassAndRepository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table
@@ -18,11 +18,12 @@ public class TwitterUser {
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username" )
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private List<Follow> follows = new ArrayList<>();
 
-    @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username" )
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private List<Post> posts = new ArrayList<>();
 
     public TwitterUser(String username, String password) {

@@ -21,18 +21,14 @@ public class PostedMessages {
     @Column(name = "onlyMe")
     private boolean onlyMe;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
-    private TwitterUser twitterUser;
 
-    public PostedMessages(String message, Timestamp timestamp, boolean onlyMe, TwitterUser twitterUser) {
+    public PostedMessages() {
+    }
+
+    public PostedMessages(String message, Timestamp timestamp, boolean onlyMe) {
         this.message = message;
         this.timestamp = timestamp;
         this.onlyMe = onlyMe;
-        this.twitterUser = twitterUser;
-    }
-
-    public PostedMessages() {
     }
 
     public Long getId() {
@@ -59,14 +55,20 @@ public class PostedMessages {
         this.timestamp = timestamp;
     }
 
+    public boolean getOnlyMe() {
+        return onlyMe;
+    }
+
+    public void setOnlyMe(boolean onlyMe) {
+        this.onlyMe = onlyMe;
+    }
+
+
     @Override
     public String toString() {
-        return "PostedMessages{" +
-                "id=" + id +
+        return "id=" + id +
                 ", message='" + message + '\'' +
                 ", timestamp=" + timestamp +
-                ", onlyMe=" + onlyMe +
-                ", twitterUser=" + twitterUser +
-                '}';
+                ", onlyMe=" + onlyMe;
     }
 }

@@ -16,11 +16,11 @@ public class Mention {
     private TwitterUser twitterUser;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fkPostId")
+    @JoinColumn(name = "postId")
     private Post post;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fkReplyId")
+    @JoinColumn(name = "replyId")
     private Reply reply;
 
     public Mention(TwitterUser twitterUser, Post post, Reply reply) {
