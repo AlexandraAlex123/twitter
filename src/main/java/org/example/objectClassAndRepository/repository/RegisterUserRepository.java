@@ -13,7 +13,7 @@ public interface RegisterUserRepository extends JpaRepository<RegisterUser, Long
 
     RegisterUser findUserByEmail(String email);
 
-    @Query(value = "SELECT ru FROM RegisterUser ru WHERE username = :username")
+    @Query(value = "SELECT ru FROM RegisterUser ru WHERE account = :username")
     RegisterUser findUserByUsername(@Param("username") String username);
 
 

@@ -2,7 +2,9 @@ package org.example.objectClassAndRepository.model;
 
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table
@@ -10,29 +12,29 @@ public class Follow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "followId")
+    @Column(name = "follow_id")
     private Long followId;
 
-    @Column(name = "usernameFollow")
-    private String usernameFollow;
+    @Column(name = "user_followed")
+    private String usernameFollowed;
 
-    @Column(name = "timestamp")
-    private Timestamp timestamp;
+    @Column(name = "start_follow")
+    private Timestamp date;
 
-    public Follow(String usernameFollow, Timestamp timestamp) {
-        this.usernameFollow = usernameFollow;
-        this.timestamp = timestamp;
+    public Follow(String usernameFollowed, Timestamp date) {
+        this.usernameFollowed = usernameFollowed;
+        this.date = date;
     }
 
     public Follow() {
     }
 
-    public String getUsernameFollow() {
-        return usernameFollow;
+    public String getUsernameFollowed() {
+        return usernameFollowed;
     }
 
-    public void setUsernameFollow(String usernameFollow) {
-        this.usernameFollow = usernameFollow;
+    public void setUsernameFollowed(String usernameFollowed) {
+        this.usernameFollowed = usernameFollowed;
     }
 
     public Long getFollowId() {
@@ -43,20 +45,20 @@ public class Follow {
         this.followId = followId;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
         return "Follow{" +
                 "followId=" + followId +
-                ", usernameFollow='" + usernameFollow + '\'' +
-                ", timestamp=" + timestamp +
+                ", usernameFollowed='" + usernameFollowed + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

@@ -1,35 +1,43 @@
 package org.example.objectClassAndRepository.model;
 
 
+import org.example.classService.service.classDtO.TwitterUserDtO;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table
-public class RegisterUser {
+public class RegisterUser implements Comparable<RegisterUser>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "firstName", nullable = false, length = 300)
+    @Column(name = "first_name", nullable = false, length = 300)
     private String firstName;
 
-    @Column(name = "lastName", nullable = false, length = 300)
+    @Column(name = "last_name", nullable = false, length = 300)
     private String lastName;
 
     @Column(name = "email", nullable = false, length = 300, unique = true)
     private String email;
 
+    @Column(name = "create_date")
+    private Timestamp date;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "account")
     private TwitterUser twitterUser;
 
 
-    public RegisterUser(String firstName, String lastName, String email) {
+    public RegisterUser(String firstName, String lastName, String email, Timestamp date) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.date = date;
     }
 
     public RegisterUser() {
@@ -67,6 +75,14 @@ public class RegisterUser {
         this.email = email;
     }
 
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
     public TwitterUser getTwitterUser() {
         return twitterUser;
     }
@@ -76,12 +92,18 @@ public class RegisterUser {
     }
 
     @Override
+    public int compareTo(RegisterUser o) {
+        return this.email.compareTo(o.getEmail());
+    }
+
+    @Override
     public String toString() {
         return "RegisterUser{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", date=" + date +
                 ", twitterUser=" + twitterUser +
                 '}';
     }

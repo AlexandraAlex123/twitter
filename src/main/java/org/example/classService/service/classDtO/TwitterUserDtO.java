@@ -1,7 +1,7 @@
 package org.example.classService.service.classDtO;
 
 import org.example.objectClassAndRepository.model.Follow;
-import org.example.objectClassAndRepository.model.Post;
+import org.example.objectClassAndRepository.model.posts.Post;
 
 import java.util.List;
 

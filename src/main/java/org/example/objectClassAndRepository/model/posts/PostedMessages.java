@@ -1,7 +1,8 @@
-package org.example.objectClassAndRepository.model;
+package org.example.objectClassAndRepository.model.posts;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -15,19 +16,19 @@ public class PostedMessages {
     @Column(name = "message", length = 100000)
     private String message;
 
-    @Column(name = "timestamp")
-    private Timestamp timestamp;
+    @Column(name = "date_of_posting")
+    private Timestamp date;
 
-    @Column(name = "onlyMe")
-    private boolean onlyMe;
+    @Column(name = "not_public")
+    private Boolean onlyMe;
 
 
     public PostedMessages() {
     }
 
-    public PostedMessages(String message, Timestamp timestamp, boolean onlyMe) {
+    public PostedMessages(String message, Timestamp date, Boolean onlyMe) {
         this.message = message;
-        this.timestamp = timestamp;
+        this.date = date;
         this.onlyMe = onlyMe;
     }
 
@@ -47,28 +48,29 @@ public class PostedMessages {
         this.message = message;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
-    public boolean getOnlyMe() {
+    public Boolean getOnlyMe() {
         return onlyMe;
     }
 
-    public void setOnlyMe(boolean onlyMe) {
+    public void setOnlyMe(Boolean onlyMe) {
         this.onlyMe = onlyMe;
     }
 
-
     @Override
     public String toString() {
-        return "id=" + id +
+        return "PostedMessages{" +
+                "id=" + id +
                 ", message='" + message + '\'' +
-                ", timestamp=" + timestamp +
-                ", onlyMe=" + onlyMe;
+                ", date=" + date +
+                ", onlyMe=" + onlyMe +
+                '}';
     }
 }

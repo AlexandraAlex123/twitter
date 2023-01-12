@@ -1,16 +1,21 @@
 package org.example.classService.service.classDtO;
 
+import java.sql.Date;
+import java.time.DateTimeException;
+
 public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
 
     String firstName;
     String lastName;
     String username;
+    String date;
 
 
-    public RegisterUserDtO(String firstName, String lastName, String username) {
+    public RegisterUserDtO(String firstName, String lastName, String username, String date) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.date = date;
     }
 
     public RegisterUserDtO() {
@@ -40,6 +45,14 @@ public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
         this.username = username;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public int compareTo(RegisterUserDtO o) {
         int i = this.firstName.compareTo(o.getFirstName());
         if (i == 0) {
@@ -57,6 +70,7 @@ public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 }

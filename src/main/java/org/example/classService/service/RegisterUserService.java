@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -26,11 +27,12 @@ public class RegisterUserService extends CheckValue {
 
     public String singUp(RegisterUser ru) {
 
-        if (ruIsNotNull(ru)) {
+        if (cV.ruIsNotNull(ru)) {
 
-            if (cV.checkStringRu(ru.getFirstName()) && cV.checkStringRu(ru.getLastName()) && cV.checkStringE(ru.getEmail())) {
+            if (cV.validRu(ru)) {
 
                 if (!emailExist(ru.getEmail())) {
+                    ru.setDate(new Timestamp(System.currentTimeMillis()));
                     rUr.save(ru);
                     return "User registered";
                 } else {
@@ -46,19 +48,25 @@ public class RegisterUserService extends CheckValue {
 
     public String createAccount(String email, TwitterUser tu) {
 
-        if (tuIsNotNull(tu) && email != null) {
+        if (cV.tuIsNotNull(tu) && !email.isEmpty()) {
 
-            if (cV.checkStringE(email) && cV.checkStringTu(tu.getUsername()) && cV.checkStringTu(tu.getPassword())) {
+            if (cV.validTu(tu)) {
 
-                RegisterUser ru = rUr.findUserByEmail(email);
-                if (!usernameExist(tu.getUsername())) {
-                    ru.setTwitterUser(tu);
-                    rUr.save(ru);
-                    return "Account created";
+                if (emailExist(email)) {
+
+                    RegisterUser ru = rUr.findUserByEmail(email);
+                    if (!cV.usernameExist(tu.getUsername(), rUr)) {
+                        tu.setDate(new Timestamp(System.currentTimeMillis()));
+                        ru.setTwitterUser(tu);
+                        rUr.save(ru);
+                        return "Account created";
+                    } else {
+                        return "Username not available";
+                    }
                 } else {
-                    return "Email doesn't exist";
+                    return "User not found";
                 }
-            }else {
+            } else {
                 return "Invalid command";
             }
         }
@@ -68,48 +76,36 @@ public class RegisterUserService extends CheckValue {
 
     public Set<RegisterUserDtO> searchUser(String keyWord) {
 
-        Set<RegisterUserDtO> ruDTOSFind = new TreeSet<>();
+        Set<RegisterUser> ruSFind = new TreeSet<>();
 
         if (!keyWord.isEmpty() && !keyWord.equals(" ")) {
 
-            List<RegisterUserDtO> ruDTOS = getListOfUserDtO();
-            for (RegisterUserDtO user : ruDTOS) {
+            List<RegisterUser> ruS = rUr.findAll();
+            for (RegisterUser user : ruS) {
                 if ((user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase()).
                         contains(keyWord.toUpperCase())) {
-                    ruDTOSFind.add(user);
+                    ruSFind.add(user);
                 }
             }
         }
-        return ruDTOSFind;
+        return getListOfUserDtO(ruSFind);
     }
 
 
-    public List<RegisterUserDtO> getListOfUserDtO() {
-        List<RegisterUser> ruS = rUr.findAll();
-        List<RegisterUserDtO> ruDTOS = new ArrayList<>();
+    public Set<RegisterUserDtO> getListOfUserDtO(Set<RegisterUser> ruS) {
+        Set<RegisterUserDtO> ruDTOS = new TreeSet<>();
         for (RegisterUser ru : ruS) {
             RegisterUserDtO ruDTO;
             if (ru.getTwitterUser() != null) {
-                ruDTO = new RegisterUserDtO(ru.getFirstName(), ru.getLastName(), ru.getTwitterUser().getUsername());
+                ruDTO = new RegisterUserDtO(ru.getFirstName(), ru.getLastName(), ru.getTwitterUser().getUsername(), cV.getLocalDate(ru.getDate()) );
             } else {
-                ruDTO = new RegisterUserDtO(ru.getFirstName(), ru.getLastName(), "Not created");
+                ruDTO = new RegisterUserDtO(ru.getFirstName(), ru.getLastName(), "Not created", cV.getLocalDate(ru.getDate()));
             }
             ruDTOS.add(ruDTO);
         }
         return ruDTOS;
     }
 
-    public boolean ruIsNotNull(RegisterUser ru) {
-        return !ru.getFirstName().isEmpty() || !ru.getLastName().isEmpty();
-    }
-
-    public boolean tuIsNotNull(TwitterUser tu) {
-        return !tu.getUsername().isEmpty() || !tu.getPassword().isEmpty();
-    }
-
-    public boolean usernameExist(String username) {
-        return rUr.findUserByUsername(username) != null;
-    }
 
     public boolean emailExist(String email) {
         return rUr.findUserByEmail(email) != null;

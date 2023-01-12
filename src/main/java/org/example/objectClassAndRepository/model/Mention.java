@@ -1,6 +1,7 @@
 package org.example.objectClassAndRepository.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table
@@ -8,25 +9,22 @@ public class Mention {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "mentionId")
+    @Column(name = "mention_id")
     private Long mentionId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
-    private TwitterUser twitterUser;
+    @Column(name = "user_mentioned")
+    private String userMentioned;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "postId")
-    private Post post;
+    @Column(name = "user_who_mention")
+    private String userWhoMention;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "replyId")
-    private Reply reply;
+    @Column(name = "time_mention")
+    private Timestamp date;
 
-    public Mention(TwitterUser twitterUser, Post post, Reply reply) {
-        this.twitterUser = twitterUser;
-        this.post = post;
-        this.reply = reply;
+    public Mention(String userMentioned, String userWhoMention, Timestamp date) {
+        this.userMentioned = userMentioned;
+        this.userWhoMention = userWhoMention;
+        this.date = date;
     }
 
     public Mention() {
@@ -40,37 +38,37 @@ public class Mention {
         this.mentionId = mentionId;
     }
 
-    public TwitterUser getTwitterUser() {
-        return twitterUser;
+    public String getUserMentioned() {
+        return userMentioned;
     }
 
-    public void setTwitterUser(TwitterUser twitterUser) {
-        this.twitterUser = twitterUser;
+    public void setUserMentioned(String userMentioned) {
+        this.userMentioned = userMentioned;
     }
 
-    public Post getPost() {
-        return post;
+    public String getUserWhoMention() {
+        return userWhoMention;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setUserWhoMention(String userWhoMention) {
+        this.userWhoMention = userWhoMention;
     }
 
-    public Reply getReply() {
-        return reply;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setReply(Reply reply) {
-        this.reply = reply;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
         return "Mention{" +
                 "mentionId=" + mentionId +
-                ", twitterUser=" + twitterUser +
-                ", post=" + post +
-                ", reply=" + reply +
+                ", userMentioned='" + userMentioned + '\'' +
+                ", userWhoMention='" + userWhoMention + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

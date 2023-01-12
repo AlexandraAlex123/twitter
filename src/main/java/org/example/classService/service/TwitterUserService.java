@@ -3,7 +3,7 @@ package org.example.classService.service;
 import org.example.classService.CheckValue;
 import org.example.classService.service.classDtO.TwitterUserDtO;
 import org.example.objectClassAndRepository.model.Follow;
-import org.example.objectClassAndRepository.model.Post;
+import org.example.objectClassAndRepository.model.posts.Post;
 import org.example.objectClassAndRepository.model.TwitterUser;
 import org.example.objectClassAndRepository.repository.TwitterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,11 @@ public class TwitterUserService extends CheckValue {
 
     private final CheckValue cV = new CheckValue();
     @Autowired
-    private TwitterUserRepository tUr;
+    private final TwitterUserRepository tUr;
 
-
-//    public TwitterUserService(TwitterUserRepository tUr) {
-//        this.tUr = tUr;
-//    }
+    public TwitterUserService(TwitterUserRepository tUr) {
+        this.tUr = tUr;
+    }
 
 
     public String login(String username, String password) {
@@ -48,8 +47,10 @@ public class TwitterUserService extends CheckValue {
 
         Set<TwitterUserDtO> tuDtOSFind = new TreeSet<>();
         if (!keyWord.isEmpty() && !keyWord.equals(" ")) {
+
             List<TwitterUserDtO> tuDtOS = getAllTwitterUserDTO();
             for (TwitterUserDtO tuDTO : tuDtOS) {
+
                 if (tuDTO.getUsername().toUpperCase().contains(keyWord.toUpperCase())) {
                     tuDtOSFind.add(tuDTO);
                 }
@@ -59,13 +60,19 @@ public class TwitterUserService extends CheckValue {
     }
 
 
-    public String addAPost(String username, String message, boolean onlyMe) {
+    public String addAPost(String username, String message) {
 
         if (!username.isEmpty() && !message.isEmpty()) {
+
             if (cV.checkStringTu(username) && !message.equals(" ")) {
-                TwitterUser tu = tUr.findByUsername(username);
-                createAndSavePost(tu, message, onlyMe);
-                return "Post uploaded";
+
+                if (cV.usernameExist(username, tUr)) {
+                    TwitterUser tu = tUr.findByUsername(username);
+                    createAndSavePost(tu, message);
+                    return "Post uploaded";
+                } else {
+                    return "User not found";
+                }
             } else {
                 return "Invalid command";
             }
@@ -77,25 +84,22 @@ public class TwitterUserService extends CheckValue {
     public String whoYouFollow(String usernameWhoFollow, String usernameFollow) {
 
         if (!usernameWhoFollow.isEmpty() && !usernameFollow.isEmpty()) {
+
             if (cV.checkStringTu(usernameWhoFollow) && cV.checkStringTu(usernameFollow)) {
-                TwitterUser tu = tUr.findByUsername(usernameWhoFollow);
-                createAndSaveFollow(tu, usernameFollow);
-                return "You fallow " + usernameFollow;
+
+                if (cV.usernameExist(usernameWhoFollow, tUr) && cV.usernameExist(usernameFollow, tUr)) {
+                    TwitterUser tu = tUr.findByUsername(usernameWhoFollow);
+                    createAndSaveFollow(tu, usernameFollow);
+                    return "You fallow " + usernameFollow;
+                } else {
+                    return "User not found";
+                }
             } else {
                 return "Invalid command";
             }
         }
         return "Null parameter";
     }
-
-
-    //    public List<Post> getYourOwnPosts(String username) {
-//        List<Post> posts = pR.findAll(username);
-//        List<Post> myOwnPosts = new ArrayList<>();
-//        for(Post post : posts){
-//            if(post.ge)
-//        }
-//    }
 
 
     public List<TwitterUserDtO> getAllTwitterUserDTO() {
@@ -105,10 +109,12 @@ public class TwitterUserService extends CheckValue {
         for (TwitterUser tu : tuS) {
             if (tu.getFollows() != null && tu.getPosts() != null) {
                 tuDTOS.add(new TwitterUserDtO(tu.getUsername(), tu.getFollows(), tu.getPosts()));
-            } else if (tu.getFollows().equals(null)) {
-                tuDTOS.add(new TwitterUserDtO(tu.getUsername(), null, tu.getPosts()));
-            } else if (tu.getPosts().equals(null)) {
+            } else if (tu.getFollows().isEmpty() && tu.getPosts().isEmpty()) {
+                tuDTOS.add(new TwitterUserDtO(tu.getUsername(), null, null));
+            } else if (tu.getPosts().isEmpty() && tu.getFollows() != null) {
                 tuDTOS.add(new TwitterUserDtO(tu.getUsername(), tu.getFollows(), null));
+            } else if (tu.getFollows().isEmpty() && tu.getPosts() != null) {
+                tuDTOS.add(new TwitterUserDtO(tu.getUsername(), null, tu.getPosts()));
             }
         }
         return tuDTOS;
@@ -122,8 +128,8 @@ public class TwitterUserService extends CheckValue {
         tu.setFollows(follows);
     }
 
-    public void createAndSavePost(TwitterUser tu, String message, boolean onlyMe) {
-        Post post = new Post(message, new Timestamp(System.currentTimeMillis()), onlyMe);
+    public void createAndSavePost(TwitterUser tu, String message) {
+        Post post = new Post(message, new Timestamp(System.currentTimeMillis()), false);
         List<Post> posts = tu.getPosts();
         posts.add(post);
         tu.setPosts(posts);

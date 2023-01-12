@@ -1,7 +1,7 @@
 package org.example.classControler;
 
 import org.example.classService.service.PostService;
-import org.example.objectClassAndRepository.model.Post;
+import org.example.objectClassAndRepository.model.posts.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

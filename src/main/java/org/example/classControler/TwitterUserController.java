@@ -32,7 +32,7 @@ public class TwitterUserController {
     }
 
     @PutMapping(path = "/addAPost")
-    public String addAPost(@RequestParam String username, @RequestParam String message, @RequestParam boolean onlyMe) {
-        return tUs.addAPost(username, message, onlyMe);
+    public String addAPost(@RequestParam String username, @RequestParam String message) {
+        return tUs.addAPost(username, message);
     }
 }
