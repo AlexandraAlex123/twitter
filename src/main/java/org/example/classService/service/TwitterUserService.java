@@ -1,35 +1,34 @@
 package org.example.classService.service;
 
-import org.example.classService.CheckValue;
 import org.example.classService.service.classDtO.TwitterUserDtO;
-import org.example.objectClassAndRepository.model.Follow;
-import org.example.objectClassAndRepository.model.posts.Post;
+import org.example.classService.validation.DtOService;
 import org.example.objectClassAndRepository.model.TwitterUser;
 import org.example.objectClassAndRepository.repository.TwitterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 @Transactional
-public class TwitterUserService extends CheckValue {
+public class TwitterUserService extends DtOService {
 
-    private final CheckValue cV = new CheckValue();
+    private TwitterUserRepository tUr;
+
     @Autowired
-    private final TwitterUserRepository tUr;
-
     public TwitterUserService(TwitterUserRepository tUr) {
         this.tUr = tUr;
     }
 
+    public TwitterUserService() {
+    }
 
     public String login(String username, String password) {
-
         if (!username.isEmpty() && !password.isEmpty()) {
-            if (cV.checkStringTu(username) && cV.checkStringTu(password)) {
+            if (checkStringTu(username) && checkStringTu(password)) {
                 if (tUr.matchLogin(username, password) != null) {
                     return "Login successful!";
                 } else {
@@ -44,29 +43,23 @@ public class TwitterUserService extends CheckValue {
 
 
     public Set<TwitterUserDtO> searchTwitterAccount(String keyWord) {
-
-        Set<TwitterUserDtO> tuDtOSFind = new TreeSet<>();
+        Set<TwitterUser> tuSFind = new TreeSet<>();
         if (!keyWord.isEmpty() && !keyWord.equals(" ")) {
-
-            List<TwitterUserDtO> tuDtOS = getAllTwitterUserDTO();
-            for (TwitterUserDtO tuDTO : tuDtOS) {
-
-                if (tuDTO.getUsername().toUpperCase().contains(keyWord.toUpperCase())) {
-                    tuDtOSFind.add(tuDTO);
+            List<TwitterUser> tuS = tUr.findAll();
+            for (TwitterUser tu : tuS) {
+                if (tu.getUsername().toUpperCase().contains(keyWord.toUpperCase())) {
+                    tuSFind.add(tu);
                 }
             }
         }
-        return tuDtOSFind;
+        return getAllTwitterUserDTO(tuSFind);
     }
 
 
     public String addAPost(String username, String message) {
-
         if (!username.isEmpty() && !message.isEmpty()) {
-
-            if (cV.checkStringTu(username) && !message.equals(" ")) {
-
-                if (cV.usernameExist(username, tUr)) {
+            if (checkStringTu(username) && !message.equals(" ")) {
+                if (usernameExist(username, tUr)) {
                     TwitterUser tu = tUr.findByUsername(username);
                     createAndSavePost(tu, message);
                     return "Post uploaded";
@@ -82,12 +75,9 @@ public class TwitterUserService extends CheckValue {
 
 
     public String whoYouFollow(String usernameWhoFollow, String usernameFollow) {
-
         if (!usernameWhoFollow.isEmpty() && !usernameFollow.isEmpty()) {
-
-            if (cV.checkStringTu(usernameWhoFollow) && cV.checkStringTu(usernameFollow)) {
-
-                if (cV.usernameExist(usernameWhoFollow, tUr) && cV.usernameExist(usernameFollow, tUr)) {
+            if (checkStringTu(usernameWhoFollow) && checkStringTu(usernameFollow)) {
+                if (usernameExist(usernameWhoFollow, tUr) && usernameExist(usernameFollow, tUr)) {
                     TwitterUser tu = tUr.findByUsername(usernameWhoFollow);
                     createAndSaveFollow(tu, usernameFollow);
                     return "You fallow " + usernameFollow;
@@ -101,37 +91,29 @@ public class TwitterUserService extends CheckValue {
         return "Null parameter";
     }
 
-
-    public List<TwitterUserDtO> getAllTwitterUserDTO() {
-
-        List<TwitterUser> tuS = tUr.findAll();
-        List<TwitterUserDtO> tuDTOS = new ArrayList<>();
-        for (TwitterUser tu : tuS) {
-            if (tu.getFollows() != null && tu.getPosts() != null) {
-                tuDTOS.add(new TwitterUserDtO(tu.getUsername(), tu.getFollows(), tu.getPosts()));
-            } else if (tu.getFollows().isEmpty() && tu.getPosts().isEmpty()) {
-                tuDTOS.add(new TwitterUserDtO(tu.getUsername(), null, null));
-            } else if (tu.getPosts().isEmpty() && tu.getFollows() != null) {
-                tuDTOS.add(new TwitterUserDtO(tu.getUsername(), tu.getFollows(), null));
-            } else if (tu.getFollows().isEmpty() && tu.getPosts() != null) {
-                tuDTOS.add(new TwitterUserDtO(tu.getUsername(), null, tu.getPosts()));
-            }
-        }
-        return tuDTOS;
-    }
+//    public Set<PostDtO> getFollowsPosts(String username) {
+//        if (!username.isEmpty() && checkStringTu(username)) {
+//
+//        }
+//    }
 
 
-    public void createAndSaveFollow(TwitterUser tu, String usernameFollow) {
-        Follow follow = new Follow(usernameFollow, new Timestamp(System.currentTimeMillis()));
-        List<Follow> follows = tu.getFollows();
-        follows.add(follow);
-        tu.setFollows(follows);
-    }
 
-    public void createAndSavePost(TwitterUser tu, String message) {
-        Post post = new Post(message, new Timestamp(System.currentTimeMillis()), false);
-        List<Post> posts = tu.getPosts();
-        posts.add(post);
-        tu.setPosts(posts);
-    }
+// Convert class to DTO with reflection
+
+//    public Set<TwitterUserDtO> getAllTwitterUserDTOTest(Set<TwitterUser> tuS) {
+//
+//        Set<TwitterUserDtO> tuDTOs = new TreeSet<>();
+//        Field[] fieldsDTO = TwitterUserDtO.class.getFields();
+//        for (TwitterUser tu : tuS) {
+//            for (Field f : fieldsDTO) {
+//                String valueToGet = tu.
+//                TwitterUserDtO tuDTO = new TwitterUserDtO();
+//
+//            }
+//        }
+//        return tuDTOs;
+//    }
+
+
 }

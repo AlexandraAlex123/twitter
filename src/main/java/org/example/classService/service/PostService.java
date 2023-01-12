@@ -1,49 +1,51 @@
 package org.example.classService.service;
 
-import org.example.classService.CheckValue;
 import org.example.classService.service.classDtO.PostDtO;
+import org.example.classService.validation.DtOService;
 import org.example.objectClassAndRepository.model.posts.Post;
 import org.example.objectClassAndRepository.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.Set;
 
 
 @Service
 @Transactional
-public class PostService extends CheckValue {
+public class PostService extends DtOService {
 
-    private final CheckValue cV = new CheckValue();
-    private final PostRepository pR;
+    private PostRepository pR;
 
     @Autowired
     public PostService(PostRepository pR) {
         this.pR = pR;
     }
 
+    public PostService() {
 
-    public List<PostDtO> convertListPostsToDTO(List<Post> posts) {
-        List<PostDtO> postsDTO = new ArrayList<>();
-        for (Post p : posts) {
-            if (p.getLikes().isEmpty()) {
-                postsDTO.add(new PostDtO(p.getMessage(), new SimpleDateFormat("MM/dd/yyyy HH:mm").format(p.getDate()), p.getOnlyMe(), p.getReplies(), null));
-            } else if (p.getReplies().isEmpty()) {
-                postsDTO.add(new PostDtO(p.getMessage(), new SimpleDateFormat("MM/dd/yyyy HH:mm").format(p.getDate()), p.getOnlyMe(), null, p.getLikes()));
-            } else if (p.getLikes().isEmpty() && p.getReplies().isEmpty()) {
-                postsDTO.add(new PostDtO(p.getMessage(), new SimpleDateFormat("MM/dd/yyyy HH:mm").format(p.getDate()), p.getOnlyMe(), p.getReplies(), p.getLikes()));
-            } else if (p.getLikes() != null && p.getReplies() != null){
-                postsDTO.add(new PostDtO(p.getMessage(), new SimpleDateFormat("MM/dd/yyyy HH:mm").format(p.getDate()), p.getOnlyMe(), null, null));
+    }
+
+    public Set<PostDtO> filterPosts(Timestamp ts, Timestamp ts2) {
+        Set<Post> posts = pR.findPostsBetweenDates(ts, ts2);
+        return getAllPostsDTO(posts);
+    }
+
+    public Set<PostDtO> searchUserPosts(String username) {
+        if (username != null) {
+            if (checkStringTu(username)) {
+                if (usernameExist(username, pR)) {
+                    Set<Post> posts = pR.findAll(username);
+                    return getAllPostsDTO(posts);
+                }
             }
         }
-        return postsDTO;
+        return null;
     }
 
-    public List<Post> getYourOwnPosts(String username) {
-        return pR.findAll(username);
-    }
+
+
+
 
 }

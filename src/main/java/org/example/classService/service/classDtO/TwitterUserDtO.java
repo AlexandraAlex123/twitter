@@ -1,60 +1,75 @@
 package org.example.classService.service.classDtO;
 
-import org.example.objectClassAndRepository.model.Follow;
-import org.example.objectClassAndRepository.model.posts.Post;
+import org.example.objectClassAndRepository.model.Mention;
 
 import java.util.List;
+import java.util.Set;
 
-public class TwitterUserDtO implements  Comparable<TwitterUserDtO> {
+public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
 
-    String username;
-    private List<Follow> follow;
-    private List<Post> posts;
 
-    public TwitterUserDtO(String username, List<Follow> follow, List<Post> posts) {
-        this.username = username;
-        this.follow = follow;
-        this.posts = posts;
-    }
+    String account;
+    String createDate;
+    private Set<FollowDtO> yourFollows;
+    private Set<PostDtO> yourPosts;
+    private Set<Mention> yourMentions;
+
 
     public TwitterUserDtO() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public List<Follow> getFollow() {
-        return follow;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setFollow(List<Follow> follow) {
-        this.follow = follow;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
-    public List<Post> getPosts() {
-        return posts;
+    public Set<FollowDtO> getYourFollows() {
+        return yourFollows;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setYourFollows(Set<FollowDtO> yourFollows) {
+        this.yourFollows = yourFollows;
+    }
+
+    public Set<PostDtO> getYourPosts() {
+        return yourPosts;
+    }
+
+    public void setYourPosts(Set<PostDtO> yourPosts) {
+        this.yourPosts = yourPosts;
+    }
+
+    public Set<Mention> getYourMentions() {
+        return yourMentions;
+    }
+
+    public void setYourMentions(Set<Mention> yourMentions) {
+        this.yourMentions = yourMentions;
+    }
+
+    @Override
+    public int compareTo(TwitterUserDtO o) {
+        return this.account.compareTo(o.getAccount());
     }
 
     @Override
     public String toString() {
         return "TwitterUserDtO{" +
-                "username='" + username + '\'' +
-                ", follow=" + follow +
-                ", posts=" + posts +
+                "username='" + account + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", yourFollows=" + yourFollows +
+                ", yourPosts=" + yourPosts +
                 '}';
-    }
-
-    @Override
-    public int compareTo(TwitterUserDtO o) {
-        return this.username.compareTo(o.getUsername());
     }
 }

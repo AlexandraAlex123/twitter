@@ -1,21 +1,18 @@
 package org.example.classService.service.classDtO;
 
-import java.sql.Date;
-import java.time.DateTimeException;
-
 public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
 
     String firstName;
     String lastName;
-    String username;
-    String date;
+    String account;
+    String createDate;
 
 
-    public RegisterUserDtO(String firstName, String lastName, String username, String date) {
+    public RegisterUserDtO(String firstName, String lastName, String account, String createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
-        this.date = date;
+        this.account = account;
+        this.createDate = createDate;
     }
 
     public RegisterUserDtO() {
@@ -37,20 +34,20 @@ public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     public int compareTo(RegisterUserDtO o) {
@@ -69,8 +66,8 @@ public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
         return "RegisterUserDtO{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
-                ", date='" + date + '\'' +
+                ", account='" + account + '\'' +
+                ", createDate='" + createDate + '\'' +
                 '}';
     }
 }

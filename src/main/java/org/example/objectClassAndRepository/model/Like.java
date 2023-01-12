@@ -2,7 +2,6 @@ package org.example.objectClassAndRepository.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "like_a_post")
@@ -17,11 +16,11 @@ public class Like {
     private String whoGivesLike;
 
     @Column(name = "create_date")
-    private Timestamp date;
+    private Timestamp createDate;
 
-    public Like(String whoGivesLike, Timestamp date) {
+    public Like(String whoGivesLike, Timestamp createDate) {
         this.whoGivesLike = whoGivesLike;
-        this.date = date;
+        this.createDate = createDate;
     }
 
     public Like() {
@@ -43,12 +42,12 @@ public class Like {
         this.whoGivesLike = whoGivesLike;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
     @Override
@@ -56,7 +55,7 @@ public class Like {
         return "Like{" +
                 "id=" + id +
                 ", whoGivesLike='" + whoGivesLike + '\'' +
-                ", date=" + date +
+                ", createDate=" + createDate +
                 '}';
     }
 }

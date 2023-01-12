@@ -1,5 +1,8 @@
 package org.example.objectClassAndRepository.model;
 
+import org.example.objectClassAndRepository.model.posts.Post;
+import org.example.objectClassAndRepository.model.posts.Reply;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -12,19 +15,23 @@ public class Mention {
     @Column(name = "mention_id")
     private Long mentionId;
 
-    @Column(name = "user_mentioned")
-    private String userMentioned;
-
     @Column(name = "user_who_mention")
     private String userWhoMention;
 
     @Column(name = "time_mention")
-    private Timestamp date;
+    private Timestamp createDate;
 
-    public Mention(String userMentioned, String userWhoMention, Timestamp date) {
-        this.userMentioned = userMentioned;
+    @OneToOne
+    @JoinColumn(name = "posts_id", insertable = false, updatable = false)
+    private Post post;
+
+    @OneToOne
+    @JoinColumn(name = "posts_id", insertable = false, updatable = false)
+    private Reply reply;
+
+    public Mention(String userWhoMention, Timestamp createDate) {
         this.userWhoMention = userWhoMention;
-        this.date = date;
+        this.createDate = createDate;
     }
 
     public Mention() {
@@ -38,14 +45,6 @@ public class Mention {
         this.mentionId = mentionId;
     }
 
-    public String getUserMentioned() {
-        return userMentioned;
-    }
-
-    public void setUserMentioned(String userMentioned) {
-        this.userMentioned = userMentioned;
-    }
-
     public String getUserWhoMention() {
         return userWhoMention;
     }
@@ -54,21 +53,38 @@ public class Mention {
         this.userWhoMention = userWhoMention;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public Reply getReply() {
+        return reply;
+    }
+
+    public void setReply(Reply reply) {
+        this.reply = reply;
     }
 
     @Override
     public String toString() {
         return "Mention{" +
                 "mentionId=" + mentionId +
-                ", userMentioned='" + userMentioned + '\'' +
                 ", userWhoMention='" + userWhoMention + '\'' +
-                ", date=" + date +
+                ", createDate=" + createDate +
+                ", post=" + post +
+                ", reply=" + reply +
                 '}';
     }
 }

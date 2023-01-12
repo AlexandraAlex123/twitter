@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c45cdb1b-14cf-43b2-954c-fc9223c60a2f" name="Changes" comment="TwitterApp">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/Post.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/Reply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/classDtO/FollowDtO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/classDtO/MentionDtO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/classDtO/PostDTOMention.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/classDtO/ReplyDtO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/validation/ValidateValue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classControler/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classControler/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classControler/TwitterUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classControler/TwitterUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classService/CheckValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/CheckValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classService/CheckValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/validation/CheckValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classService/service/FollowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/FollowService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classService/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/PostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classService/service/RegisterUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/RegisterUserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/classService/service/TwitterUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/classService/service/TwitterUserService.java" afterDir="false" />
@@ -20,15 +23,12 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Follow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Follow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Like.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Like.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Mention.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Mention.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Post.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/PostedMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/PostedMessages.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/RegisterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/RegisterUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/Reply.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/TwitterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/TwitterUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/PostedMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/PostedMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/Reply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/model/posts/Reply.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/repository/PostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/repository/RegisterUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/repository/RegisterUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/repository/ReplyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/objectClassAndRepository/repository/ReplyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673435822365</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="TwitterApp">
+      <created>1673488544293</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1673488544293</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

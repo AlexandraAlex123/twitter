@@ -1,12 +1,13 @@
 package org.example.objectClassAndRepository.model.posts;
 
-import org.example.objectClassAndRepository.model.Mention;
+import org.example.classService.service.classDtO.PostDtO;
 import org.example.objectClassAndRepository.model.Like;
+import org.example.objectClassAndRepository.model.Mention;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -14,53 +15,44 @@ public class Post extends PostedMessages {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", referencedColumnName = "id")
-    private List<Reply> replies;
+    private Set<Reply> replies;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "posts_id", referencedColumnName = "id")
-    private List<Like> likes;
+    private Set<Like> likes;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "posts_id", referencedColumnName = "id")
-    private List<Mention> mentions;
 
     public Post(String message, Timestamp date, Boolean onlyMe) {
         super(message, date, onlyMe);
     }
 
+
     public Post() {
     }
 
-    public List<Reply> getReplies() {
+    public Set<Reply> getReplies() {
         return replies;
     }
 
-    public void setReplies(List<Reply> replies) {
+    public void setReplies(Set<Reply> replies) {
         this.replies = replies;
     }
 
-    public List<Like> getLikes() {
+    public Set<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Like> likes) {
+    public void setLikes(Set<Like> likes) {
         this.likes = likes;
     }
 
-    public List<Mention> getMentions() {
-        return mentions;
-    }
-
-    public void setMentions(List<Mention> mentions) {
-        this.mentions = mentions;
-    }
 
     @Override
     public String toString() {
-        return "Post{" + super.toString() +
+        return "Post{" +
                 "replies=" + replies +
                 ", likes=" + likes +
-                ", mentions=" + mentions +
-                "} ";
+                "} " + super.toString();
     }
+
 }

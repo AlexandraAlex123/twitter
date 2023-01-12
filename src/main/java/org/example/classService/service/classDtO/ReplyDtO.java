@@ -6,23 +6,23 @@ import org.example.objectClassAndRepository.model.posts.Reply;
 import java.util.List;
 import java.util.Set;
 
-public class PostDtO implements Comparable<PostDtO> {
+public class ReplyDtO {
 
     String message;
     String createDate;
     boolean onlyMe;
-    Set<Reply> postReplies;
-    Set<Like> postLikes;
+    Set<Reply> replyReplies;
+    Set<Like> replyLikes;
 
-    public PostDtO(String message, String createDate, boolean onlyMe, Set<Reply> postReplies, Set<Like> postLikes) {
+    public ReplyDtO(String message, String createDate, boolean onlyMe, Set<Reply> replyReplies, Set<Like> replyLikes) {
         this.message = message;
         this.createDate = createDate;
         this.onlyMe = onlyMe;
-        this.postReplies = postReplies;
-        this.postLikes = postLikes;
+        this.replyReplies = replyReplies;
+        this.replyLikes = replyLikes;
     }
 
-    public PostDtO() {
+    public ReplyDtO() {
     }
 
     public String getMessage() {
@@ -49,42 +49,30 @@ public class PostDtO implements Comparable<PostDtO> {
         this.onlyMe = onlyMe;
     }
 
-    public Set<Reply> getPostReplies() {
-        return postReplies;
+    public Set<Reply> getReplyReplies() {
+        return replyReplies;
     }
 
-    public void setPostReplies(Set<Reply> postReplies) {
-        this.postReplies = postReplies;
+    public void setReplyReplies(Set<Reply> replyReplies) {
+        this.replyReplies = replyReplies;
     }
 
-    public Set<Like> getPostLikes() {
-        return postLikes;
+    public Set<Like> getReplyLikes() {
+        return replyLikes;
     }
 
-    public void setPostLikes(Set<Like> postLikes) {
-        this.postLikes = postLikes;
-    }
-
-    @Override
-    public int compareTo(PostDtO o) {
-        int i = this.createDate.compareTo(o.getCreateDate());
-        if(i == 0){
-            return 0;
-        } else if (i < 0) {
-            return -1;
-        }else{
-            return 1;
-        }
+    public void setReplyLikes(Set<Like> replyLikes) {
+        this.replyLikes = replyLikes;
     }
 
     @Override
     public String toString() {
-        return "PostDtO{" +
+        return "ReplyDtO{" +
                 "message='" + message + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", onlyMe=" + onlyMe +
-                ", postReplies=" + postReplies +
-                ", postLikes=" + postLikes +
+                ", replyReplies=" + replyReplies +
+                ", replyLikes=" + replyLikes +
                 '}';
     }
 }

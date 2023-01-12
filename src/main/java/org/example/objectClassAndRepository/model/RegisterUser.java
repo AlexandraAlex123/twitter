@@ -1,11 +1,7 @@
 package org.example.objectClassAndRepository.model;
 
-
-import org.example.classService.service.classDtO.TwitterUserDtO;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table
@@ -26,18 +22,18 @@ public class RegisterUser implements Comparable<RegisterUser>{
     private String email;
 
     @Column(name = "create_date")
-    private Timestamp date;
+    private Timestamp createDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account")
     private TwitterUser twitterUser;
 
 
-    public RegisterUser(String firstName, String lastName, String email, Timestamp date) {
+    public RegisterUser(String firstName, String lastName, String email, Timestamp createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.date = date;
+        this.createDate = createDate;
     }
 
     public RegisterUser() {
@@ -75,12 +71,12 @@ public class RegisterUser implements Comparable<RegisterUser>{
         this.email = email;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
     public TwitterUser getTwitterUser() {
@@ -103,7 +99,7 @@ public class RegisterUser implements Comparable<RegisterUser>{
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", date=" + date +
+                ", createDate=" + createDate +
                 ", twitterUser=" + twitterUser +
                 '}';
     }

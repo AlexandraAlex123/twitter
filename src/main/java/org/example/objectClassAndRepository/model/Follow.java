@@ -2,9 +2,7 @@ package org.example.objectClassAndRepository.model;
 
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table
@@ -19,11 +17,11 @@ public class Follow {
     private String usernameFollowed;
 
     @Column(name = "start_follow")
-    private Timestamp date;
+    private Timestamp createDate;
 
-    public Follow(String usernameFollowed, Timestamp date) {
+    public Follow(String usernameFollowed, Timestamp createDate) {
         this.usernameFollowed = usernameFollowed;
-        this.date = date;
+        this.createDate = createDate;
     }
 
     public Follow() {
@@ -45,12 +43,12 @@ public class Follow {
         this.followId = followId;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
     @Override
@@ -58,7 +56,7 @@ public class Follow {
         return "Follow{" +
                 "followId=" + followId +
                 ", usernameFollowed='" + usernameFollowed + '\'' +
-                ", date=" + date +
+                ", createDate=" + createDate +
                 '}';
     }
 }

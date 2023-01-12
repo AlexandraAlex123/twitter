@@ -2,11 +2,10 @@ package org.example.objectClassAndRepository.model.posts;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class PostedMessages {
+public class PostedMessages implements Comparable<PostedMessages> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -17,7 +16,7 @@ public class PostedMessages {
     private String message;
 
     @Column(name = "date_of_posting")
-    private Timestamp date;
+    private Timestamp createDate;
 
     @Column(name = "not_public")
     private Boolean onlyMe;
@@ -26,9 +25,9 @@ public class PostedMessages {
     public PostedMessages() {
     }
 
-    public PostedMessages(String message, Timestamp date, Boolean onlyMe) {
+    public PostedMessages(String message, Timestamp createDate, Boolean onlyMe) {
         this.message = message;
-        this.date = date;
+        this.createDate = createDate;
         this.onlyMe = onlyMe;
     }
 
@@ -48,12 +47,12 @@ public class PostedMessages {
         this.message = message;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
     public Boolean getOnlyMe() {
@@ -65,12 +64,25 @@ public class PostedMessages {
     }
 
     @Override
+    public int compareTo(PostedMessages o) {
+        int i = this.createDate.compareTo(o.getCreateDate());
+        if (i == 0) {
+            return 0;
+        } else if (i < 0) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    @Override
     public String toString() {
         return "PostedMessages{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
-                ", date=" + date +
+                ", createDate=" + createDate +
                 ", onlyMe=" + onlyMe +
                 '}';
     }
+
 }

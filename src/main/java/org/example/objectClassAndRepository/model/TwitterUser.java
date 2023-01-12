@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.objectClassAndRepository.model.posts.Post;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
-public class TwitterUser {
+public class TwitterUser implements Comparable<TwitterUser> {
 
     @Id
     @Column(name = "username", length = 300, unique = true)
@@ -22,21 +21,25 @@ public class TwitterUser {
     private String password;
 
     @Column(name = "create_date")
-    private Timestamp date;
+    private Timestamp createDate;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_who_follow", referencedColumnName = "username")
-    private List<Follow> follows = new ArrayList<>();
+    private Set<Follow> follows;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_who_post", referencedColumnName = "username")
-    private List<Post> posts = new ArrayList<>();
+    private Set<Post> posts;
 
-    public TwitterUser(String username, String password, Timestamp date) {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_mentioned", referencedColumnName = "username")
+    public Set<Mention> mentions;
+
+    public TwitterUser(String username, String password, Timestamp createDate) {
         this.username = username;
         this.password = password;
-        this.date = date;
+        this.createDate = createDate;
     }
 
     public TwitterUser() {
@@ -58,28 +61,41 @@ public class TwitterUser {
         this.password = password;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
-    public List<Follow> getFollows() {
+    public Set<Follow> getFollows() {
         return follows;
     }
 
-    public void setFollows(List<Follow> follows) {
+    public void setFollows(Set<Follow> follows) {
         this.follows = follows;
     }
 
-    public List<Post> getPosts() {
+    public Set<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(Set<Post> posts) {
         this.posts = posts;
+    }
+
+    public Set<Mention> getMentions() {
+        return mentions;
+    }
+
+    public void setMentions(Set<Mention> mentions) {
+        this.mentions = mentions;
+    }
+
+    @Override
+    public int compareTo(TwitterUser o) {
+        return this.username.compareTo(o.getUsername());
     }
 
     @Override
@@ -87,9 +103,10 @@ public class TwitterUser {
         return "TwitterUser{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", date=" + date +
+                ", createDate=" + createDate +
                 ", follows=" + follows +
                 ", posts=" + posts +
+                ", mentions=" + mentions +
                 '}';
     }
 }
