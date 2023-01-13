@@ -15,11 +15,12 @@ import java.util.Set;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "SELECT p FROM Post p WHERE user_who_post = :username")
-    Set<Post> findAll(@Param("username") String username);
+    Set<Post> findAllByUsername(@Param("username") String username);
 
-    @Query(value = "SELECT p FROM Post p WHERE (date_of_posting BETWEEN :timestamp and :timestamp2)")
+    @Query(value = "SELECT p " +
+            "FROM Post p WHERE (date_of_posting " +
+            "BETWEEN :timestamp and :timestamp2)")
     Set<Post> findPostsBetweenDates(@Param("timestamp") Timestamp timestamp, @Param("timestamp2") Timestamp timestamp2);
 
-    @Query(value = "SELECT p FROM Post p WHERE user_who_post = :username")
-    RegisterUser findUserByUsername(@Param("username") String username);
+
 }

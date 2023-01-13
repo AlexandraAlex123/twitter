@@ -1,7 +1,6 @@
 package org.example.classService.service;
 
 import org.example.classService.service.classDtO.RegisterUserDtO;
-import org.example.classService.validation.CheckValue;
 import org.example.classService.validation.DtOService;
 import org.example.objectClassAndRepository.model.RegisterUser;
 import org.example.objectClassAndRepository.model.TwitterUser;
@@ -29,7 +28,7 @@ public class RegisterUserService extends DtOService {
 
     public String singUp(RegisterUser ru) {
         if (isNotNull(ru)) {
-            if (validRu(ru)) {
+            if (validUser(ru)) {
                 if (!emailExist(ru.getEmail(), rUr)) {
                     ru.setCreateDate(new Timestamp(System.currentTimeMillis()));
                     rUr.save(ru);
@@ -47,7 +46,7 @@ public class RegisterUserService extends DtOService {
 
     public String createAccount(String email, TwitterUser tu) {
         if (isNotNull(tu) && !email.isEmpty()) {
-            if (validTu(tu)) {
+            if (validUser(tu)) {
                 if (emailExist(email, rUr)) {
                     RegisterUser ru = rUr.findUserByEmail(email);
                     if (!usernameExist(tu.getUsername(), rUr)) {

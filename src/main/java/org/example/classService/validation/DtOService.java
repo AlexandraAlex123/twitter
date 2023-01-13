@@ -77,4 +77,20 @@ public class DtOService extends GarageClass{
         }
         return postsDTO;
     }
+
+    // Convert class to DTO with reflection
+
+//    public Set<TwitterUserDtO> getAllTwitterUserDTOTest(Set<TwitterUser> tuS) {
+//
+//        Set<TwitterUserDtO> tuDTOs = new TreeSet<>();
+//        Field[] fieldsDTO = TwitterUserDtO.class.getFields();
+//        for (TwitterUser tu : tuS) {
+//            for (Field f : fieldsDTO) {
+//                String valueToGet = tu.
+//                TwitterUserDtO tuDTO = new TwitterUserDtO();
+//
+//            }
+//        }
+//        return tuDTOs;
+//    }
 }

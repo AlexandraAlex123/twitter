@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table
-public class Follow {
+public class Follow implements Comparable<Follow> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,5 +58,10 @@ public class Follow {
                 ", usernameFollowed='" + usernameFollowed + '\'' +
                 ", createDate=" + createDate +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Follow o) {
+       return this.createDate.compareTo(o.createDate);
     }
 }

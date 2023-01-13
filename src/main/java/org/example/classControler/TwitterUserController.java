@@ -3,6 +3,7 @@ package org.example.classControler;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import org.example.classService.service.classDtO.PostDtO;
 import org.example.classService.service.classDtO.TwitterUserDtO;
 import org.example.classService.service.TwitterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,10 @@ public class TwitterUserController {
     @PutMapping(path = "/addAPost")
     public String addAPost(@RequestParam String username, @RequestParam String message) {
         return tUs.addAPost(username, message);
+    }
+
+    @GetMapping(path = "/getFeeds")
+    public Set<PostDtO> getFollowsPosts (@RequestParam String username){
+        return tUs.getFollowsPosts(username);
     }
 }

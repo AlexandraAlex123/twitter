@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -27,25 +28,34 @@ public class PostService extends DtOService {
 
     }
 
-    public Set<PostDtO> filterPosts(Timestamp ts, Timestamp ts2) {
-        Set<Post> posts = pR.findPostsBetweenDates(ts, ts2);
-        return getAllPostsDTO(posts);
+    public String addAReply(Long id, String message, String userWhoReply) {
+        if (id != null && !message.isEmpty() && !userWhoReply.isEmpty()) {
+            if (!message.equals(" ") && checkStringTu(userWhoReply)) {
+                Optional<Post> p = pR.findById(id);
+//                createAndSaveReply(p , message, userWhoReply);
+                return "Comment add";
+            } else {
+                return "Invalid command";
+            }
+        }
+        return "Null parameter";
     }
 
-    public Set<PostDtO> searchUserPosts(String username) {
-        if (username != null) {
-            if (checkStringTu(username)) {
-                if (usernameExist(username, pR)) {
-                    Set<Post> posts = pR.findAll(username);
-                    return getAllPostsDTO(posts);
-                }
-            }
+    public Set<PostDtO> filterPostsByDate(Timestamp ts, Timestamp ts2) {
+        if (ts != null && ts2 != null) {
+            Set<Post> posts = pR.findPostsBetweenDates(ts, ts2);
+            return getAllPostsDTO(posts);
         }
         return null;
     }
 
-
-
+    public Set<PostDtO> searchUserPosts(String username) {
+        if (validUsername(username, pR)) {
+            Set<Post> posts = pR.findAllByUsername(username);
+            return getAllPostsDTO(posts);
+        }
+        return null;
+    }
 
 
 }

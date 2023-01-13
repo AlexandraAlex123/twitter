@@ -65,14 +65,7 @@ public class PostedMessages implements Comparable<PostedMessages> {
 
     @Override
     public int compareTo(PostedMessages o) {
-        int i = this.createDate.compareTo(o.getCreateDate());
-        if (i == 0) {
-            return 0;
-        } else if (i < 0) {
-            return -1;
-        } else {
-            return 1;
-        }
+        return this.createDate.compareTo(o.getCreateDate());
     }
 
     @Override

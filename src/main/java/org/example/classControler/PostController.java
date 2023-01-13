@@ -23,6 +23,6 @@ public class PostController {
 
     @GetMapping(path = "/filterPosts")
     public Set<PostDtO> filterPosts(@RequestParam Timestamp ts, @RequestParam Timestamp ts2) {
-        return pS.filterPosts(ts, ts2);
+        return pS.filterPostsByDate(ts, ts2);
     }
 }

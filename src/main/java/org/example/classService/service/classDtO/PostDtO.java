@@ -1,9 +1,9 @@
 package org.example.classService.service.classDtO;
 
 import org.example.objectClassAndRepository.model.Like;
+import org.example.objectClassAndRepository.model.posts.PostedMessages;
 import org.example.objectClassAndRepository.model.posts.Reply;
 
-import java.util.List;
 import java.util.Set;
 
 public class PostDtO implements Comparable<PostDtO> {
@@ -68,13 +68,7 @@ public class PostDtO implements Comparable<PostDtO> {
     @Override
     public int compareTo(PostDtO o) {
         int i = this.createDate.compareTo(o.getCreateDate());
-        if(i == 0){
-            return 0;
-        } else if (i < 0) {
-            return -1;
-        }else{
-            return 1;
-        }
+        return Integer.compare(0, i);
     }
 
     @Override

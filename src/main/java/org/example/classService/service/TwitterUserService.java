@@ -1,7 +1,9 @@
 package org.example.classService.service;
 
+import org.example.classService.service.classDtO.PostDtO;
 import org.example.classService.service.classDtO.TwitterUserDtO;
 import org.example.classService.validation.DtOService;
+import org.example.objectClassAndRepository.model.Follow;
 import org.example.objectClassAndRepository.model.TwitterUser;
 import org.example.objectClassAndRepository.repository.TwitterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.TreeSet;
 @Transactional
 public class TwitterUserService extends DtOService {
 
+    private PostService ps;
     private TwitterUserRepository tUr;
 
     @Autowired
@@ -91,29 +94,19 @@ public class TwitterUserService extends DtOService {
         return "Null parameter";
     }
 
-//    public Set<PostDtO> getFollowsPosts(String username) {
-//        if (!username.isEmpty() && checkStringTu(username)) {
-//
-//        }
-//    }
-
-
-
-// Convert class to DTO with reflection
-
-//    public Set<TwitterUserDtO> getAllTwitterUserDTOTest(Set<TwitterUser> tuS) {
-//
-//        Set<TwitterUserDtO> tuDTOs = new TreeSet<>();
-//        Field[] fieldsDTO = TwitterUserDtO.class.getFields();
-//        for (TwitterUser tu : tuS) {
-//            for (Field f : fieldsDTO) {
-//                String valueToGet = tu.
-//                TwitterUserDtO tuDTO = new TwitterUserDtO();
-//
-//            }
-//        }
-//        return tuDTOs;
-//    }
-
+    public Set<PostDtO> getFollowsPosts(String username) {
+        Set<PostDtO> allFollowPost = new TreeSet<>();
+        if (validUsername(username, tUr)) {
+            TwitterUser tu = tUr.findByUsername(username);
+            Set<Follow> follows = tu.getFollows();
+            for (Follow f : follows) {
+                String follow = f.getUsernameFollowed();
+                Set<PostDtO> followPosts = ps.searchUserPosts(username);
+                allFollowPost.addAll(followPosts);
+            }
+            return allFollowPost;
+        }
+        return allFollowPost;
+    }
 
 }
