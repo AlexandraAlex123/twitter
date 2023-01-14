@@ -32,13 +32,7 @@ public class FollowDtO implements Comparable<FollowDtO> {
     @Override
     public int compareTo(FollowDtO o) {
         int i = this.createDate.compareTo(o.getCreateDate());
-        if(i == 0){
-            return 0;
-        } else if (i < 0) {
-            return -1;
-        }else{
-            return 1;
-        }
+        return Integer.compare(0, i);
     }
 
     @Override

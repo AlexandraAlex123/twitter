@@ -22,11 +22,6 @@ public class RegisterUserService extends ValidateFactory {
     @Autowired
     private RegisterUserRepository rUr;
 
-    public RegisterUserService(RegisterUserRepository rUr) {
-        this.rUr = rUr;
-    }
-
-
     public String singUp(RegisterUser ru) {
         if (isNotNull(ru)) {
             if (validUser(ru)) {
@@ -85,6 +80,16 @@ public class RegisterUserService extends ValidateFactory {
         return ruSFind;
     }
 
+    public boolean usernameExists(String username) {
+        return rUr.findUserByUsername(username) != null;
+    }
 
+    public boolean emailExists(String email) {
+        return rUr.findUserByEmail(email) != null;
+    }
+
+    public boolean validUsername(String username) {
+        return !username.isEmpty() && checkStringTu(username) && usernameExists(username);
+    }
 
 }

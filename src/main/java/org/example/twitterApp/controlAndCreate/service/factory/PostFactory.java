@@ -5,7 +5,6 @@ import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 
 public class PostFactory extends ValidateFactory implements Factory {
 
-
     @Override
     public PostDtO convertToDTO(Object o) {
         Post post = (Post) o;

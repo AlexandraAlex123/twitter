@@ -19,7 +19,7 @@ public class Reply extends PostedMessages {
     private List<Reply> replies;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "posts_id", referencedColumnName = "id")
+    @JoinColumn(name = "reply_id", referencedColumnName = "id")
     private List<Like> likes;
 
 

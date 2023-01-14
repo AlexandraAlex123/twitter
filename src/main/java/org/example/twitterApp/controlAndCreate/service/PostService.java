@@ -2,6 +2,7 @@ package org.example.twitterApp.controlAndCreate.service;
 
 import org.example.twitterApp.controlAndCreate.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +19,24 @@ import java.util.TreeSet;
 @Transactional
 public class PostService extends ValidateFactory {
 
+    @Autowired
+    private RegisterUserService rus;
+    @Autowired
     private PostRepository pR;
 
-    @Autowired
-    public PostService(PostRepository pR) {
-        this.pR = pR;
-    }
 
-    public PostService() {
-
-    }
-
-    public Set<PostDtO> searchUserPosts(String username) {
-        if (validUsername(username)) {
+    public Set<PostDtO> searchOnlyUserPosts(String username) {
+        if (rus.validUsername(username)) {
             List<Post> posts = pR.findAllByUsername(username);
             return getListPostsDTO(posts);
+        }
+        return null;
+    }
+
+    public Set<PostDTOFeed> searchFeedPosts(String username){
+        if (rus.validUsername(username)) {
+            List<Post> posts = pR.findAllByUsername(username);
+            return getListPostsDTOF(posts);
         }
         return null;
     }
@@ -63,15 +67,12 @@ public class PostService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public Set<PostDtO> getMentionsPosts (String userMentioned){
-        if(validUsername(userMentioned)) {
+    public Set<PostDtO> getMentionsPosts(String userMentioned) {
+        if (rus.validUsername(userMentioned)) {
             List<Post> posts = pR.findMentionPosts(userMentioned);
             return getListPostsDTO(posts);
         }
         return null;
     }
-
-
-
 
 }

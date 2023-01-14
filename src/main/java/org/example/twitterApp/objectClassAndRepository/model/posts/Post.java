@@ -16,7 +16,7 @@ public class Post extends PostedMessages {
     private List<Reply> replies;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "posts_id", referencedColumnName = "id")
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
     private List<Like> likes;
 
 

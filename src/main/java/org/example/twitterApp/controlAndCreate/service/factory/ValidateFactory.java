@@ -1,11 +1,11 @@
 package org.example.twitterApp.controlAndCreate.service.factory;
 
+import org.example.twitterApp.controlAndCreate.service.RegisterUserService;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
-import org.example.twitterApp.objectClassAndRepository.repository.RegisterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
@@ -18,17 +18,6 @@ import java.util.List;
 
 @Transactional
 public class ValidateFactory extends CreateFactory {
-
-
-    RegisterUserRepository rUr;
-
-    @Autowired
-    public ValidateFactory(RegisterUserRepository rUr) {
-        this.rUr = rUr;
-    }
-
-    public ValidateFactory() {
-    }
 
     public boolean checkStringRu(String stringToCheck) {
         char[] c = stringToCheck.toCharArray();
@@ -73,22 +62,10 @@ public class ValidateFactory extends CreateFactory {
         return checkStringTu(tu.getUsername()) && checkStringTu(tu.getPassword());
     }
 
-    public boolean validUsername(String username) {
-        return !username.isEmpty() && checkStringTu(username) && usernameExists(username);
-    }
-
-    public boolean usernameExists(String username) {
-        return rUr.findUserByUsername(username) != null;
-    }
-
-    public boolean emailExists(String email) {
-        return rUr.findUserByEmail(email) != null;
-    }
-
 
     public void createAndSaveFollow(TwitterUser tu, String usernameFollow) {
-        Follow follow = new Follow(usernameFollow, new Timestamp(System.currentTimeMillis()));
         List<Follow> follows = tu.getFollows();
+        Follow follow = new Follow(usernameFollow, new Timestamp(System.currentTimeMillis()));
         follows.add(follow);
         tu.setFollows(follows);
     }

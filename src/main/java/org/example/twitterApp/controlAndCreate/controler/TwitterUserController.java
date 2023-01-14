@@ -2,17 +2,21 @@ package org.example.twitterApp.controlAndCreate.controler;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.example.twitterApp.controlAndCreate.service.TwitterUserService;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
 @RestController
 public class TwitterUserController {
 
-    private TwitterUserService tUs = new TwitterUserService();
+    @Autowired
+    private TwitterUserService tUs;
 
     @GetMapping(path = "/login")
     public String login(@RequestParam String username, @RequestParam String password) {
@@ -36,7 +40,7 @@ public class TwitterUserController {
     }
 
     @GetMapping(path = "/getFeeds")
-    public Set<PostDtO> getFollowsPosts(@RequestParam String username) {
+    public Set<PostDTOFeed> getFollowsPosts(@RequestParam String username) {
         return tUs.getFollowsPosts(username);
     }
 }

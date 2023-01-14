@@ -4,6 +4,7 @@ import org.example.twitterApp.controlAndCreate.service.factory.Factory;
 import org.example.twitterApp.controlAndCreate.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.TwitterUserRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -19,17 +21,17 @@ import java.util.TreeSet;
 @Transactional
 public class TwitterUserService extends ValidateFactory {
 
-    private final PostService ps = new PostService();
+    @Autowired
+    private FollowService fs;
 
     @Autowired
-    private  TwitterUserRepository tUr;
+    private PostService ps;
+    @Autowired
+    private RegisterUserService rus;
 
-    public TwitterUserService(TwitterUserRepository tUr) {
-        this.tUr = tUr;
-    }
+    @Autowired
+    private TwitterUserRepository tUr;
 
-    public TwitterUserService() {
-    }
 
     public String login(String username, String password) {
         if (!username.isEmpty() && !password.isEmpty()) {
@@ -66,7 +68,7 @@ public class TwitterUserService extends ValidateFactory {
     public String addAPost(String username, String message) {
         if (!username.isEmpty() && !message.isEmpty()) {
             if (checkStringTu(username) && !message.equals(" ")) {
-                if (usernameExists(username)) {
+                if (rus.usernameExists(username)) {
                     TwitterUser tu = tUr.findByUsername(username);
                     createAndSavePost(tu, message);
                     return "Post uploaded";
@@ -84,10 +86,14 @@ public class TwitterUserService extends ValidateFactory {
     public String whoYouFollow(String usernameWhoFollow, String usernameFollow) {
         if (!usernameWhoFollow.isEmpty() && !usernameFollow.isEmpty()) {
             if (checkStringTu(usernameWhoFollow) && checkStringTu(usernameFollow)) {
-                if (usernameExists(usernameWhoFollow) && usernameExists(usernameFollow)) {
+                if (rus.usernameExists(usernameWhoFollow) && rus.usernameExists(usernameFollow)) {
                     TwitterUser tu = tUr.findByUsername(usernameWhoFollow);
-                    createAndSaveFollow(tu, usernameFollow);
-                    return "You fallow " + usernameFollow;
+                    if(!fs.alreadyFollow(usernameFollow)) {
+                        createAndSaveFollow(tu, usernameFollow);
+                        return "You fallow " + usernameFollow;
+                    }else{
+                        return "You already follow " + usernameFollow;
+                    }
                 } else {
                     return "User not found";
                 }
@@ -98,14 +104,14 @@ public class TwitterUserService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public Set<PostDtO> getFollowsPosts(String username) {
-        Set<PostDtO> allFollowPost = new TreeSet<>();
-        if (validUsername(username)) {
+    public Set<PostDTOFeed> getFollowsPosts(String username) {
+        Set<PostDTOFeed> allFollowPost = new TreeSet<>();
+        if (rus.validUsername(username)) {
             TwitterUser tu = tUr.findByUsername(username);
             List<Follow> follows = tu.getFollows();
             for (Follow f : follows) {
                 String follow = f.getUsernameFollowed();
-                Set<PostDtO> followPosts = ps.searchUserPosts(follow);
+                Set<PostDTOFeed> followPosts = ps.searchFeedPosts(follow);
                 allFollowPost.addAll(followPosts);
             }
             return allFollowPost;

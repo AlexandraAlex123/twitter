@@ -35,7 +35,9 @@ public class CreateFactory {
             case "mention":
                 return new MentionFactory();
             case "postM":
-                return new PostMentionDTOFactory();
+                return new PostDTOMentionFactory();
+            case "postF":
+                return new PostDTOFeedFactory();
             default:
                 throw new IllegalArgumentException("Unknown channel " + channel);
         }
@@ -47,6 +49,26 @@ public class CreateFactory {
             Factory uFi = create("post");
             PostDtO postDtO = (PostDtO) uFi.convertToDTO(post);
             postDTOs.add(postDtO);
+        }
+        return postDTOs;
+    }
+
+    public Set<PostDTOFeed> getListPostsDTOF(List<Post> posts) {
+        Set<PostDTOFeed> postDTOs = new TreeSet<>();
+        for (Post post : posts) {
+            Factory uFi = create("postF");
+            PostDTOFeed postDTOFeed = (PostDTOFeed) uFi.convertToDTO(post);
+            postDTOs.add(postDTOFeed);
+        }
+        return postDTOs;
+    }
+
+    public Set<PostDTOFeed> getListRepliesDTOF(List<Reply> replies) {
+        Set<PostDTOFeed> postDTOs = new TreeSet<>();
+        for (Reply reply : replies) {
+            Factory uFi = create("postF");
+            PostDTOFeed postDTOFeed = (PostDTOFeed) uFi.convertToDTO(reply);
+            postDTOs.add(postDTOFeed);
         }
         return postDTOs;
     }

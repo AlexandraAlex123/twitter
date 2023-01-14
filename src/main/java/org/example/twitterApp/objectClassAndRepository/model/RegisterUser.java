@@ -89,7 +89,7 @@ public class RegisterUser implements Comparable<RegisterUser>{
 
     @Override
     public int compareTo(RegisterUser o) {
-        return this.email.compareTo(o.getEmail());
+        return this.createDate.compareTo(o.getCreateDate());
     }
 
     @Override

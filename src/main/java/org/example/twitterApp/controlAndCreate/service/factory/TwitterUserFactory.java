@@ -1,14 +1,12 @@
 package org.example.twitterApp.controlAndCreate.service.factory;
 
-import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 
 public class TwitterUserFactory extends ValidateFactory implements Factory {
 
-    private CreateFactory sf = new CreateFactory();
-
     @Override
-    public TwitterUserDtO convertToDTO(Object o) {
+    public Object convertToDTO(Object o) {
         TwitterUser tu = (TwitterUser) o;
         TwitterUserDtO tuDTO = new TwitterUserDtO();
         tuDTO.setAccount(tu.getUsername());

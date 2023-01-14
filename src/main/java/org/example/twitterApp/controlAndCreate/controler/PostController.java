@@ -12,11 +12,11 @@ import java.util.Set;
 public class PostController {
 
     @Autowired
-    private PostService pS = new PostService();
+    private PostService pS;
 
     @GetMapping(path = "/searchUserPosts")
     public Set<PostDtO> searchUserPosts(@RequestParam String username) {
-        return pS.searchUserPosts(username);
+        return pS.searchOnlyUserPosts(username);
     }
 
     @GetMapping(path = "/filterPosts")
@@ -25,7 +25,7 @@ public class PostController {
     }
 
     @PutMapping(path = "/leaveComment")
-    public String addAReply(@PathVariable Long id, @RequestParam String message, @RequestParam String userWhoReply) {
+    public String addAReply(@RequestParam Long id, @RequestParam String message, @RequestParam String userWhoReply) {
         return pS.addAReplyPost(id, message, userWhoReply);
     }
 

@@ -5,35 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c45cdb1b-14cf-43b2-954c-fc9223c60a2f" name="Changes" comment="TwitterApp">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/PostDTOFeedFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/PostDTOFeed.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/classControler/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/controler/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/classControler/RegisterUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/controler/RegisterUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/classControler/TwitterUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/controler/TwitterUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/ServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/CreateFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/ValidateValueClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/ValidateFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/FactoryInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/Factory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/FollowFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/FollowFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/LikeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/LikeFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/MentionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/MentionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/PostFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/PostFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/PostMentionDTOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/PostMentionDTOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/RegisterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/RegisterUserFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/ReplyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/ReplyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/ReplyMentionDTOFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/factory/classFactory/TwitterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/TwitterUserFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/serviceClass/FollowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/FollowService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/serviceClass/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/serviceClass/RegisterUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/RegisterUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controler/service/serviceClass/TwitterUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/TwitterUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/FollowDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/FollowDtO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/LikeDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/LikeDtO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/MentionDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/MentionDtO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/PostDTOMention.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/PostDTOMention.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/PostDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/PostDtO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/RegisterUserDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/RegisterUserDtO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/ReplyDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/ReplyDtO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/ReplyMentionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/ReplyMentionDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/classDtO/TwitterUserDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/TwitterUserDtO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/controler/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/controler/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/controler/TwitterUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/controler/TwitterUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/FollowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/FollowService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/RegisterUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/RegisterUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/TwitterUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/TwitterUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/CreateFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/CreateFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/PostFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/PostFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/PostMentionDTOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/PostDTOMentionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/TwitterUserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/TwitterUserFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/ValidateFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndCreate/service/factory/ValidateFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/RegisterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/RegisterUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/TwitterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/TwitterUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/posts/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/posts/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/posts/Reply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/model/posts/Reply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/FollowDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/FollowDtO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/FollowRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/FollowRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/PostRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,16 +63,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/Lenovo/TwitterProject/twitter/target/accessing-data-mysql-0.0.1-SNAPSHOT.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.classes" />
@@ -242,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673658087574</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="TwitterApp">
+      <created>1673712551054</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1673712551054</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

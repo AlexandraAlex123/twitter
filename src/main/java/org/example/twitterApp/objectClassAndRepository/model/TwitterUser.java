@@ -94,7 +94,7 @@ public class TwitterUser implements Comparable<TwitterUser> {
 
     @Override
     public int compareTo(TwitterUser o) {
-        return this.username.compareTo(o.getUsername());
+        return this.createDate.compareTo(o.getCreateDate());
     }
 
     @Override
