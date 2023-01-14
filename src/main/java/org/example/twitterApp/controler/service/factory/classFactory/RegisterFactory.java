@@ -1,14 +1,10 @@
 package org.example.twitterApp.controler.service.factory.classFactory;
 
 import org.example.twitterApp.controler.service.factory.ValidateValueClass;
-import org.example.twitterApp.objectClassAndRepository.classDtO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.classDtO.RegisterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 
-import java.util.Set;
-import java.util.TreeSet;
-
-public class RegisterUserFactory extends ValidateValueClass implements UserFactoryInterface {
+public class RegisterFactory extends ValidateValueClass implements FactoryInterface {
 
     @Override
     public RegisterUserDtO convertToDTO(Object o) {

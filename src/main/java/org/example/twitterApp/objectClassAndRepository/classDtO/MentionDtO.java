@@ -1,22 +1,20 @@
 package org.example.twitterApp.objectClassAndRepository.classDtO;
 
+import org.example.twitterApp.controler.service.factory.ServiceFactory;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 
-public class MentionDtO {
+public class MentionDtO implements Comparable<MentionDtO> {
 
     String userHwoMention;
-    String message;
-    String date;
-    Post post;
-    Reply reply;
+    String createDate;
+    PostDTOMention postDTOMention;
 
-    public MentionDtO(String userHwoMention, String message, String date, Post post, Reply reply) {
+    public MentionDtO(String userHwoMention, String createDate, PostDTOMention postDTOMention) {
         this.userHwoMention = userHwoMention;
-        this.message = message;
-        this.date = date;
-        this.post = post;
-        this.reply = reply;
+        this.createDate = createDate;
+        this.postDTOMention = postDTOMention;
+
     }
 
     public MentionDtO() {
@@ -30,35 +28,35 @@ public class MentionDtO {
         this.userHwoMention = userHwoMention;
     }
 
-    public String getMessage() {
-        return message;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
-    public String getDate() {
-        return date;
+    public PostDTOMention getPostDTOMention() {
+        return postDTOMention;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setPostDTOMention(PostDTOMention postDTOMention) {
+        this.postDTOMention = postDTOMention;
     }
 
-    public Post getPost() {
-        return post;
+
+    @Override
+    public String toString() {
+        return "MentionDtO{" +
+                "userHwoMention='" + userHwoMention + '\'' +
+                ", date='" + createDate + '\'' +
+                ", post=" + postDTOMention +
+                '}';
     }
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public Reply getReply() {
-        return reply;
-    }
-
-    public void setReply(Reply reply) {
-        this.reply = reply;
+    @Override
+    public int compareTo(MentionDtO o) {
+        int i = this.createDate.compareTo(o.getCreateDate());
+        return Integer.compare(0, i);
     }
 }

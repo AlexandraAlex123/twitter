@@ -5,15 +5,15 @@ import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 
 import java.util.Set;
 
-public class ReplyDtO {
+public class ReplyDtO implements Comparable<ReplyDtO> {
 
     String message;
     String createDate;
     boolean onlyMe;
-    Set<Reply> replyReplies;
-    Set<Like> replyLikes;
+    Set<ReplyDtO> replyReplies;
+    Set<LikeDtO> replyLikes;
 
-    public ReplyDtO(String message, String createDate, boolean onlyMe, Set<Reply> replyReplies, Set<Like> replyLikes) {
+    public ReplyDtO(String message, String createDate, boolean onlyMe, Set<ReplyDtO> replyReplies, Set<LikeDtO> replyLikes) {
         this.message = message;
         this.createDate = createDate;
         this.onlyMe = onlyMe;
@@ -48,19 +48,19 @@ public class ReplyDtO {
         this.onlyMe = onlyMe;
     }
 
-    public Set<Reply> getReplyReplies() {
+    public Set<ReplyDtO> getReplyReplies() {
         return replyReplies;
     }
 
-    public void setReplyReplies(Set<Reply> replyReplies) {
+    public void setReplyReplies(Set<ReplyDtO> replyReplies) {
         this.replyReplies = replyReplies;
     }
 
-    public Set<Like> getReplyLikes() {
+    public Set<LikeDtO> getReplyLikes() {
         return replyLikes;
     }
 
-    public void setReplyLikes(Set<Like> replyLikes) {
+    public void setReplyLikes(Set<LikeDtO> replyLikes) {
         this.replyLikes = replyLikes;
     }
 
@@ -73,5 +73,11 @@ public class ReplyDtO {
                 ", replyReplies=" + replyReplies +
                 ", replyLikes=" + replyLikes +
                 '}';
+    }
+
+    @Override
+    public int compareTo(ReplyDtO o) {
+        int i = this.createDate.compareTo(o.getCreateDate());
+        return Integer.compare(0, i);
     }
 }

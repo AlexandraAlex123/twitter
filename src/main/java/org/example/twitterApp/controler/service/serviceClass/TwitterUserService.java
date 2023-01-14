@@ -1,8 +1,7 @@
 package org.example.twitterApp.controler.service.serviceClass;
 
 import org.example.twitterApp.controler.service.factory.ServiceFactory;
-import org.example.twitterApp.controler.service.factory.ValidateValueClass;
-import org.example.twitterApp.controler.service.factory.classFactory.UserFactoryInterface;
+import org.example.twitterApp.controler.service.factory.classFactory.FactoryInterface;
 import org.example.twitterApp.objectClassAndRepository.classDtO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.classDtO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
@@ -53,7 +52,7 @@ public class TwitterUserService extends ServiceFactory {
             List<TwitterUser> tuS = tUr.findAll();
             for (TwitterUser tu : tuS) {
                 if (tu.getUsername().toUpperCase().contains(keyWord.toUpperCase())) {
-                    UserFactoryInterface uFi = create("tu");
+                    FactoryInterface uFi = create("tu");
                     TwitterUserDtO tuDtO = (TwitterUserDtO) uFi.convertToDTO(tu);
                     tuSFind.add(tuDtO);
                 }
@@ -105,7 +104,7 @@ public class TwitterUserService extends ServiceFactory {
             List<Follow> follows = tu.getFollows();
             for (Follow f : follows) {
                 String follow = f.getUsernameFollowed();
-                Set<PostDtO> followPosts = ps.searchUserPosts(username);
+                Set<PostDtO> followPosts = ps.searchUserPosts(follow);
                 allFollowPost.addAll(followPosts);
             }
             return allFollowPost;

@@ -1,18 +1,17 @@
 package org.example.twitterApp.objectClassAndRepository.classDtO;
 
-public class PostDTOMention implements Comparable<PostDTOMention>{
-
+public class ReplyMentionDTO implements Comparable<ReplyMentionDTO>{
     String message;
     String createDate;
     boolean onlyMe;
 
-    public PostDTOMention(String message, String createDate, boolean onlyMe) {
+    public ReplyMentionDTO(String message, String createDate, boolean onlyMe) {
         this.message = message;
         this.createDate = createDate;
         this.onlyMe = onlyMe;
     }
 
-    public PostDTOMention() {
+    public ReplyMentionDTO() {
     }
 
     public String getMessage() {
@@ -48,8 +47,9 @@ public class PostDTOMention implements Comparable<PostDTOMention>{
                 '}';
     }
 
+
     @Override
-    public int compareTo(PostDTOMention o) {
+    public int compareTo(ReplyMentionDTO o) {
         int i = this.createDate.compareTo(o.getCreateDate());
         return Integer.compare(0, i);
     }

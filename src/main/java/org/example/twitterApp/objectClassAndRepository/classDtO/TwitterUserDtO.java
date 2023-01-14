@@ -11,7 +11,7 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
     String createDate;
     private Set<FollowDtO> yourFollows;
     private Set<PostDtO> yourPosts;
-    private Set<Mention> yourMentions;
+    private Set<MentionDtO> yourMentions;
 
 
     public TwitterUserDtO() {
@@ -49,11 +49,11 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
         this.yourPosts = yourPosts;
     }
 
-    public Set<Mention> getYourMentions() {
+    public Set<MentionDtO> getYourMentions() {
         return yourMentions;
     }
 
-    public void setYourMentions(Set<Mention> yourMentions) {
+    public void setYourMentions(Set<MentionDtO> yourMentions) {
         this.yourMentions = yourMentions;
     }
 

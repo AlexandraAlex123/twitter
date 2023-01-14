@@ -1,10 +1,8 @@
 package org.example.twitterApp.controler.service.serviceClass;
 
 import org.example.twitterApp.controler.service.factory.ServiceFactory;
-import org.example.twitterApp.controler.service.factory.ValidateValueClass;
-import org.example.twitterApp.controler.service.factory.classFactory.UserFactoryInterface;
+import org.example.twitterApp.controler.service.factory.classFactory.FactoryInterface;
 import org.example.twitterApp.objectClassAndRepository.classDtO.RegisterUserDtO;
-import org.example.twitterApp.objectClassAndRepository.classDtO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.repository.RegisterUserRepository;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -79,7 +76,7 @@ public class RegisterUserService extends ServiceFactory {
             for (RegisterUser user : ruS) {
                 if ((user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase()).
                         contains(keyWord.toUpperCase())) {
-                    UserFactoryInterface uFi = create("ru");
+                    FactoryInterface uFi = create("ru");
                     RegisterUserDtO ruDtO = (RegisterUserDtO) uFi.convertToDTO(user);
                     ruSFind.add(ruDtO);
                 }

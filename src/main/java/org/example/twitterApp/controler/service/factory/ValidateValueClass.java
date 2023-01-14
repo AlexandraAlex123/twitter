@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 public class ValidateValueClass  {
 
@@ -91,11 +91,11 @@ public class ValidateValueClass  {
         tu.setPosts(posts);
     }
 
-    public void createAndSaveReply(Post p, String message, String userWhoReply) {
+    public void createAndSaveReply(Post post, String message, String userWhoReply) {
         Reply reply = new Reply(message, new Timestamp(System.currentTimeMillis()), false, userWhoReply);
-        List<Reply> replies = p.getReplies();
+        List<Reply> replies = post.getReplies();
         replies.add(reply);
-        p.setReplies(replies);
+        post.setReplies(replies);
     }
 
     public String getHash(String password) {

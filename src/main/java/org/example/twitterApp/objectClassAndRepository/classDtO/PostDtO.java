@@ -10,10 +10,10 @@ public class PostDtO implements Comparable<PostDtO> {
     String message;
     String createDate;
     boolean onlyMe;
-    Set<Reply> postReplies;
-    Set<Like> postLikes;
+    Set<ReplyDtO> postReplies;
+    Set<LikeDtO> postLikes;
 
-    public PostDtO(String message, String createDate, boolean onlyMe, Set<Reply> postReplies, Set<Like> postLikes) {
+    public PostDtO(String message, String createDate, boolean onlyMe, Set<ReplyDtO> postReplies, Set<LikeDtO> postLikes) {
         this.message = message;
         this.createDate = createDate;
         this.onlyMe = onlyMe;
@@ -48,19 +48,19 @@ public class PostDtO implements Comparable<PostDtO> {
         this.onlyMe = onlyMe;
     }
 
-    public Set<Reply> getPostReplies() {
+    public Set<ReplyDtO> getPostReplies() {
         return postReplies;
     }
 
-    public void setPostReplies(Set<Reply> postReplies) {
+    public void setPostReplies(Set<ReplyDtO> postReplies) {
         this.postReplies = postReplies;
     }
 
-    public Set<Like> getPostLikes() {
+    public Set<LikeDtO> getPostLikes() {
         return postLikes;
     }
 
-    public void setPostLikes(Set<Like> postLikes) {
+    public void setPostLikes(Set<LikeDtO> postLikes) {
         this.postLikes = postLikes;
     }
 

@@ -20,7 +20,7 @@ public class Reply extends PostedMessages {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "posts_id", referencedColumnName = "id")
-    private Set<Like> likes;
+    private List<Like> likes;
 
 
     public Reply(String message, Timestamp date, Boolean onlyMe, String userWhoReply) {
@@ -47,11 +47,11 @@ public class Reply extends PostedMessages {
         this.replies = replies;
     }
 
-    public Set<Like> getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(Set<Like> likes) {
+    public void setLikes(List<Like> likes) {
         this.likes = likes;
     }
 
