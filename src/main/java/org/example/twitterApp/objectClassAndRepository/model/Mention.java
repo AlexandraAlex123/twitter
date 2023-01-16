@@ -15,24 +15,24 @@ public class Mention {
     @Column(name = "mention_id")
     private Long mentionId;
 
-    @Column(name = "user_who_mention")
-    private String userWhoMention;
-
     @Column(name = "time_mention")
     private Timestamp createDate;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_mentioning")
+    private TwitterUser userMentioning;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "user_mention")
+    private TwitterUser userMention;
 
     @OneToOne
-    @JoinColumn(name = "posts_id", insertable = false, updatable = false)
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @OneToOne
-    @JoinColumn(name = "posts_id", insertable = false, updatable = false)
+    @JoinColumn(name = "reply_id")
     private Reply reply;
 
-    public Mention(String userWhoMention, Timestamp createDate) {
-        this.userWhoMention = userWhoMention;
-        this.createDate = createDate;
-    }
 
     public Mention() {
     }
@@ -45,12 +45,12 @@ public class Mention {
         this.mentionId = mentionId;
     }
 
-    public String getUserWhoMention() {
-        return userWhoMention;
+    public TwitterUser getUserMentioning() {
+        return userMentioning;
     }
 
-    public void setUserWhoMention(String userWhoMention) {
-        this.userWhoMention = userWhoMention;
+    public void setUserMentioning(TwitterUser userMentioning) {
+        this.userMentioning = userMentioning;
     }
 
     public Timestamp getCreateDate() {
@@ -77,12 +77,21 @@ public class Mention {
         this.reply = reply;
     }
 
+    public TwitterUser getUserMention() {
+        return userMention;
+    }
+
+    public void setUserMention(TwitterUser userMention) {
+        this.userMention = userMention;
+    }
+
     @Override
     public String toString() {
         return "Mention{" +
                 "mentionId=" + mentionId +
-                ", userWhoMention='" + userWhoMention + '\'' +
                 ", createDate=" + createDate +
+                ", userMentioning=" + userMentioning +
+                ", userMention=" + userMention +
                 ", post=" + post +
                 ", reply=" + reply +
                 '}';

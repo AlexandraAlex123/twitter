@@ -26,15 +26,8 @@ public class RegisterUser implements Comparable<RegisterUser>{
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account")
-    private TwitterUser twitterUser;
+    private TwitterUser account;
 
-
-    public RegisterUser(String firstName, String lastName, String email, Timestamp createDate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.createDate = createDate;
-    }
 
     public RegisterUser() {
     }
@@ -79,12 +72,12 @@ public class RegisterUser implements Comparable<RegisterUser>{
         this.createDate = createDate;
     }
 
-    public TwitterUser getTwitterUser() {
-        return twitterUser;
+    public TwitterUser getAccount() {
+        return account;
     }
 
-    public void setTwitterUser(TwitterUser twitterUser) {
-        this.twitterUser = twitterUser;
+    public void setAccount(TwitterUser account) {
+        this.account = account;
     }
 
     @Override
@@ -100,7 +93,7 @@ public class RegisterUser implements Comparable<RegisterUser>{
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", createDate=" + createDate +
-                ", twitterUser=" + twitterUser +
+                ", twitterUser=" + account +
                 '}';
     }
 }

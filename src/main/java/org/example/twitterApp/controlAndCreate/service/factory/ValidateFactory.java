@@ -1,12 +1,11 @@
 package org.example.twitterApp.controlAndCreate.service.factory;
 
-import org.example.twitterApp.controlAndCreate.service.RegisterUserService;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
+import org.example.twitterApp.objectClassAndRepository.model.Mention;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.security.MessageDigest;
@@ -63,25 +62,58 @@ public class ValidateFactory extends CreateFactory {
     }
 
 
-    public void createAndSaveFollow(TwitterUser tu, String usernameFollow) {
-        List<Follow> follows = tu.getFollows();
-        Follow follow = new Follow(usernameFollow, new Timestamp(System.currentTimeMillis()));
+    public void createAndSaveFollow(TwitterUser userFollowing, TwitterUser userFollow) {
+        List<Follow> follows = userFollowing.getFollows();
+        Follow follow = new Follow();
+        follow.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        follow.setUserFollow(userFollow);
+        follow.setUserFollowing(userFollowing);
         follows.add(follow);
-        tu.setFollows(follows);
+        userFollowing.setFollows(follows);
     }
 
     public void createAndSavePost(TwitterUser tu, String message) {
-        Post post = new Post(message, new Timestamp(System.currentTimeMillis()), false);
+        Post post = new Post();
+        post.setMessage(message);
+        post.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        post.setOnlyMe(false);
+        post.setUserWhoPost(tu);
         List<Post> posts = tu.getPosts();
         posts.add(post);
         tu.setPosts(posts);
     }
 
-    public void createAndSaveReply(Post post, String message, String userWhoReply) {
-        Reply reply = new Reply(message, new Timestamp(System.currentTimeMillis()), false, userWhoReply);
+    public void createAndSaveReply(Post post, String message, TwitterUser userWhoPost) {
+        Reply reply = new Reply();
+        reply.setMessage(message);
+        reply.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        reply.setOnlyMe(false);
+        reply.setUserWhoPost(userWhoPost);
         List<Reply> replies = post.getReplies();
         replies.add(reply);
         post.setReplies(replies);
+    }
+
+    public void createAndSaveMention(Post post, TwitterUser userMention, TwitterUser userMentioning) {
+        Mention mention = new Mention();
+        mention.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        mention.setUserMention(userMention);
+        mention.setUserMentioning(userMentioning);
+        mention.setPost(post);
+        List<Mention> mentions = userMention.getMentions();
+        mentions.add(mention);
+        userMention.setMentions(mentions);
+    }
+
+    public void createAndSaveMention(Reply reply, TwitterUser userMention, TwitterUser userMentioning) {
+        Mention mention = new Mention();
+        mention.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        mention.setUserMention(userMention);
+        mention.setUserMentioning(userMentioning);
+        mention.setReply(reply);
+        List<Mention> mentions = userMention.getMentions();
+        mentions.add(mention);
+        userMention.setMentions(mentions);
     }
 
     public String getHash(String password) {

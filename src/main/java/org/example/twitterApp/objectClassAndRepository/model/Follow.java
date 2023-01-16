@@ -1,6 +1,5 @@
 package org.example.twitterApp.objectClassAndRepository.model;
 
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -13,27 +12,21 @@ public class Follow implements Comparable<Follow> {
     @Column(name = "follow_id")
     private Long followId;
 
-    @Column(name = "user_followed")
-    private String usernameFollowed;
-
     @Column(name = "start_follow")
     private Timestamp createDate;
 
-    public Follow(String usernameFollowed, Timestamp createDate) {
-        this.usernameFollowed = usernameFollowed;
-        this.createDate = createDate;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_follow")
+    private TwitterUser userFollow;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_following")
+    private TwitterUser userFollowing;
+
 
     public Follow() {
     }
 
-    public String getUsernameFollowed() {
-        return usernameFollowed;
-    }
-
-    public void setUsernameFollowed(String usernameFollowed) {
-        this.usernameFollowed = usernameFollowed;
-    }
 
     public Long getFollowId() {
         return followId;
@@ -51,12 +44,30 @@ public class Follow implements Comparable<Follow> {
         this.createDate = createDate;
     }
 
+    public TwitterUser getUserFollow() {
+        return userFollow;
+    }
+
+    public void setUserFollow(TwitterUser userFollow) {
+        this.userFollow = userFollow;
+    }
+
+    public TwitterUser getUserFollowing() {
+        return userFollowing;
+    }
+
+    public void setUserFollowing(TwitterUser userFollowing) {
+        this.userFollowing = userFollowing;
+    }
+
+
     @Override
     public String toString() {
         return "Follow{" +
                 "followId=" + followId +
-                ", usernameFollowed='" + usernameFollowed + '\'' +
                 ", createDate=" + createDate +
+                ", userFollow=" + userFollow +
+                ", userFollowing=" + userFollowing +
                 '}';
     }
 

@@ -1,8 +1,12 @@
 package org.example.twitterApp.controlAndCreate.service;
 
 import org.example.twitterApp.controlAndCreate.service.factory.ValidateFactory;
+import org.example.twitterApp.objectClassAndRepository.model.Follow;
+import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
+import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOMention;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +23,48 @@ import java.util.TreeSet;
 @Transactional
 public class PostService extends ValidateFactory {
 
-    @Autowired
-    private RegisterUserService rus;
-    @Autowired
-    private PostRepository pR;
+    private final TwitterUserService tus;
 
+    @Autowired
+    private final PostRepository pR;
 
-    public Set<PostDtO> searchOnlyUserPosts(String username) {
-        if (rus.validUsername(username)) {
-            List<Post> posts = pR.findAllByUsername(username);
-            return getListPostsDTO(posts);
-        }
-        return null;
+    public PostService(TwitterUserService tus, PostRepository pR) {
+        this.tus = tus;
+        this.pR = pR;
     }
 
-    public Set<PostDTOFeed> searchFeedPosts(String username){
-        if (rus.validUsername(username)) {
+    public Set<PostDtO> searchOnlyUserPosts(String username) {
+        Set<PostDtO> postDTOs = new TreeSet<>();
+        if (tus.validUsername(username)) {
             List<Post> posts = pR.findAllByUsername(username);
-            return getListPostsDTOF(posts);
+            postDTOs = getListPostsDTO(posts);
+            return postDTOs;
         }
-        return null;
+        return postDTOs;
+    }
+
+    public Set<PostDTOFeed> getFollowsPosts(String username) {
+        Set<PostDTOFeed> allFollowPost = new TreeSet<>();
+        if (tus.validUsername(username)) {
+            TwitterUser tu = tus.getUserByUsername(username);
+            List<Follow> follows = tu.getFollows();
+            for (Follow f : follows) {
+                Set<PostDTOFeed> followPosts = searchFeedPosts(f.getUserFollow().getUsername());
+                allFollowPost.addAll(followPosts);
+            }
+            return allFollowPost;
+        }
+        return allFollowPost;
+    }
+
+    public Set<PostDTOFeed> searchFeedPosts(String username) {
+        Set<PostDTOFeed> postsDTOFeed = new TreeSet<>();
+        if (tus.validUsername(username)) {
+            List<Post> posts = pR.findAllByUsername(username);
+            postsDTOFeed = getListPostsDTOF(posts);
+            return postsDTOFeed;
+        }
+        return postsDTOFeed;
     }
 
     public Set<PostDtO> filterPostsByDate(Set<PostDtO> postDTOs, Timestamp ts, Timestamp ts2) {
@@ -54,11 +80,11 @@ public class PostService extends ValidateFactory {
         return null;
     }
 
-    public String addAReplyPost(Long id, String message, String userWhoReply) {
-        if (id != null && !message.isEmpty() && !userWhoReply.isEmpty()) {
-            if (!message.equals(" ") && checkStringTu(userWhoReply)) {
+    public String addReplyPost(Long id, String message, String userWhoPost) {
+        if (id != null && !message.isEmpty() && !userWhoPost.isEmpty()) {
+            if (!message.equals(" ") && checkStringTu(userWhoPost)) {
                 Post post = pR.findPostById(id);
-                createAndSaveReply(post, message, userWhoReply);
+                createAndSaveReply(post, message, tus.getUserByUsername(userWhoPost));
                 return "Comment add";
             } else {
                 return "Invalid command";
@@ -67,12 +93,33 @@ public class PostService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public Set<PostDtO> getMentionsPosts(String userMentioned) {
-        if (rus.validUsername(userMentioned)) {
-            List<Post> posts = pR.findMentionPosts(userMentioned);
-            return getListPostsDTO(posts);
+//    public String addMention(Long idPost, String userMention, String userMentioning) {
+//        if (idPost != null && !userMention.isEmpty() && !userMentioning.isEmpty()) {
+//            if (checkStringTu(userMention) && checkStringTu(userMentioning)) {
+//                if (tus.usernameExists(userMention) && tus.usernameExists(userMentioning)) {
+//                    Post post = pR.findPostById(idPost);
+//                    if (post != null) {
+//                        createAndSaveMention(post, tus.getUserByUsername(userMention), tus.getUserByUsername(userMentioning));
+//                        return userMentioning + " mention " + userMention + " in a post";
+//                    }else if()
+//                }
+//            }
+//        }
+//    }
+
+    public Set<PostDTOMention> getMentionsPosts(String userMention, String userMentioning) {
+        Set<PostDTOMention> postDTOMs = new TreeSet<>();
+        if (tus.validUsername(userMention) && tus.validUsername(userMentioning)) {
+            List<Post> posts = pR.findMentionPosts(userMention);
+            for (Post p : posts) {
+                if (p.getMentions().get(0).getUserMention().getUsername().equals(userMention) && p.getMentions().get(0).getUserMentioning().getUsername().equals(userMentioning)) {
+                    PostDTOMention postDTOM = createPostMentionDTO(p);
+                    postDTOMs.add(postDTOM);
+                }
+            }
+            return postDTOMs;
         }
-        return null;
+        return postDTOMs;
     }
 
 }

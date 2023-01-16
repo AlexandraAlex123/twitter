@@ -7,10 +7,9 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
 
     String account;
     String createDate;
-    private Set<FollowDtO> yourFollows;
-    private Set<PostDtO> yourPosts;
-    private Set<MentionDtO> yourMentions;
-
+    Set<PostDtO> yourPosts;
+    Set<FollowDtO> yourFollows;
+    Set<MentionDtO> yourMentions;
 
     public TwitterUserDtO() {
     }
@@ -63,10 +62,11 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
     @Override
     public String toString() {
         return "TwitterUserDtO{" +
-                "username='" + account + '\'' +
+                "account='" + account + '\'' +
                 ", createDate='" + createDate + '\'' +
-                ", yourFollows=" + yourFollows +
                 ", yourPosts=" + yourPosts +
+                ", yourFollows=" + yourFollows +
+                ", yourMentions=" + yourMentions +
                 '}';
     }
 }

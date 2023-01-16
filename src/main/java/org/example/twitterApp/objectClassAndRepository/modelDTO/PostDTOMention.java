@@ -2,17 +2,27 @@ package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
 public class PostDTOMention implements Comparable<PostDTOMention>{
 
+    String postBy;
     String message;
     String createDate;
     boolean onlyMe;
 
-    public PostDTOMention(String message, String createDate, boolean onlyMe) {
+    public PostDTOMention(String postBy, String message, String createDate, boolean onlyMe) {
+        this.postBy = postBy;
         this.message = message;
         this.createDate = createDate;
         this.onlyMe = onlyMe;
     }
 
     public PostDTOMention() {
+    }
+
+    public String getPostBy() {
+        return postBy;
+    }
+
+    public void setPostBy(String postBy) {
+        this.postBy = postBy;
     }
 
     public String getMessage() {
@@ -42,7 +52,8 @@ public class PostDTOMention implements Comparable<PostDTOMention>{
     @Override
     public String toString() {
         return "PostDTOMention{" +
-                "message='" + message + '\'' +
+                "postBy='" + postBy + '\'' +
+                ", message='" + message + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", onlyMe=" + onlyMe +
                 '}';

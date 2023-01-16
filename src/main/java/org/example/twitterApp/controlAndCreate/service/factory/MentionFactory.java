@@ -9,7 +9,7 @@ public class MentionFactory extends ValidateFactory implements Factory {
     public Object convertToDTO(Object o) {
         Mention mention = (Mention) o;
         MentionDtO mentionDTO = new MentionDtO();
-        mentionDTO.setUserHwoMention(mention.getUserWhoMention());
+        mentionDTO.setUserHwoMention(mention.getUserMentioning().getUsername());
         mentionDTO.setCreateDate(getDateAndTime(mention.getCreateDate()));
         mentionDTO.setPostDTOMention(createPostMentionDTO(mention.getPost()));
         return mentionDTO;

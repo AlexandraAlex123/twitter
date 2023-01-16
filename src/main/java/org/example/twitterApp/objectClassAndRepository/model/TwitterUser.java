@@ -6,7 +6,6 @@ import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table
@@ -22,24 +21,19 @@ public class TwitterUser implements Comparable<TwitterUser> {
     @Column(name = "create_date")
     private Timestamp createDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_who_follow", referencedColumnName = "username")
+    @Column(name = "last_login" )
+    private Timestamp lastLogin;
+
+    @OneToMany(mappedBy = "userFollowing", cascade = CascadeType.ALL)
     private List<Follow> follows;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_who_post", referencedColumnName = "username")
+    @OneToMany(mappedBy = "userWhoPost", cascade = CascadeType.ALL)
     private List<Post> posts;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_mentioned", referencedColumnName = "username")
+    @OneToMany(mappedBy = "userMention", cascade = CascadeType.ALL)
     public List<Mention> mentions;
 
-    public TwitterUser(String username, String password, Timestamp createDate) {
-        this.username = username;
-        this.password = password;
-        this.createDate = createDate;
-    }
 
     public TwitterUser() {
     }
@@ -66,6 +60,14 @@ public class TwitterUser implements Comparable<TwitterUser> {
 
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
+    }
+
+    public Timestamp getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Timestamp lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     public List<Follow> getFollows() {
@@ -103,6 +105,7 @@ public class TwitterUser implements Comparable<TwitterUser> {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", createDate=" + createDate +
+                ", lastLogin=" + lastLogin +
                 ", follows=" + follows +
                 ", posts=" + posts +
                 ", mentions=" + mentions +

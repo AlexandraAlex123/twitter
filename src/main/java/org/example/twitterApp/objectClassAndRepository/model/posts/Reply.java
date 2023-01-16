@@ -1,6 +1,8 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
 import org.example.twitterApp.objectClassAndRepository.model.Like;
+import org.example.twitterApp.objectClassAndRepository.model.Mention;
+import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,8 +13,6 @@ import java.util.Set;
 @Table
 public class Reply extends PostedMessages {
 
-    @Column(name = "user_who_reply", length = 300)
-    private String userWhoReply;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "reply_id", referencedColumnName = "id")
@@ -22,22 +22,15 @@ public class Reply extends PostedMessages {
     @JoinColumn(name = "reply_id", referencedColumnName = "id")
     private List<Like> likes;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reply_id", referencedColumnName = "id")
+    private List<Mention> mentions;
 
-    public Reply(String message, Timestamp date, Boolean onlyMe, String userWhoReply) {
-        super(message, date, onlyMe);
-        this.userWhoReply = userWhoReply;
-    }
+
 
     public Reply() {
     }
 
-    public String getUserWhoReply() {
-        return userWhoReply;
-    }
-
-    public void setUserWhoReply(String userWhoReply) {
-        this.userWhoReply = userWhoReply;
-    }
 
     public List<Reply> getReplies() {
         return replies;
@@ -55,13 +48,20 @@ public class Reply extends PostedMessages {
         this.likes = likes;
     }
 
-    @Override
-    public String toString() {
-        return "Reply{" +
-                "userWhoReply='" + userWhoReply + '\'' +
-                ", replies=" + replies +
-                ", likes=" + likes +
-                "} " + super.toString();
+    public List<Mention> getMentions() {
+        return mentions;
     }
 
+    public void setMentions(List<Mention> mentions) {
+        this.mentions = mentions;
+    }
+
+    @Override
+    public String toString() {
+        return "Reply{" + super.toString() +
+                "replies=" + replies +
+                ", likes=" + likes +
+                ", mentions=" + mentions +
+                "} ";
+    }
 }

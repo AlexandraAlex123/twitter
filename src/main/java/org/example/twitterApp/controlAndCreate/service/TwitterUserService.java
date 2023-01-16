@@ -4,8 +4,6 @@ import org.example.twitterApp.controlAndCreate.service.factory.Factory;
 import org.example.twitterApp.controlAndCreate.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.TwitterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +20,16 @@ import java.util.TreeSet;
 public class TwitterUserService extends ValidateFactory {
 
     @Autowired
-    private FollowService fs;
-
-    @Autowired
-    private PostService ps;
-    @Autowired
-    private RegisterUserService rus;
-
-    @Autowired
     private TwitterUserRepository tUr;
 
 
     public String login(String username, String password) {
         if (!username.isEmpty() && !password.isEmpty()) {
             if (checkStringTu(username) && checkStringTu(password)) {
-                if (tUr.matchLogin(username, password) != null) {
+                TwitterUser tu = tUr.findAccountByUsernameAndPassword(username, password);
+                if (tu != null) {
+                    tu.setLastLogin(new Timestamp(System.currentTimeMillis()));
+                    tUr.save(tu);
                     return "Login successful!";
                 } else {
                     return "Username and password doesn't match";
@@ -68,7 +61,7 @@ public class TwitterUserService extends ValidateFactory {
     public String addAPost(String username, String message) {
         if (!username.isEmpty() && !message.isEmpty()) {
             if (checkStringTu(username) && !message.equals(" ")) {
-                if (rus.usernameExists(username)) {
+                if (usernameExists(username)) {
                     TwitterUser tu = tUr.findByUsername(username);
                     createAndSavePost(tu, message);
                     return "Post uploaded";
@@ -83,16 +76,15 @@ public class TwitterUserService extends ValidateFactory {
     }
 
 
-    public String whoYouFollow(String usernameWhoFollow, String usernameFollow) {
-        if (!usernameWhoFollow.isEmpty() && !usernameFollow.isEmpty()) {
-            if (checkStringTu(usernameWhoFollow) && checkStringTu(usernameFollow)) {
-                if (rus.usernameExists(usernameWhoFollow) && rus.usernameExists(usernameFollow)) {
-                    TwitterUser tu = tUr.findByUsername(usernameWhoFollow);
-                    if(!fs.alreadyFollow(usernameFollow)) {
-                        createAndSaveFollow(tu, usernameFollow);
-                        return "You fallow " + usernameFollow;
-                    }else{
-                        return "You already follow " + usernameFollow;
+    public String whoYouFollow(String userFollowing, String userFollow) {
+        if (!userFollowing.isEmpty() && !userFollow.isEmpty()) {
+            if (checkStringTu(userFollowing) && checkStringTu(userFollow)) {
+                if (usernameExists(userFollowing) && usernameExists(userFollow)) {
+                    if (!alreadyFollow(userFollowing, userFollow)) {
+                        createAndSaveFollow(getUserByUsername(userFollowing), getUserByUsername(userFollow));
+                        return "You fallow " + userFollow;
+                    } else {
+                        return "You already follow " + userFollow;
                     }
                 } else {
                     return "User not found";
@@ -104,19 +96,21 @@ public class TwitterUserService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public Set<PostDTOFeed> getFollowsPosts(String username) {
-        Set<PostDTOFeed> allFollowPost = new TreeSet<>();
-        if (rus.validUsername(username)) {
-            TwitterUser tu = tUr.findByUsername(username);
-            List<Follow> follows = tu.getFollows();
-            for (Follow f : follows) {
-                String follow = f.getUsernameFollowed();
-                Set<PostDTOFeed> followPosts = ps.searchFeedPosts(follow);
-                allFollowPost.addAll(followPosts);
-            }
-            return allFollowPost;
-        }
-        return allFollowPost;
+
+    public TwitterUser getUserByUsername(String username) {
+        return tUr.findByUsername(username);
     }
 
+    public boolean usernameExists(String username) {
+        return tUr.findByUsername(username) != null;
+    }
+
+    public boolean validUsername(String username) {
+        return !username.isEmpty() && checkStringTu(username) && usernameExists(username);
+    }
+
+    private boolean alreadyFollow(String userFollowing, String userFollow) {
+        TwitterUser tuFollowing = getUserByUsername(userFollowing);
+        return tuFollowing.getFollows().get(0).getUserFollow().getUsername().equals(userFollow);
+    }
 }

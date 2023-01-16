@@ -47,7 +47,7 @@ public class RegisterUserService extends ValidateFactory {
                     RegisterUser ru = rUr.findUserByEmail(email);
                     if (!usernameExists(tu.getUsername())) {
                         tu.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                        ru.setTwitterUser(tu);
+                        ru.setAccount(tu);
                         rUr.save(ru);
                         return "Account created";
                     } else {
@@ -81,15 +81,13 @@ public class RegisterUserService extends ValidateFactory {
     }
 
     public boolean usernameExists(String username) {
-        return rUr.findUserByUsername(username) != null;
+        return rUr.findUserByUsername(username);
     }
 
     public boolean emailExists(String email) {
         return rUr.findUserByEmail(email) != null;
     }
 
-    public boolean validUsername(String username) {
-        return !username.isEmpty() && checkStringTu(username) && usernameExists(username);
-    }
+
 
 }

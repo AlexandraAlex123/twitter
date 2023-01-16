@@ -9,7 +9,7 @@ public class FollowFactory extends ValidateFactory implements Factory {
     public Object convertToDTO(Object o) {
         Follow follow = (Follow) o;
         FollowDtO followDTO = new FollowDtO();
-        followDTO.setUsernameFollow(follow.getUsernameFollowed());
+        followDTO.setUsernameFollow(follow.getUserFollow().getUsername());
         followDTO.setCreateDate(getDateAndTime(follow.getCreateDate()));
         return followDTO;
     }

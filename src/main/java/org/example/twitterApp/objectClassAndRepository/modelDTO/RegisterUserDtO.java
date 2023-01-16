@@ -4,15 +4,14 @@ public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
 
     String firstName;
     String lastName;
-    String account;
     String createDate;
+    String account;
 
-
-    public RegisterUserDtO(String firstName, String lastName, String account, String createDate) {
+    public RegisterUserDtO(String firstName, String lastName, String createDate, String account) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.account = account;
         this.createDate = createDate;
+        this.account = account;
     }
 
     public RegisterUserDtO() {
@@ -66,8 +65,8 @@ public class RegisterUserDtO implements Comparable<RegisterUserDtO> {
         return "RegisterUserDtO{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", account='" + account + '\'' +
                 ", createDate='" + createDate + '\'' +
+                ", account='" + account + '\'' +
                 '}';
     }
 }

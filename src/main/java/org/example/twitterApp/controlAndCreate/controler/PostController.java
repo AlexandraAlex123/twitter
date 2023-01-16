@@ -1,9 +1,14 @@
 package org.example.twitterApp.controlAndCreate.controler;
 
 import org.example.twitterApp.controlAndCreate.service.PostService;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOMention;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.util.Set;
@@ -13,6 +18,7 @@ public class PostController {
 
     @Autowired
     private PostService pS;
+
 
     @GetMapping(path = "/searchUserPosts")
     public Set<PostDtO> searchUserPosts(@RequestParam String username) {
@@ -26,11 +32,17 @@ public class PostController {
 
     @PutMapping(path = "/leaveComment")
     public String addAReply(@RequestParam Long id, @RequestParam String message, @RequestParam String userWhoReply) {
-        return pS.addAReplyPost(id, message, userWhoReply);
+        return pS.addReplyPost(id, message, userWhoReply);
     }
 
     @GetMapping(path = "/getMentionsPosts")
-    public Set<PostDtO> getMentionsPosts (@RequestParam String userMentioned){
-        return pS.getMentionsPosts(userMentioned);
+    public Set<PostDTOMention> getMentionsPosts (@RequestParam String userMentioned, @RequestParam String userMentioning){
+        return pS.getMentionsPosts(userMentioned, userMentioning);
     }
+
+    @GetMapping(path = "/getFeeds")
+    public Set<PostDTOFeed> getFeeds(@RequestParam String username) {
+        return pS.getFollowsPosts(username);
+    }
+
 }

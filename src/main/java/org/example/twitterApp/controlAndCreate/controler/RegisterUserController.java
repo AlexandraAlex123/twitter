@@ -1,13 +1,12 @@
 package org.example.twitterApp.controlAndCreate.controler;
 
-import org.example.twitterApp.objectClassAndRepository.modelDTO.RegisterUserDtO;
 import org.example.twitterApp.controlAndCreate.service.RegisterUserService;
-import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
+import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.RegisterUserDtO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
@@ -17,7 +16,7 @@ public class RegisterUserController {
     private RegisterUserService rUs;
 
     @PostMapping(path = "/singUp")
-    public String singUp(@Valid @RequestBody RegisterUser ru) {
+    public String singUp(@RequestBody RegisterUser ru) {
         return rUs.singUp(ru);
     }
 

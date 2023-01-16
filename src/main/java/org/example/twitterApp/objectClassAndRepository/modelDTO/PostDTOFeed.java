@@ -1,18 +1,20 @@
 package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
+import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
+
 import java.util.Set;
 
 public class PostDTOFeed implements Comparable<PostDTOFeed> {
 
-    String userWhoPost;
+    String postBy;
     String message;
     String createDate;
     boolean onlyMe;
-    Set<ReplyDtO> postReplies;
+    Set<PostDTOFeed> postReplies;
     Set<LikeDtO> postLikes;
 
-    public PostDTOFeed(String userWhoPost, String message, String createDate, boolean onlyMe, Set<ReplyDtO> postReplies, Set<LikeDtO> postLikes) {
-        this.userWhoPost = userWhoPost;
+    public PostDTOFeed(String postBy, String message, String createDate, boolean onlyMe, Set<PostDTOFeed> postReplies, Set<LikeDtO> postLikes) {
+        this.postBy = postBy;
         this.message = message;
         this.createDate = createDate;
         this.onlyMe = onlyMe;
@@ -23,12 +25,12 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
     public PostDTOFeed() {
     }
 
-    public String getUserWhoPost() {
-        return userWhoPost;
+    public String getPostBy() {
+        return postBy;
     }
 
-    public void setUserWhoPost(String userWhoPost) {
-        this.userWhoPost = userWhoPost;
+    public void setPostBy(String postBy) {
+        this.postBy = postBy;
     }
 
     public String getMessage() {
@@ -55,11 +57,11 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
         this.onlyMe = onlyMe;
     }
 
-    public Set<ReplyDtO> getPostReplies() {
+    public Set<PostDTOFeed> getPostReplies() {
         return postReplies;
     }
 
-    public void setPostReplies(Set<ReplyDtO> postReplies) {
+    public void setPostReplies(Set<PostDTOFeed> postReplies) {
         this.postReplies = postReplies;
     }
 
@@ -80,7 +82,7 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
     @Override
     public String toString() {
         return "PostDTOFeed{" +
-                "userWhoPost='" + userWhoPost + '\'' +
+                "postBy='" + postBy + '\'' +
                 ", message='" + message + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", onlyMe=" + onlyMe +

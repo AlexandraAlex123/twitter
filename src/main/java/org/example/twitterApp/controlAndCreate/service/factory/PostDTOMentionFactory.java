@@ -11,6 +11,7 @@ public class PostDTOMentionFactory extends ValidateFactory implements Factory {
         if (o instanceof Post) {
             Post post = (Post) o;
             PostDTOMention postDTOM = new PostDTOMention();
+            postDTOM.setPostBy(postDTOM.getPostBy());
             postDTOM.setMessage(post.getMessage());
             postDTOM.setCreateDate(getDateAndTime(post.getCreateDate()));
             postDTOM.setOnlyMe(post.getOnlyMe());
@@ -18,6 +19,7 @@ public class PostDTOMentionFactory extends ValidateFactory implements Factory {
         } else if (o instanceof Reply) {
             Reply reply = (Reply) o;
             PostDTOMention postDTOM = new PostDTOMention();
+            postDTOM.setPostBy(postDTOM.getPostBy());
             postDTOM.setMessage(reply.getMessage());
             postDTOM.setCreateDate(getDateAndTime(reply.getCreateDate()));
             postDTOM.setOnlyMe(reply.getOnlyMe());

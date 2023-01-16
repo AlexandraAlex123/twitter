@@ -9,7 +9,7 @@ public class LikeFactory extends ValidateFactory implements Factory {
     public Object convertToDTO(Object o) {
         Like like = (Like) o;
         LikeDtO likeDTO = new LikeDtO();
-        likeDTO.setWhoGivesLike(like.getWhoGivesLike());
+        likeDTO.setWhoGivesLike(like.getWhoGivesLike().getUsername());
         likeDTO.setCreateDate(getDateAndTime(like.getCreateDate()));
         return likeDTO;
     }

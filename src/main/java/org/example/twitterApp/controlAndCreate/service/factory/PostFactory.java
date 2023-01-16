@@ -18,7 +18,7 @@ public class PostFactory extends ValidateFactory implements Factory {
             postDTO.setPostLikes(null);
         }
         if (post.getReplies() != null) {
-            postDTO.setPostReplies(getListRepliesDTO(post.getReplies()));
+            postDTO.setPostReplies(getListRepliesDTOF(post.getReplies()));
         } else {
             postDTO.setPostReplies(null);
         }

@@ -7,12 +7,15 @@ public class RegisterUserFactory extends ValidateFactory implements Factory {
 
     @Override
     public RegisterUserDtO convertToDTO(Object o) {
-        RegisterUserDtO ruDTO;
         RegisterUser ru = (RegisterUser) o;
-        if (ru.getTwitterUser() != null) {
-            ruDTO = new RegisterUserDtO(ru.getFirstName(), ru.getLastName(), ru.getTwitterUser().getUsername(), getDateAndTime(ru.getCreateDate()));
+        RegisterUserDtO ruDTO = new RegisterUserDtO();
+        ruDTO.setFirstName(ru.getFirstName());
+        ruDTO.setLastName(ru.getLastName());
+        ruDTO.setCreateDate(getDateAndTime(ru.getCreateDate()));
+        if (ru.getAccount() != null) {
+            ruDTO.setAccount(ru.getAccount().getUsername());
         } else {
-            ruDTO = new RegisterUserDtO(ru.getFirstName(), ru.getLastName(), "Not created", getDateAndTime(ru.getCreateDate()));
+            ruDTO.setAccount("Not created");
         }
         return ruDTO;
     }

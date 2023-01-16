@@ -1,5 +1,7 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
+import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -21,14 +23,12 @@ public class PostedMessages implements Comparable<PostedMessages> {
     @Column(name = "not_public")
     private Boolean onlyMe;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_who_post")
+    private TwitterUser userWhoPost;
+
 
     public PostedMessages() {
-    }
-
-    public PostedMessages(String message, Timestamp createDate, Boolean onlyMe) {
-        this.message = message;
-        this.createDate = createDate;
-        this.onlyMe = onlyMe;
     }
 
     public Long getId() {
@@ -63,6 +63,15 @@ public class PostedMessages implements Comparable<PostedMessages> {
         this.onlyMe = onlyMe;
     }
 
+    public TwitterUser getUserWhoPost() {
+        return userWhoPost;
+    }
+
+    public void setUserWhoPost(TwitterUser userWhoPost) {
+        this.userWhoPost = userWhoPost;
+    }
+
+
     @Override
     public int compareTo(PostedMessages o) {
         return this.createDate.compareTo(o.getCreateDate());
@@ -70,12 +79,10 @@ public class PostedMessages implements Comparable<PostedMessages> {
 
     @Override
     public String toString() {
-        return "PostedMessages{" +
-                "id=" + id +
+        return "id=" + id +
                 ", message='" + message + '\'' +
                 ", createDate=" + createDate +
                 ", onlyMe=" + onlyMe +
-                '}';
+                ", userWhoPost=" + userWhoPost;
     }
-
 }
