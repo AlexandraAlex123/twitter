@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static java.util.Objects.isNull;
+
 @Service
 @Transactional
 public class RegisterUserService extends ValidateFactory {
@@ -81,13 +83,15 @@ public class RegisterUserService extends ValidateFactory {
     }
 
     public boolean usernameExists(String username) {
-        return rUr.findUserByUsername(username);
+        if (isNull(rUr.findUserByUsername(username))) {
+            return false;
+        }
+        return true;
     }
 
     public boolean emailExists(String email) {
         return rUr.findUserByEmail(email) != null;
     }
-
 
 
 }

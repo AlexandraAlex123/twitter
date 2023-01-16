@@ -9,9 +9,9 @@ public class PostDTOFeedFactory extends ValidateFactory implements Factory {
 
     @Override
     public Object convertToDTO(Object o) {
+        PostDTOFeed postDTO = new PostDTOFeed();
         if (o instanceof Post) {
             Post post = (Post) o;
-            PostDTOFeed postDTO = new PostDTOFeed();
             postDTO.setPostBy(post.getUserWhoPost().getUsername());
             postDTO.setMessage(post.getMessage());
             postDTO.setCreateDate(getDateAndTime(post.getCreateDate()));
@@ -29,7 +29,6 @@ public class PostDTOFeedFactory extends ValidateFactory implements Factory {
             return postDTO;
         } else if (o instanceof Reply) {
             Reply reply = (Reply) o;
-            PostDTOFeed postDTO = new PostDTOFeed();
             postDTO.setPostBy(reply.getUserWhoPost().getUsername());
             postDTO.setMessage(reply.getMessage());
             postDTO.setCreateDate(getDateAndTime(reply.getCreateDate()));
@@ -46,6 +45,6 @@ public class PostDTOFeedFactory extends ValidateFactory implements Factory {
             }
             return postDTO;
         }
-        return null;
+        return postDTO;
     }
 }

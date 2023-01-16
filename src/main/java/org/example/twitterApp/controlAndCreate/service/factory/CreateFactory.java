@@ -1,11 +1,13 @@
 package org.example.twitterApp.controlAndCreate.service.factory;
 
-import org.example.twitterApp.objectClassAndRepository.modelDTO.*;
+
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
-import org.example.twitterApp.objectClassAndRepository.model.Like;
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
+import org.example.twitterApp.objectClassAndRepository.model.like.Like;
+import org.example.twitterApp.objectClassAndRepository.model.mention.Mention;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
+import org.example.twitterApp.objectClassAndRepository.model.posts.PostedMessages;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -97,11 +99,12 @@ public class CreateFactory {
         Set<LikeDtO> likeDTOs = new TreeSet<>();
         for (Like like : likes) {
             Factory uFi = create("like");
-            LikeDtO replyDTO = (LikeDtO) uFi.convertToDTO(like);
-            likeDTOs.add(replyDTO);
+            LikeDtO likeDTO = (LikeDtO) uFi.convertToDTO(like);
+            likeDTOs.add(likeDTO);
         }
         return likeDTOs;
     }
+
 
     public Set<MentionDtO> getListMentionsDTO(List<Mention> mentions) {
         Set<MentionDtO> mentionDtOS = new TreeSet<>();
@@ -114,9 +117,9 @@ public class CreateFactory {
     }
 
 
-    public PostDTOMention createPostMentionDTO(Post post) {
+    public PostDTOMention createPostMentionDTO(PostedMessages postedMessages) {
         Factory uFi = create("postM");
-        return (PostDTOMention) uFi.convertToDTO(post);
+        return (PostDTOMention) uFi.convertToDTO(postedMessages);
     }
 
 

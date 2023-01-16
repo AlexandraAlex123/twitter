@@ -1,9 +1,11 @@
 package org.example.twitterApp.controlAndCreate.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
+import org.example.twitterApp.objectClassAndRepository.model.mention.Mention;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
+import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 
@@ -95,24 +97,24 @@ public class ValidateFactory extends CreateFactory {
     }
 
     public void createAndSaveMention(Post post, TwitterUser userMention, TwitterUser userMentioning) {
-        Mention mention = new Mention();
-        mention.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        mention.setUserMention(userMention);
-        mention.setUserMentioning(userMentioning);
-        mention.setPost(post);
+        MentionPost mentionPost = new MentionPost();
+        mentionPost.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        mentionPost.setUserMention(userMention);
+        mentionPost.setUserMentioning(userMentioning);
+        mentionPost.setPost(post);
         List<Mention> mentions = userMention.getMentions();
-        mentions.add(mention);
+        mentions.add(mentionPost);
         userMention.setMentions(mentions);
     }
 
     public void createAndSaveMention(Reply reply, TwitterUser userMention, TwitterUser userMentioning) {
-        Mention mention = new Mention();
-        mention.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        mention.setUserMention(userMention);
-        mention.setUserMentioning(userMentioning);
-        mention.setReply(reply);
+        MentionReply mentionReply = new MentionReply();
+        mentionReply.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        mentionReply.setUserMention(userMention);
+        mentionReply.setUserMentioning(userMentioning);
+        mentionReply.setReply(reply);
         List<Mention> mentions = userMention.getMentions();
-        mentions.add(mention);
+        mentions.add(mentionReply);
         userMention.setMentions(mentions);
     }
 

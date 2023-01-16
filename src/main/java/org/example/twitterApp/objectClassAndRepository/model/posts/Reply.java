@@ -1,13 +1,10 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
-import org.example.twitterApp.objectClassAndRepository.model.Like;
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
-import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.model.like.Like;
+import org.example.twitterApp.objectClassAndRepository.model.mention.Mention;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table
@@ -27,10 +24,8 @@ public class Reply extends PostedMessages {
     private List<Mention> mentions;
 
 
-
     public Reply() {
     }
-
 
     public List<Reply> getReplies() {
         return replies;

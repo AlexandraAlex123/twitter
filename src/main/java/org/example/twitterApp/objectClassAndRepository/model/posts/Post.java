@@ -1,11 +1,9 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
-import org.example.twitterApp.objectClassAndRepository.model.Like;
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
-import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.model.like.Like;
+import org.example.twitterApp.objectClassAndRepository.model.mention.Mention;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -23,7 +21,6 @@ public class Post extends PostedMessages {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private List<Mention> mentions;
-
 
 
     public Post() {

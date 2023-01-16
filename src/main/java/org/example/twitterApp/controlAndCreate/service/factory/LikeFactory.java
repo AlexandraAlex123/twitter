@@ -1,16 +1,25 @@
 package org.example.twitterApp.controlAndCreate.service.factory;
 
+import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
+import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.LikeDtO;
-import org.example.twitterApp.objectClassAndRepository.model.Like;
 
 public class LikeFactory extends ValidateFactory implements Factory {
 
     @Override
     public Object convertToDTO(Object o) {
-        Like like = (Like) o;
         LikeDtO likeDTO = new LikeDtO();
-        likeDTO.setWhoGivesLike(like.getWhoGivesLike().getUsername());
-        likeDTO.setCreateDate(getDateAndTime(like.getCreateDate()));
+        if (o instanceof LikePost) {
+            LikePost likePost = (LikePost) o;
+            likeDTO.setWhoGivesLike(likePost.getWhoGivesLike().getUsername());
+            likeDTO.setCreateDate(getDateAndTime(likePost.getCreateDate()));
+            return likeDTO;
+        } else if (o instanceof LikeReply) {
+            LikeReply likeReply = (LikeReply) o;
+            likeDTO.setWhoGivesLike(likeReply.getWhoGivesLike().getUsername());
+            likeDTO.setCreateDate(getDateAndTime(likeReply.getCreateDate()));
+            return likeDTO;
+        }
         return likeDTO;
     }
 }

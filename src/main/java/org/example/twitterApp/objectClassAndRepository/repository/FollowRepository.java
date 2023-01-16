@@ -1,7 +1,6 @@
 package org.example.twitterApp.objectClassAndRepository.repository;
 
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
-import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
