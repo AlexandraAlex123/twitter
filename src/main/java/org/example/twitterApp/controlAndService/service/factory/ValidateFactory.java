@@ -70,6 +70,7 @@ public class ValidateFactory extends ConvertDTOFactory {
         return false;
     }
 
+
     public boolean alreadyMention(Reply reply, TwitterUser tuMention) {
         List<Mention> mentions = tuMention.getMentions();
         for (Mention mention : mentions) {

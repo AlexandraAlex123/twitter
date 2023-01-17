@@ -95,7 +95,6 @@ public class TwitterUserService extends ValidateFactory {
         return "Null parameter";
     }
 
-
     public TwitterUser getUserByUsername(String username) {
         return tUr.findByUsername(username);
     }
@@ -108,7 +107,7 @@ public class TwitterUserService extends ValidateFactory {
         return !username.isEmpty() && checkStringTu(username) && usernameExists(username);
     }
 
-    private boolean alreadyFollow(String userFollowing, String userFollow) {
+    public boolean alreadyFollow(String userFollowing, String userFollow) {
         TwitterUser tuFollowing = getUserByUsername(userFollowing);
         if (!tuFollowing.getFollows().isEmpty()) {
             return tuFollowing.getFollows().get(0).getUserFollow().equals(userFollow);
