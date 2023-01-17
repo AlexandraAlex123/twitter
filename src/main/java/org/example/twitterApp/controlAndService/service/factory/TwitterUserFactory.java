@@ -1,9 +1,9 @@
-package org.example.twitterApp.controlAndCreate.service.factory;
+package org.example.twitterApp.controlAndService.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 
-public class TwitterUserFactory extends ValidateFactory implements Factory {
+public class TwitterUserFactory extends ValidateFactory implements ConvertDTO {
 
     @Override
     public Object convertToDTO(Object o) {

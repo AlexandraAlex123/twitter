@@ -1,6 +1,6 @@
-package org.example.twitterApp.controlAndCreate.controler;
+package org.example.twitterApp.controlAndService.controler;
 
-import org.example.twitterApp.controlAndCreate.service.RegisterUserService;
+import org.example.twitterApp.controlAndService.service.RegisterUserService;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.RegisterUserDtO;
@@ -20,7 +20,7 @@ public class RegisterUserController {
         return rUs.singUp(ru);
     }
 
-    @PostMapping(path = "/createAccount")
+    @PutMapping(path = "/createAccount")
     public String createAccount(@RequestParam String email, @RequestBody TwitterUser tu) {
         return rUs.createAccount(email, tu);
     }

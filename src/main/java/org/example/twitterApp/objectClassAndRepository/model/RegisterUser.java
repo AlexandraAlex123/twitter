@@ -25,7 +25,7 @@ public class RegisterUser implements Comparable<RegisterUser>{
     private Timestamp createDate;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account")
+    @JoinColumn(name = "account", referencedColumnName = "username")
     private TwitterUser account;
 
 

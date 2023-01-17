@@ -10,23 +10,23 @@ public class LikePost extends Like {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
-    private Post postLiked;
+    private Post postLike;
 
     public LikePost() {
     }
 
-    public Post getPostLiked() {
-        return postLiked;
+    public Post getPostLike() {
+        return postLike;
     }
 
-    public void setPostLiked(Post postLiked) {
-        this.postLiked = postLiked;
+    public void setPostLike(Post postLike) {
+        this.postLike = postLike;
     }
 
     @Override
     public String toString() {
         return "LikePost{" + super.toString() +
-                "postLiked=" + postLiked +
+                "postLiked=" + postLike +
                 "} ";
     }
 }

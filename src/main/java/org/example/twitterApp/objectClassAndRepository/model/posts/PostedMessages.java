@@ -5,8 +5,8 @@ import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+
+@MappedSuperclass
 public class PostedMessages implements Comparable<PostedMessages> {
 
     @Id

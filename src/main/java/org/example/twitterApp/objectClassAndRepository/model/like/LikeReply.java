@@ -9,23 +9,23 @@ import javax.persistence.*;
 public class LikeReply extends Like{
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "reply_id")
-    private Reply replyLiked;
+    private Reply replyLike;
 
     public LikeReply() {
     }
 
-    public Reply getReplyLiked() {
-        return replyLiked;
+    public Reply getReplyLike() {
+        return replyLike;
     }
 
-    public void setReplyLiked(Reply replyLiked) {
-        this.replyLiked = replyLiked;
+    public void setReplyLike(Reply replyLike) {
+        this.replyLike = replyLike;
     }
 
     @Override
     public String toString() {
         return "LikeReply{" +super.toString() +
-                "replyLiked=" + replyLiked +
+                "replyLiked=" + replyLike +
                 "} ";
     }
 }

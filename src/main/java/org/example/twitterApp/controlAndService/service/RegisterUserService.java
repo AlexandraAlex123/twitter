@@ -1,7 +1,7 @@
-package org.example.twitterApp.controlAndCreate.service;
+package org.example.twitterApp.controlAndService.service;
 
-import org.example.twitterApp.controlAndCreate.service.factory.Factory;
-import org.example.twitterApp.controlAndCreate.service.factory.ValidateFactory;
+import org.example.twitterApp.controlAndService.service.factory.ConvertDTO;
+import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.RegisterUserDtO;
@@ -50,7 +50,6 @@ public class RegisterUserService extends ValidateFactory {
                     if (!usernameExists(tu.getUsername())) {
                         tu.setCreateDate(new Timestamp(System.currentTimeMillis()));
                         ru.setAccount(tu);
-                        rUr.save(ru);
                         return "Account created";
                     } else {
                         return "Username not available";
@@ -73,7 +72,7 @@ public class RegisterUserService extends ValidateFactory {
             for (RegisterUser user : ruS) {
                 if ((user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase()).
                         contains(keyWord.toUpperCase())) {
-                    Factory uFi = create("ru");
+                    ConvertDTO uFi = factory("ru");
                     RegisterUserDtO ruDtO = (RegisterUserDtO) uFi.convertToDTO(user);
                     ruSFind.add(ruDtO);
                 }
@@ -83,10 +82,7 @@ public class RegisterUserService extends ValidateFactory {
     }
 
     public boolean usernameExists(String username) {
-        if (isNull(rUr.findUserByUsername(username))) {
-            return false;
-        }
-        return true;
+        return !isNull(rUr.findUserByUsername(username));
     }
 
     public boolean emailExists(String email) {

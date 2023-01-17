@@ -1,8 +1,7 @@
-package org.example.twitterApp.controlAndCreate.service;
+package org.example.twitterApp.controlAndService.service;
 
-import org.example.twitterApp.controlAndCreate.service.factory.Factory;
-import org.example.twitterApp.controlAndCreate.service.factory.ValidateFactory;
-import org.example.twitterApp.objectClassAndRepository.model.Follow;
+import org.example.twitterApp.controlAndService.service.factory.ConvertDTO;
+import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.TwitterUserRepository;
@@ -48,7 +47,7 @@ public class TwitterUserService extends ValidateFactory {
             List<TwitterUser> tuS = tUr.findAll();
             for (TwitterUser tu : tuS) {
                 if (tu.getUsername().toUpperCase().contains(keyWord.toUpperCase())) {
-                    Factory uFi = create("tu");
+                    ConvertDTO uFi = factory("tu");
                     TwitterUserDtO tuDtO = (TwitterUserDtO) uFi.convertToDTO(tu);
                     tuSFind.add(tuDtO);
                 }
@@ -58,12 +57,12 @@ public class TwitterUserService extends ValidateFactory {
     }
 
 
-    public String addAPost(String username, String message) {
-        if (!username.isEmpty() && !message.isEmpty()) {
-            if (checkStringTu(username) && !message.equals(" ")) {
-                if (usernameExists(username)) {
-                    TwitterUser tu = tUr.findByUsername(username);
-                    createAndSavePost(tu, message);
+    public String addAPost(String userWhoPost, String message) {
+        if (!userWhoPost.isEmpty() && !message.isEmpty()) {
+            if (checkStringTu(userWhoPost) && !message.equals(" ")) {
+                if (usernameExists(userWhoPost)) {
+                    TwitterUser tuWhoPost = tUr.findByUsername(userWhoPost);
+                    createAndSavePost(message, tuWhoPost);
                     return "Post uploaded";
                 } else {
                     return "User not found";
@@ -81,7 +80,7 @@ public class TwitterUserService extends ValidateFactory {
             if (checkStringTu(userFollowing) && checkStringTu(userFollow)) {
                 if (usernameExists(userFollowing) && usernameExists(userFollow)) {
                     if (!alreadyFollow(userFollowing, userFollow)) {
-                        createAndSaveFollow(getUserByUsername(userFollowing), getUserByUsername(userFollow));
+                        createAndSaveFollow(userFollow, getUserByUsername(userFollowing));
                         return "You fallow " + userFollow;
                     } else {
                         return "You already follow " + userFollow;
@@ -111,6 +110,10 @@ public class TwitterUserService extends ValidateFactory {
 
     private boolean alreadyFollow(String userFollowing, String userFollow) {
         TwitterUser tuFollowing = getUserByUsername(userFollowing);
-        return tuFollowing.getFollows().get(0).getUserFollow().getUsername().equals(userFollow);
+        if (!tuFollowing.getFollows().isEmpty()) {
+            return tuFollowing.getFollows().get(0).getUserFollow().equals(userFollow);
+        }
+        return false;
     }
+
 }

@@ -1,25 +1,23 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
-import org.example.twitterApp.objectClassAndRepository.model.like.Like;
-import org.example.twitterApp.objectClassAndRepository.model.mention.Mention;
+import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
+import org.example.twitterApp.objectClassAndRepository.model.Mention;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "post")
 public class Post extends PostedMessages {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private List<Reply> replies;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
-    private List<Like> likes;
+    @OneToMany(mappedBy = "postLike",cascade = CascadeType.ALL)
+    private List<LikePost> likes;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "postMention",cascade = CascadeType.ALL)
     private List<Mention> mentions;
 
 
@@ -34,11 +32,11 @@ public class Post extends PostedMessages {
         this.replies = replies;
     }
 
-    public List<Like> getLikes() {
+    public List<LikePost> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Like> likes) {
+    public void setLikes(List<LikePost> likes) {
         this.likes = likes;
     }
 

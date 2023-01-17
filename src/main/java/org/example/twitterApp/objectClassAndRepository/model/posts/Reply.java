@@ -1,30 +1,36 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
-import org.example.twitterApp.objectClassAndRepository.model.like.Like;
-import org.example.twitterApp.objectClassAndRepository.model.mention.Mention;
+import org.example.twitterApp.objectClassAndRepository.model.Mention;
+import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "reply")
 public class Reply extends PostedMessages {
 
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "reply_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Reply replyReply;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "replyReply")
     private List<Reply> replies;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "reply_id", referencedColumnName = "id")
-    private List<Like> likes;
+    @OneToMany(mappedBy = "replyLike",cascade = CascadeType.ALL)
+    private List<LikeReply> likes;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "reply_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "replyMention",cascade = CascadeType.ALL)
     private List<Mention> mentions;
 
 
     public Reply() {
+    }
+
+    public Reply getReplyReply() {
+        return replyReply;
+    }
+
+    public void setReplyReply(Reply replyReply) {
+        this.replyReply = replyReply;
     }
 
     public List<Reply> getReplies() {
@@ -35,11 +41,11 @@ public class Reply extends PostedMessages {
         this.replies = replies;
     }
 
-    public List<Like> getLikes() {
+    public List<LikeReply> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Like> likes) {
+    public void setLikes(List<LikeReply> likes) {
         this.likes = likes;
     }
 
@@ -54,7 +60,8 @@ public class Reply extends PostedMessages {
     @Override
     public String toString() {
         return "Reply{" + super.toString() +
-                "replies=" + replies +
+                "replyReply=" + replyReply +
+                ", replies=" + replies +
                 ", likes=" + likes +
                 ", mentions=" + mentions +
                 "} ";

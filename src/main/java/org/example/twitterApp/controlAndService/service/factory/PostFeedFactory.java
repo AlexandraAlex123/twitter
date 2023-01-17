@@ -1,10 +1,10 @@
-package org.example.twitterApp.controlAndCreate.service.factory;
+package org.example.twitterApp.controlAndService.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 
-public class PostDTOFeedFactory extends ValidateFactory implements Factory {
+public class PostFeedFactory extends ValidateFactory implements ConvertDTO {
 
 
     @Override
@@ -17,7 +17,7 @@ public class PostDTOFeedFactory extends ValidateFactory implements Factory {
             postDTO.setCreateDate(getDateAndTime(post.getCreateDate()));
             postDTO.setOnlyMe(post.getOnlyMe());
             if (post.getLikes() != null) {
-                postDTO.setPostLikes(getListLikesDTO(post.getLikes()));
+                postDTO.setPostLikes(getListLikesPostDTO(post.getLikes()));
             } else {
                 postDTO.setPostLikes(null);
             }
@@ -34,7 +34,7 @@ public class PostDTOFeedFactory extends ValidateFactory implements Factory {
             postDTO.setCreateDate(getDateAndTime(reply.getCreateDate()));
             postDTO.setOnlyMe(reply.getOnlyMe());
             if (reply.getLikes() != null) {
-                postDTO.setPostLikes(getListLikesDTO(reply.getLikes()));
+                postDTO.setPostLikes(getListLikesReplyDTO(reply.getLikes()));
             } else {
                 postDTO.setPostLikes(null);
             }

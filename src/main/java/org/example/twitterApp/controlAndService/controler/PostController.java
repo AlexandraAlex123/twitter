@@ -1,6 +1,6 @@
-package org.example.twitterApp.controlAndCreate.controler;
+package org.example.twitterApp.controlAndService.controler;
 
-import org.example.twitterApp.controlAndCreate.service.PostService;
+import org.example.twitterApp.controlAndService.service.PostService;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOMention;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
@@ -25,24 +25,20 @@ public class PostController {
         return pS.searchOnlyUserPosts(username);
     }
 
-    @GetMapping(path = "/filterPosts")
-    public Set<PostDtO> filterPosts(@RequestParam Set<PostDtO> postDTOs, @RequestParam Timestamp ts, @RequestParam Timestamp ts2) {
-        return pS.filterPostsByDate(postDTOs, ts, ts2);
-    }
+//    @GetMapping(path = "/filterPosts")
+//    public Set<PostDtO> filterPosts(@RequestParam Set<PostDtO> postDTOs, @RequestParam Timestamp ts, @RequestParam Timestamp ts2) {
+//        return pS.filterPostsByDate(postDTOs, ts, ts2);
+//    }
 
     @PutMapping(path = "/leaveComment")
     public String addAReply(@RequestParam Long id, @RequestParam String message, @RequestParam String userWhoReply) {
-        return pS.addReplyPost(id, message, userWhoReply);
+        return pS.addPostReply(id, message, userWhoReply);
     }
 
-    @GetMapping(path = "/getMentionsPosts")
-    public Set<PostDTOMention> getMentionsPosts (@RequestParam String userMentioned, @RequestParam String userMentioning){
-        return pS.getMentionsPosts(userMentioned, userMentioning);
-    }
 
     @GetMapping(path = "/getFeeds")
     public Set<PostDTOFeed> getFeeds(@RequestParam String username) {
-        return pS.getFollowsPosts(username);
+        return pS.getFeeds(username);
     }
 
 }

@@ -1,10 +1,10 @@
-package org.example.twitterApp.controlAndCreate.service.factory;
+package org.example.twitterApp.controlAndService.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.LikeDtO;
 
-public class LikeFactory extends ValidateFactory implements Factory {
+public class LikeFactory extends ValidateFactory implements ConvertDTO{
 
     @Override
     public Object convertToDTO(Object o) {
@@ -22,4 +22,6 @@ public class LikeFactory extends ValidateFactory implements Factory {
         }
         return likeDTO;
     }
+
+
 }

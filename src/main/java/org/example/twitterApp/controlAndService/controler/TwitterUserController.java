@@ -1,9 +1,8 @@
-package org.example.twitterApp.controlAndCreate.controler;
+package org.example.twitterApp.controlAndService.controler;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.example.twitterApp.controlAndCreate.service.TwitterUserService;
-import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.controlAndService.service.TwitterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

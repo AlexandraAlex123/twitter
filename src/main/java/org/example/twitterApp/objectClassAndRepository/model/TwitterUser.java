@@ -1,7 +1,6 @@
 package org.example.twitterApp.objectClassAndRepository.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.example.twitterApp.objectClassAndRepository.model.mention.Mention;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 
 import javax.persistence.*;

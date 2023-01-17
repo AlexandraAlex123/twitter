@@ -15,9 +15,8 @@ public class Follow implements Comparable<Follow> {
     @Column(name = "start_follow")
     private Timestamp createDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_follow")
-    private TwitterUser userFollow;
+    @Column(name = "user_follow")
+    private String userFollow;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_following")
@@ -44,11 +43,11 @@ public class Follow implements Comparable<Follow> {
         this.createDate = createDate;
     }
 
-    public TwitterUser getUserFollow() {
+    public String getUserFollow() {
         return userFollow;
     }
 
-    public void setUserFollow(TwitterUser userFollow) {
+    public void setUserFollow(String userFollow) {
         this.userFollow = userFollow;
     }
 
