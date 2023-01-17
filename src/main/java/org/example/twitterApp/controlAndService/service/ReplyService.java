@@ -60,7 +60,7 @@ public class ReplyService extends ValidateFactory {
                             createAndSaveMentionReply(reply.getUserWhoPost().getUsername(), tus.getUserByUsername(userMention), reply);
                             return reply.getUserWhoPost().getUsername() + " mention " + userMention + " in a reply";
                         }else{
-                            return "Notification already send"
+                            return "Notification already send";
                         }
                     }
                 } else {
