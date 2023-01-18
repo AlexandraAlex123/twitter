@@ -6,8 +6,9 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
 
     String account;
     String createDate;
-    Set<PostDtO> yourPosts;
     Set<FollowDtO> yourFollows;
+    Set<PostDtO> yourPosts;
+
 
     public TwitterUserDtO() {
     }
@@ -55,8 +56,8 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
         return "TwitterUserDtO{" +
                 "account='" + account + '\'' +
                 ", createDate='" + createDate + '\'' +
-                ", yourPosts=" + yourPosts +
                 ", yourFollows=" + yourFollows +
+                ", yourPosts=" + yourPosts +
                 '}';
     }
 }

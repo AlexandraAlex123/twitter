@@ -14,7 +14,4 @@ public class FollowService extends ValidateFactory {
     @Autowired
     private FollowRepository fR;
 
-   
-
-
 }

@@ -9,7 +9,7 @@ public class PostDtO implements Comparable<PostDtO> {
     String message;
     String createDate;
     boolean onlyMe;
-    Set<PostDTOFeed> postReplies;
+    Set<ReplyDtO> postReplies;
     Set<LikeDtO> postLikes;
 
     Set<MentionDtO> mentionPost;
@@ -42,11 +42,11 @@ public class PostDtO implements Comparable<PostDtO> {
         this.onlyMe = onlyMe;
     }
 
-    public Set<PostDTOFeed> getPostReplies() {
+    public Set<ReplyDtO> getPostReplies() {
         return postReplies;
     }
 
-    public void setPostReplies(Set<PostDTOFeed> postReplies) {
+    public void setPostReplies(Set<ReplyDtO> postReplies) {
         this.postReplies = postReplies;
     }
 

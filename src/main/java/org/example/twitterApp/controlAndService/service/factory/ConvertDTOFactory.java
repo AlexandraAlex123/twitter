@@ -42,6 +42,7 @@ public class ConvertDTOFactory extends CreateFactory {
         }
     }
 
+
     public Set<PostDtO> getListPostsDTO(List<Post> posts) {
         Set<PostDtO> postDTOs = new TreeSet<>();
         for (Post post : posts) {
@@ -68,18 +69,6 @@ public class ConvertDTOFactory extends CreateFactory {
             if (!post.getOnlyMe()) {
                 ConvertDTO convertDTO = factory("postF");
                 PostDTOFeed postDTOFeed = (PostDTOFeed) convertDTO.convertToDTO(post);
-                postDTOs.add(postDTOFeed);
-            }
-        }
-        return postDTOs;
-    }
-
-    public Set<PostDTOFeed> getListRepliesDTOF(List<Reply> replies) {
-        Set<PostDTOFeed> postDTOs = new TreeSet<>();
-        for (Reply reply : replies) {
-            if (!reply.getOnlyMe()) {
-                ConvertDTO convertDTO = factory("postF");
-                PostDTOFeed postDTOFeed = (PostDTOFeed) convertDTO.convertToDTO(reply);
                 postDTOs.add(postDTOFeed);
             }
         }

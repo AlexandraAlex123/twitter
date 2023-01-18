@@ -1,21 +1,28 @@
 package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
-import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
-
 import java.util.Set;
 
 public class ReplyDtO implements Comparable<ReplyDtO> {
 
+    String postBy;
     String message;
     String createDate;
     boolean onlyMe;
-    Set<PostDTOFeed> replyReplies;
+    Set<ReplyDtO> replyReplies;
     Set<LikeDtO> replyLikes;
 
     Set<MentionDtO> mentionReply;
 
 
     public ReplyDtO() {
+    }
+
+    public String getPostBy() {
+        return postBy;
+    }
+
+    public void setPostBy(String postBy) {
+        this.postBy = postBy;
     }
 
     public String getMessage() {
@@ -42,11 +49,7 @@ public class ReplyDtO implements Comparable<ReplyDtO> {
         this.onlyMe = onlyMe;
     }
 
-    public Set<PostDTOFeed> getReplyReplies() {
-        return replyReplies;
-    }
-
-    public void setReplyReplies(Set<PostDTOFeed> replyReplies) {
+    public void setReplyReplies(Set<ReplyDtO> replyReplies) {
         this.replyReplies = replyReplies;
     }
 
@@ -67,9 +70,16 @@ public class ReplyDtO implements Comparable<ReplyDtO> {
     }
 
     @Override
+    public int compareTo(ReplyDtO o) {
+        int i = this.createDate.compareTo(o.getCreateDate());
+        return Integer.compare(0, i);
+    }
+
+    @Override
     public String toString() {
         return "ReplyDtO{" +
-                "message='" + message + '\'' +
+                "postBy='" + postBy + '\'' +
+                ", message='" + message + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", onlyMe=" + onlyMe +
                 ", replyReplies=" + replyReplies +
@@ -78,9 +88,4 @@ public class ReplyDtO implements Comparable<ReplyDtO> {
                 '}';
     }
 
-    @Override
-    public int compareTo(ReplyDtO o) {
-        int i = this.createDate.compareTo(o.getCreateDate());
-        return Integer.compare(0, i);
-    }
 }

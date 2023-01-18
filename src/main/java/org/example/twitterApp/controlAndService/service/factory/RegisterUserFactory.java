@@ -20,5 +20,4 @@ public class RegisterUserFactory extends ValidateFactory implements ConvertDTO {
         return ruDTO;
     }
 
-
 }

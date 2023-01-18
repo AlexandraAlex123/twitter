@@ -48,7 +48,7 @@ public class PostFactory extends ValidateFactory implements ConvertDTO, Create {
             postDTO.setPostLikes(null);
         }
         if (post.getReplies() != null) {
-            postDTO.setPostReplies(getListRepliesDTOF(post.getReplies()));
+            postDTO.setPostReplies(getListRepliesDTO(post.getReplies()));
         } else {
             postDTO.setPostReplies(null);
         }
@@ -57,6 +57,5 @@ public class PostFactory extends ValidateFactory implements ConvertDTO, Create {
         }
         return postDTO;
     }
-
 
 }

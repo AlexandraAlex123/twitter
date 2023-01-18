@@ -26,12 +26,11 @@ public class TwitterUserService extends ValidateFactory {
 
 
     public String login(String username, String password) {
-        if (username != null && password !=null) {
+        if (username != null && password != null) {
             if (checkStringTu(username) && checkStringTu(password)) {
                 TwitterUser tu = tUr.findAccountByUsernameAndPassword(username, password);
                 if (tu != null) {
                     tu.setLastLogin(new Timestamp(System.currentTimeMillis()));
-                    tUr.save(tu);
                     return "Login successful!";
                 } else {
                     return "Username and password doesn't match";
@@ -42,7 +41,6 @@ public class TwitterUserService extends ValidateFactory {
         }
         return "Null parameter";
     }
-
 
     public Set<TwitterUserDtO> searchTwitterAccount(String keyWord) {
         Set<TwitterUserDtO> tuSFind = new TreeSet<>();
@@ -63,7 +61,7 @@ public class TwitterUserService extends ValidateFactory {
         if (userFollowing != null && userFollow != null) {
             if (checkStringTu(userFollowing) && checkStringTu(userFollow)) {
                 if (usernameExists(userFollowing) && usernameExists(userFollow)) {
-                    if (!alreadyFollow(userFollowing, userFollow)) {
+                    if (!alreadyFollow(getUserByUsername(userFollowing), userFollow)) {
                         createAndSaveFollow(userFollow, getUserByUsername(userFollowing));
                         return "You fallow " + userFollow;
                     } else {
@@ -78,7 +76,6 @@ public class TwitterUserService extends ValidateFactory {
         }
         return "Null parameter";
     }
-
 
     public String addAPost(String userWhoPost, String message) {
         if (userWhoPost != null && message != null) {
@@ -112,16 +109,6 @@ public class TwitterUserService extends ValidateFactory {
             }
         }
         return "Post uploaded. You mention in this post " + followMentionS;
-    }
-
-    public boolean alreadyFollow(String userFollowing, String userFollow) {
-        TwitterUser tuFollowing = getUserByUsername(userFollowing);
-        if (tuFollowing.getFollows() != null) {
-            for (Follow f : tuFollowing.getFollows()) {
-                return f.getUserFollow().equals(userFollow);
-            }
-        }
-        return false;
     }
 
     public TwitterUser getUserByUsername(String username) {

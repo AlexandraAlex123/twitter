@@ -3,7 +3,6 @@ package org.example.twitterApp.controlAndService.service;
 import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
@@ -22,10 +21,6 @@ import java.util.TreeSet;
 @Service
 @Transactional
 public class PostService extends ValidateFactory {
-
-
-    @Autowired
-    private MentionService ms;
 
     @Autowired
     private TwitterUserService tus;
@@ -85,7 +80,6 @@ public class PostService extends ValidateFactory {
         return "Null parameter";
     }
 
-
     public String addLikePost(Long id, String userWhoGivesLike) {
         if (id != null && userWhoGivesLike != null) {
             if (checkStringTu(userWhoGivesLike)) {
@@ -107,6 +101,21 @@ public class PostService extends ValidateFactory {
                 }
             } else {
                 return "Invalid command";
+            }
+        }
+        return "Null parameter";
+    }
+
+    public String makeAPostNotPublic(Long id) {
+        if (id != null) {
+            if (postExists(id)) {
+                Post post = getPostById(id);
+                post.setOnlyMe(true);
+                post.getReplies().get(0).setOnlyMe(true);
+                post.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
+                return "Post not public";
+            } else {
+                return "Post not found";
             }
         }
         return "Null parameter";
@@ -135,14 +144,8 @@ public class PostService extends ValidateFactory {
         return postsDTOFeed;
     }
 
-    public static boolean alreadyLike(TwitterUser tuWhoGivesLike, Post post) {
-        if (post.getLikes() != null) {
-            List<LikePost> likePosts = post.getLikes();
-            for (LikePost l : likePosts) {
-                return l.getWhoGivesLike().equals(tuWhoGivesLike);
-            }
-        }
-        return false;
+    public Post getPostById(Long id) {
+        return pR.findPostById(id);
     }
 
     public boolean postExists(Long id) {

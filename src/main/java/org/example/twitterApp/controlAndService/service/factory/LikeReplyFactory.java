@@ -44,5 +44,4 @@ public class LikeReplyFactory extends ValidateFactory implements ConvertDTO, Cre
         return likeDTO;
     }
 
-
 }

@@ -42,4 +42,9 @@ public class PostController {
         return pS.addLikePost(id, userWhoGivesLike);
     }
 
+    @PutMapping(path = "makePostNotPublic")
+    public String makeAPostNotPublic(@RequestParam Long id) {
+        return pS.makeAPostNotPublic(id);
+    }
+
 }

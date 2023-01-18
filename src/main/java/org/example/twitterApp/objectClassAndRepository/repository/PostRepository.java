@@ -28,6 +28,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "SELECT p " +
             "FROM Post p " +
-            "WHERE tu.user_who_post.username = :username and p.not_public = 0")
+            "WHERE user_who_post = :username and not_public = 0")
     List<Post> findAllByUsernamePublic(@Param("username") String username);
 }

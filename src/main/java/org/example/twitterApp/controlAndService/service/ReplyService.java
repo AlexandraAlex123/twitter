@@ -3,7 +3,6 @@ package org.example.twitterApp.controlAndService.service;
 import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 import org.example.twitterApp.objectClassAndRepository.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ public class ReplyService extends ValidateFactory {
 
     @Autowired
     private ReplyRepository rR;
+
 
     public String addReplyReply(Long id, String message, String userWhoReply) {
         if (id != null && !message.isEmpty() && !userWhoReply.isEmpty()) {
@@ -90,6 +90,20 @@ public class ReplyService extends ValidateFactory {
         return "Null parameter";
     }
 
+    public String makeAReplyNotPublic(Long id) {
+        if (id != null) {
+            if (replyExists(id)) {
+                Reply reply = getReplyById(id);
+                reply.setOnlyMe(true);
+                reply.getReplies().get(0).setOnlyMe(true);
+                reply.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
+                return "Post not public";
+            } else {
+                return "Post not found";
+            }
+        }
+        return "Null parameter";
+    }
 
     public Reply getReplyById(Long id) {
         return rR.findReplyById(id);
@@ -99,13 +113,4 @@ public class ReplyService extends ValidateFactory {
         return rR.findReplyById(id) != null;
     }
 
-    private static boolean alreadyLike(TwitterUser tuWhoGivesLike, Reply rely) {
-        if (rely.getLikes() != null) {
-            List<LikeReply> likesReply = rely.getLikes();
-            for (LikeReply l : likesReply) {
-                return l.getWhoGivesLike().equals(tuWhoGivesLike);
-            }
-        }
-        return false;
-    }
 }

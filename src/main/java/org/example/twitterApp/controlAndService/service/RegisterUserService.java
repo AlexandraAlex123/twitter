@@ -24,9 +24,10 @@ public class RegisterUserService extends ValidateFactory {
     @Autowired
     private RegisterUserRepository rUr;
 
+
     public String singUp(RegisterUser ru) {
         if (isNotNull(ru)) {
-            if (validUser(ru)) {
+            if (valid(ru)) {
                 if (!emailExists(ru.getEmail())) {
                     ru.setCreateDate(new Timestamp(System.currentTimeMillis()));
                     rUr.save(ru);
@@ -41,10 +42,9 @@ public class RegisterUserService extends ValidateFactory {
         return "Null parameter";
     }
 
-
     public String createAccount(String email, TwitterUser tu) {
         if (isNotNull(tu) && !email.isEmpty()) {
-            if (validUser(tu)) {
+            if (valid(tu)) {
                 if (emailExists(email)) {
                     RegisterUser ru = rUr.findUserByEmail(email);
                     if (!usernameExists(tu.getUsername())) {
@@ -63,7 +63,6 @@ public class RegisterUserService extends ValidateFactory {
         }
         return "Null parameter";
     }
-
 
     public Set<RegisterUserDtO> searchUser(String keyWord) {
         Set<RegisterUserDtO> ruSFind = new TreeSet<>();
@@ -88,6 +87,5 @@ public class RegisterUserService extends ValidateFactory {
     public boolean emailExists(String email) {
         return rUr.findUserByEmail(email) != null;
     }
-
 
 }

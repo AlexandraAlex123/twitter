@@ -22,4 +22,9 @@ public class ReplyController {
     public String addLikePost(@RequestParam Long id,@RequestParam String userWhoGivesLike) {
         return rs.addLikeReply(id, userWhoGivesLike);
     }
+
+    @PutMapping(path = "makeCommentNotPublic")
+    public String makeAReplyNotPublic(@RequestParam Long id) {
+        return rs.makeAReplyNotPublic(id);
+    }
 }

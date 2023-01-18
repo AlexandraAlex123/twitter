@@ -4,6 +4,5 @@ public interface ConvertDTO {
 
      Object convertToDTO(Object o);
 
-
 }
 

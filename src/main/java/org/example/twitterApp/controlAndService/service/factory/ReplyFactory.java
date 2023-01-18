@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create {
 
-
     @Override
     public Reply createAndSave(Object... objects) {
         Reply replyNew = new Reply();
@@ -30,31 +29,33 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
                 message = (String) o;
             }
         }
-            if (post != null) {
-                replyNew.setMessage(message);
-                replyNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                replyNew.setOnlyMe(false);
-                replyNew.setUserWhoPost(tuWhoPost);
-                List<Reply> replies = new ArrayList<>();
-                if (post.getReplies() != null) {
-                    replies = post.getReplies();
-                }
-                replies.add(replyNew);
-                post.setReplies(replies);
-                return replyNew;
-            } else if (reply != null) {
-                replyNew.setMessage(message);
-                replyNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                replyNew.setOnlyMe(false);
-                replyNew.setUserWhoPost(tuWhoPost);
-                List<Reply> replies = new ArrayList<>();
-                if (reply.getReplies() != null) {
-                    replies = reply.getReplies();
-                }
-                replies.add(replyNew);
-                reply.setReplies(replies);
-                return replyNew;
+        if (post != null) {
+            replyNew.setMessage(message);
+            replyNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
+            replyNew.setOnlyMe(post.getOnlyMe());
+            replyNew.setUserWhoPost(tuWhoPost);
+            replyNew.setReplyPost(post);
+            List<Reply> replies = new ArrayList<>();
+            if (post.getReplies() != null) {
+                replies = post.getReplies();
             }
+            replies.add(replyNew);
+            post.setReplies(replies);
+            return replyNew;
+        } else if (reply != null) {
+            replyNew.setMessage(message);
+            replyNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
+            replyNew.setOnlyMe(reply.getOnlyMe());
+            replyNew.setUserWhoPost(tuWhoPost);
+            replyNew.setReplyReply(reply);
+            List<Reply> replies = new ArrayList<>();
+            if (reply.getReplies() != null) {
+                replies = reply.getReplies();
+            }
+            replies.add(replyNew);
+            reply.setReplies(replies);
+            return replyNew;
+        }
         return replyNew;
     }
 
@@ -62,6 +63,7 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
     public ReplyDtO convertToDTO(Object o) {
         Reply reply = (Reply) o;
         ReplyDtO replyDTO = new ReplyDtO();
+        replyDTO.setPostBy(reply.getUserWhoPost().getUsername());
         replyDTO.setMessage(reply.getMessage());
         replyDTO.setCreateDate(getDateAndTime(reply.getCreateDate()));
         replyDTO.setOnlyMe(reply.getOnlyMe());
@@ -71,7 +73,7 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
             replyDTO.setReplyLikes(null);
         }
         if (reply.getReplies() != null) {
-            replyDTO.setReplyReplies(getListRepliesDTOF(reply.getReplies()));
+            replyDTO.setReplyReplies(getListRepliesDTO(reply.getReplies()));
         } else {
             replyDTO.setReplyReplies(null);
         }
@@ -80,4 +82,5 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
         }
         return replyDTO;
     }
+
 }

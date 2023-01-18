@@ -1,11 +1,6 @@
 package org.example.twitterApp.controlAndService.service.factory;
 
-import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
-import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
-import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
-import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 
@@ -35,9 +30,9 @@ public class CreateFactory {
         }
     }
 
-    public Follow createAndSaveFollow(String userFollow, TwitterUser tuFollowing) {
+    public void createAndSaveFollow(String userFollow, TwitterUser tuFollowing) {
         Create create = create("follow");
-        return (Follow) create.createAndSave(userFollow, tuFollowing);
+        create.createAndSave(userFollow, tuFollowing);
     }
 
     public Post createAndSavePost(String message, TwitterUser tuWhoPost) {
@@ -55,24 +50,24 @@ public class CreateFactory {
         return (Reply) create.createAndSave(message, tuWhoReply, reply);
     }
 
-    public LikePost createAndSaveLikePost(TwitterUser tuMention, Post post) {
+    public void createAndSaveLikePost(TwitterUser tuMention, Post post) {
         Create create = create("likeP");
-        return (LikePost) create.createAndSave(tuMention, post);
+        create.createAndSave(tuMention, post);
     }
 
-    public LikeReply createAndSaveLikeReply(TwitterUser tuMention, Reply reply) {
+    public void createAndSaveLikeReply(TwitterUser tuMention, Reply reply) {
         Create create = create("likeR");
-        return (LikeReply) create.createAndSave(tuMention, reply);
+        create.createAndSave(tuMention, reply);
     }
 
-    public MentionPost createAndSaveMentionPost(TwitterUser tuMention, Post post) {
+    public void createAndSaveMentionPost(TwitterUser tuMention, Post post) {
         Create create = create("mentionP");
-        return (MentionPost) create.createAndSave(tuMention, post);
+        create.createAndSave(tuMention, post);
     }
 
-    public MentionReply createAndSaveMentionReply(TwitterUser tuMention, Reply reply) {
+    public void createAndSaveMentionReply(TwitterUser tuMention, Reply reply) {
         Create create = create("mentionR");
-        return (MentionReply) create.createAndSave(tuMention, reply);
+        create.createAndSave(tuMention, reply);
     }
 
 }

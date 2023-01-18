@@ -43,4 +43,5 @@ public class MentionPostFactory extends ValidateFactory implements ConvertDTO, C
         mentionDTO.setUserMention(mentionPost.getUserMention().getUsername());
         return mentionDTO;
     }
+
 }
