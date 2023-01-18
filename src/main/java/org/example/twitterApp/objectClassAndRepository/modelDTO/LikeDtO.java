@@ -1,14 +1,10 @@
 package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
-public class LikeDtO implements Comparable<LikeDtO>{
+public class LikeDtO implements Comparable<LikeDtO> {
 
-     private String whoGivesLike;
-     private String createDate;
+    private String whoGivesLike;
+    private String createDate;
 
-    public LikeDtO(String whoGivesLike, String createDate) {
-        this.whoGivesLike = whoGivesLike;
-        this.createDate = createDate;
-    }
 
     public LikeDtO() {
     }
@@ -30,6 +26,12 @@ public class LikeDtO implements Comparable<LikeDtO>{
     }
 
     @Override
+    public int compareTo(LikeDtO o) {
+        int i = this.createDate.compareTo(o.getCreateDate());
+        return Integer.compare(0, i);
+    }
+
+    @Override
     public String toString() {
         return "LikeDtO{" +
                 "whoGivesLike='" + whoGivesLike + '\'' +
@@ -37,9 +39,4 @@ public class LikeDtO implements Comparable<LikeDtO>{
                 '}';
     }
 
-    @Override
-    public int compareTo(LikeDtO o) {
-        int i = this.createDate.compareTo(o.getCreateDate());
-        return Integer.compare(0, i);
-    }
 }

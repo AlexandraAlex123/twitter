@@ -22,10 +22,8 @@ public class Follow implements Comparable<Follow> {
     @JoinColumn(name = "user_following")
     private TwitterUser userFollowing;
 
-
     public Follow() {
     }
-
 
     public Long getFollowId() {
         return followId;
@@ -59,13 +57,12 @@ public class Follow implements Comparable<Follow> {
         this.userFollowing = userFollowing;
     }
 
-
     @Override
     public String toString() {
         return "Follow{" +
                 "followId=" + followId +
                 ", createDate=" + createDate +
-                ", userFollow=" + userFollow +
+                ", userFollow='" + userFollow + '\'' +
                 ", userFollowing=" + userFollowing +
                 '}';
     }

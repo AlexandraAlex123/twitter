@@ -3,7 +3,9 @@ package org.example.twitterApp.controlAndService.service;
 import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
+import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.PostRepository;
@@ -59,48 +61,20 @@ public class PostService extends ValidateFactory {
         return allFollowPost;
     }
 
-    public String addPostReply(Long id, String message, String userWhoPost) {
-        if (id != null && !message.isEmpty() && !userWhoPost.isEmpty()) {
-            if (!message.equals(" ") && checkStringTu(userWhoPost)) {
-                Post post = pR.findPostById(id);
-                createAndSaveReply(message, tus.getUserByUsername(userWhoPost), post);
-                return "Comment add";
-            } else {
-                return "Invalid command";
-            }
-        }
-        return "Null parameter";
-    }
-
-    public String addLikePost(Long id, String userWhoGivesLike) {
-        if (id != null && !userWhoGivesLike.isEmpty()) {
-            if (checkStringTu(userWhoGivesLike)) {
-                if (tus.usernameExists(userWhoGivesLike)) {
-                    Post post = pR.findPostById(id);
-                    TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
-                    createAndSaveLike(post, tuWhoGivesLike);
-                } else {
-                    return "User Not Found";
-                }
-            } else {
-                return "Invalid command";
-            }
-        }
-        return "Null parameter";
-    }
-
-    public String addMentionPost(String userMention) {
-        if (!userMention.isEmpty()) {
-            if (checkStringTu(userMention)) {
-                if (tus.usernameExists(userMention)) {
-                    List<Post> posts = pR.findMentionPosts(userMention);
-                    for (Post post : posts) {
-                        if (!alreadyMention(post, tus.getUserByUsername(userMention))) {
-                            createAndSaveMentionPost(post.getUserWhoPost().getUsername(), tus.getUserByUsername(userMention), post);
-                            return post.getUserWhoPost().getUsername() + " mention " + userMention + " in a post";
-                        }else {
-                            return "Notification already send";
+    public String addPostReply(Long id, String message, String userWhoReply) {
+        if (id != null && message != null && userWhoReply != null) {
+            if (!message.equals(" ") && checkStringTu(userWhoReply)) {
+                if (tus.usernameExists(userWhoReply)) {
+                    if (postExists(id)) {
+                        Post post = pR.findPostById(id);
+                        Reply reply = createAndSaveReply(message, tus.getUserByUsername(userWhoReply), post);
+                        if (message.contains("@")) {
+                            return addMentionReply(tus.getUserByUsername(userWhoReply), reply);
+                        } else {
+                            return "Comment add";
                         }
+                    } else {
+                        return "Post not found";
                     }
                 } else {
                     return "User not found";
@@ -112,6 +86,47 @@ public class PostService extends ValidateFactory {
         return "Null parameter";
     }
 
+    public String addMentionReply(TwitterUser tuWhoReply, Reply reply) {
+        if (tuWhoReply.getFollows() != null) {
+            List<Follow> follows = tuWhoReply.getFollows();
+            Set<String> followMentionS = new TreeSet<>();
+            for (Follow f : follows) {
+                if (reply.getMessage().contains("@" + f.getUserFollow())) {
+                    TwitterUser tuMention = tus.getUserByUsername(f.getUserFollow());
+                    createAndSaveMentionReply(tuMention, reply);
+                    followMentionS.add(f.getUserFollow());
+                }
+            }
+            return "Comment add. You mention in this reply " + followMentionS;
+        }
+        return "Comment add";
+    }
+
+    public String addLikePost(Long id, String userWhoGivesLike) {
+        if (id != null && userWhoGivesLike != null) {
+            if (checkStringTu(userWhoGivesLike)) {
+                if (tus.usernameExists(userWhoGivesLike)) {
+                    Post post = pR.findPostById(id);
+                    if (postExists(id)) {
+                        if (!alreadyLike(tus.getUserByUsername(userWhoGivesLike), post)) {
+                            TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
+                            createAndSaveLikePost(tuWhoGivesLike, post);
+                            return "Like send";
+                        }else{
+                            return "Already liked";
+                        }
+                    } else {
+                        return "Post not found";
+                    }
+                } else {
+                    return "User not found";
+                }
+            } else {
+                return "Invalid command";
+            }
+        }
+        return "Null parameter";
+    }
 
     public Set<PostDtO> filterPostsByDate(Set<PostDtO> postDTOs, Timestamp ts, Timestamp ts2) {
         if (ts != null && ts2 != null) {
@@ -126,6 +141,15 @@ public class PostService extends ValidateFactory {
         return null;
     }
 
+    public boolean alreadyLike(TwitterUser tuWhoGivesLike, Post post) {
+        if (post.getLikes() != null) {
+            List<LikePost> likePosts = post.getLikes();
+            for (LikePost l : likePosts) {
+                return l.getWhoGivesLike().equals(tuWhoGivesLike);
+            }
+        }
+        return false;
+    }
 
     public Set<PostDTOFeed> getFallowPosts(String username) {
         Set<PostDTOFeed> postsDTOFeed = new TreeSet<>();
@@ -137,4 +161,7 @@ public class PostService extends ValidateFactory {
         return postsDTOFeed;
     }
 
+    public boolean postExists(Long id) {
+        return pR.findPostById(id) != null;
+    }
 }

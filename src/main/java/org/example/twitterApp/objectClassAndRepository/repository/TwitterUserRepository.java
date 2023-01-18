@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TwitterUserRepository extends JpaRepository<TwitterUser, String> {
 
-    TwitterUser findByUsername(String username);
+    @Query(value = "SELECT tu FROM TwitterUser tu WHERE tu.username = :username")
+    TwitterUser findByUsername(@Param("username") String username);
 
     @Query(value = "SELECT tu FROM TwitterUser tu WHERE tu.username = :username and tu.password = :password")
     TwitterUser findAccountByUsernameAndPassword(@Param("username") String username, @Param("password") String password);

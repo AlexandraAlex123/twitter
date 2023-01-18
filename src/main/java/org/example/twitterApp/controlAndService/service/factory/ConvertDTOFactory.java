@@ -1,11 +1,11 @@
 package org.example.twitterApp.controlAndService.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
+import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
+import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
-import org.example.twitterApp.objectClassAndRepository.model.posts.PostedMessages;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.*;
 
@@ -21,18 +21,20 @@ public class ConvertDTOFactory extends CreateFactory {
                 return new RegisterUserFactory();
             case "tu":
                 return new TwitterUserFactory();
-            case "post":
-                return new PostFactory();
             case "follow":
                 return new FollowFactory();
+            case "post":
+                return new PostFactory();
             case "reply":
                 return new ReplyFactory();
-            case "like":
-                return new LikeFactory();
-            case "mention":
-                return new MentionFactory();
-            case "postM":
-                return new PostMentionFactory();
+            case "likeP":
+                return new LikePostFactory();
+            case "likeR":
+                return new LikeReplyFactory();
+            case "mentionP":
+                return new MentionPostFactory();
+            case "mentionR":
+                return new MentionReplyFactory();
             case "postF":
                 return new PostFeedFactory();
             default:
@@ -87,7 +89,7 @@ public class ConvertDTOFactory extends CreateFactory {
     public Set<LikeDtO> getListLikesPostDTO(List<LikePost> likes) {
         Set<LikeDtO> likeDTOs = new TreeSet<>();
         for (LikePost likePost : likes) {
-            ConvertDTO convertDTO = factory("like");
+            ConvertDTO convertDTO = factory("likeP");
             LikeDtO likeDtO = (LikeDtO) convertDTO.convertToDTO(likePost);
             likeDTOs.add(likeDtO);
         }
@@ -97,7 +99,7 @@ public class ConvertDTOFactory extends CreateFactory {
     public Set<LikeDtO> getListLikesReplyDTO(List<LikeReply> likes) {
         Set<LikeDtO> likeDTOs = new TreeSet<>();
         for (LikeReply likeReply : likes) {
-            ConvertDTO convertDTO = factory("like");
+            ConvertDTO convertDTO = factory("likeR");
             LikeDtO likeDtO = (LikeDtO) convertDTO.convertToDTO(likeReply);
             likeDTOs.add(likeDtO);
         }
@@ -114,21 +116,24 @@ public class ConvertDTOFactory extends CreateFactory {
         return followDTOs;
     }
 
-    public Set<MentionDtO> getListMentionsDTO(List<Mention> mentions) {
+    public Set<MentionDtO> getListMentionPostDTO(List<MentionPost> mentions) {
         Set<MentionDtO> mentionDtOS = new TreeSet<>();
-        for (Mention mention : mentions) {
-            mentionDtOS.add(createMentionDTO(mention));
+        for (MentionPost mentionPost : mentions) {
+            ConvertDTO convertDTO = factory("mentionP");
+            MentionDtO mentionDtO = (MentionDtO) convertDTO.convertToDTO(mentionPost);
+            mentionDtOS.add(mentionDtO);
         }
         return mentionDtOS;
     }
 
-    public MentionDtO createMentionDTO(Mention mention) {
-        ConvertDTO convertDTO = factory("mention");
-        return (MentionDtO) convertDTO.convertToDTO(mention);
+    public Set<MentionDtO> getListMentionReplyDTO(List<MentionReply> mentions) {
+        Set<MentionDtO> mentionDtOS = new TreeSet<>();
+        for (MentionReply mentionReply : mentions) {
+            ConvertDTO convertDTO = factory("mentionR");
+            MentionDtO mentionDtO = (MentionDtO) convertDTO.convertToDTO(mentionReply);
+            mentionDtOS.add(mentionDtO);
+        }
+        return mentionDtOS;
     }
 
-    public PostDTOMention createPostMentionDTO(PostedMessages postedMessages) {
-        ConvertDTO convertDTO = factory("postM");
-        return (PostDTOMention) convertDTO.convertToDTO(postedMessages);
-    }
 }

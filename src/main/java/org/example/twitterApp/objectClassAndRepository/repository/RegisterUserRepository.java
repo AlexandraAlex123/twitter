@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RegisterUserRepository extends JpaRepository<RegisterUser, Long> {
 
-    RegisterUser findUserByEmail(String email);
+    @Query(value = "SELECT ru FROM RegisterUser ru WHERE ru.email = :email")
+    RegisterUser findUserByEmail(@Param("email") String email);
 
     @Query(value = "SELECT ru FROM RegisterUser ru WHERE ru.account.username = :username")
     RegisterUser findUserByUsername(@Param("username") String username);

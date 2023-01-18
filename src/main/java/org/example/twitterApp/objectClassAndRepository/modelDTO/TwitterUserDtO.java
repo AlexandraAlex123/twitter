@@ -4,12 +4,10 @@ import java.util.Set;
 
 public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
 
-
     String account;
     String createDate;
     Set<PostDtO> yourPosts;
     Set<FollowDtO> yourFollows;
-    Set<MentionDtO> yourMentions;
 
     public TwitterUserDtO() {
     }
@@ -46,13 +44,6 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
         this.yourPosts = yourPosts;
     }
 
-    public Set<MentionDtO> getYourMentions() {
-        return yourMentions;
-    }
-
-    public void setYourMentions(Set<MentionDtO> yourMentions) {
-        this.yourMentions = yourMentions;
-    }
 
     @Override
     public int compareTo(TwitterUserDtO o) {
@@ -66,7 +57,6 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
                 ", createDate='" + createDate + '\'' +
                 ", yourPosts=" + yourPosts +
                 ", yourFollows=" + yourFollows +
-                ", yourMentions=" + yourMentions +
                 '}';
     }
 }

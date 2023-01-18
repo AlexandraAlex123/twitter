@@ -6,9 +6,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "like_reply")
-public class LikeReply extends Like{
+public class LikeReply extends Like {
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "reply_id")
+    @JoinColumn(name = "reply_id")
     private Reply replyLike;
 
     public LikeReply() {
@@ -24,7 +25,7 @@ public class LikeReply extends Like{
 
     @Override
     public String toString() {
-        return "LikeReply{" +super.toString() +
+        return "LikeReply{" + super.toString() +
                 "replyLiked=" + replyLike +
                 "} ";
     }

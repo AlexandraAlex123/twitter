@@ -1,26 +1,32 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
+import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "reply")
-public class Reply extends PostedMessages {
+public class Reply extends PostBase {
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reply_id", referencedColumnName = "id")
     private Reply replyReply;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "replyReply")
     private List<Reply> replies;
 
-    @OneToMany(mappedBy = "replyLike",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "replyLike", cascade = CascadeType.ALL)
     private List<LikeReply> likes;
 
-    @OneToMany(mappedBy = "replyMention",cascade = CascadeType.ALL)
-    private List<Mention> mentions;
+    @JsonIgnore
+    @OneToMany(mappedBy = "replyMention", cascade = CascadeType.ALL)
+    private List<MentionReply> mentions;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Post replyPost;
 
     public Reply() {
     }
@@ -49,12 +55,20 @@ public class Reply extends PostedMessages {
         this.likes = likes;
     }
 
-    public List<Mention> getMentions() {
+    public List<MentionReply> getMentions() {
         return mentions;
     }
 
-    public void setMentions(List<Mention> mentions) {
+    public void setMentions(List<MentionReply> mentions) {
         this.mentions = mentions;
+    }
+
+    public Post getReplyPost() {
+        return replyPost;
+    }
+
+    public void setReplyPost(Post replyPost) {
+        this.replyPost = replyPost;
     }
 
     @Override
@@ -64,6 +78,7 @@ public class Reply extends PostedMessages {
                 ", replies=" + replies +
                 ", likes=" + likes +
                 ", mentions=" + mentions +
+                ", replyPost=" + replyPost +
                 "} ";
     }
 }

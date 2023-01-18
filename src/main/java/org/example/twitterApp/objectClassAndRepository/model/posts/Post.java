@@ -1,25 +1,28 @@
 package org.example.twitterApp.objectClassAndRepository.model.posts;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
+import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
 @Table(name = "post")
-public class Post extends PostedMessages {
+public class Post extends PostBase {
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "replyPost", cascade = CascadeType.ALL)
     private List<Reply> replies;
 
     @OneToMany(mappedBy = "postLike",cascade = CascadeType.ALL)
     private List<LikePost> likes;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "postMention",cascade = CascadeType.ALL)
-    private List<Mention> mentions;
-
+    private List<MentionPost> mentions;
 
     public Post() {
     }
@@ -40,11 +43,11 @@ public class Post extends PostedMessages {
         this.likes = likes;
     }
 
-    public List<Mention> getMentions() {
+    public List<MentionPost> getMentions() {
         return mentions;
     }
 
-    public void setMentions(List<Mention> mentions) {
+    public void setMentions(List<MentionPost> mentions) {
         this.mentions = mentions;
     }
 

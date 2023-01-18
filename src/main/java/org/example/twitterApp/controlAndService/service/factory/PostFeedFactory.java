@@ -8,7 +8,7 @@ public class PostFeedFactory extends ValidateFactory implements ConvertDTO {
 
 
     @Override
-    public Object convertToDTO(Object o) {
+    public PostDTOFeed convertToDTO(Object o) {
         PostDTOFeed postDTO = new PostDTOFeed();
         if (o instanceof Post) {
             Post post = (Post) o;
@@ -26,6 +26,11 @@ public class PostFeedFactory extends ValidateFactory implements ConvertDTO {
             } else {
                 postDTO.setPostReplies(null);
             }
+            if (post.getMentions() != null){
+                postDTO.setMentions(getListMentionPostDTO(post.getMentions()));
+            }else {
+                postDTO.setMentions(null);
+            }
             return postDTO;
         } else if (o instanceof Reply) {
             Reply reply = (Reply) o;
@@ -42,6 +47,11 @@ public class PostFeedFactory extends ValidateFactory implements ConvertDTO {
                 postDTO.setPostReplies(getListRepliesDTOF(reply.getReplies()));
             } else {
                 postDTO.setPostReplies(null);
+            }
+            if (reply.getMentions() != null){
+                postDTO.setMentions(getListMentionReplyDTO(reply.getMentions()));
+            }else {
+                postDTO.setMentions(null);
             }
             return postDTO;
         }

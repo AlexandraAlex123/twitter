@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 
 @MappedSuperclass
-public class PostedMessages implements Comparable<PostedMessages> {
+public class PostBase implements Comparable<PostBase> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -28,7 +28,7 @@ public class PostedMessages implements Comparable<PostedMessages> {
     private TwitterUser userWhoPost;
 
 
-    public PostedMessages() {
+    public PostBase() {
     }
 
     public Long getId() {
@@ -73,7 +73,7 @@ public class PostedMessages implements Comparable<PostedMessages> {
 
 
     @Override
-    public int compareTo(PostedMessages o) {
+    public int compareTo(PostBase o) {
         return this.createDate.compareTo(o.getCreateDate());
     }
 

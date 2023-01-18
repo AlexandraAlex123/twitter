@@ -13,14 +13,8 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
     Set<PostDTOFeed> postReplies;
     Set<LikeDtO> postLikes;
 
-    public PostDTOFeed(String postBy, String message, String createDate, boolean onlyMe, Set<PostDTOFeed> postReplies, Set<LikeDtO> postLikes) {
-        this.postBy = postBy;
-        this.message = message;
-        this.createDate = createDate;
-        this.onlyMe = onlyMe;
-        this.postReplies = postReplies;
-        this.postLikes = postLikes;
-    }
+    Set<MentionDtO> mentions;
+
 
     public PostDTOFeed() {
     }
@@ -73,6 +67,14 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
         this.postLikes = postLikes;
     }
 
+    public Set<MentionDtO> getMentions() {
+        return mentions;
+    }
+
+    public void setMentions(Set<MentionDtO> mentions) {
+        this.mentions = mentions;
+    }
+
     @Override
     public int compareTo(PostDTOFeed o) {
         int i = this.createDate.compareTo(o.getCreateDate());
@@ -88,6 +90,7 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
                 ", onlyMe=" + onlyMe +
                 ", postReplies=" + postReplies +
                 ", postLikes=" + postLikes +
+                ", mentions=" + mentions +
                 '}';
     }
 }

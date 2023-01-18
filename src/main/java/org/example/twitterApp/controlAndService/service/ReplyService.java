@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @Transactional
@@ -39,7 +38,7 @@ public class ReplyService extends ValidateFactory {
                 if (tus.usernameExists(userWhoGivesLike)) {
                     Reply reply = rR.findReplyById(id);
                     TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
-                    createAndSaveLike(reply, tuWhoGivesLike);
+                    createAndSaveLikeReply(tuWhoGivesLike, reply);
                 } else {
                     return "User Not Found";
                 }
@@ -50,28 +49,28 @@ public class ReplyService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public String addMentionPost(String userMention) {
-        if (!userMention.isEmpty()) {
-            if (checkStringTu(userMention)) {
-                if (tus.usernameExists(userMention)) {
-                    List<Reply> replies = rR.findMentionReply(userMention);
-                    for (Reply reply : replies) {
-                        if (!alreadyMention(reply, tus.getUserByUsername(userMention))) {
-                            createAndSaveMentionReply(reply.getUserWhoPost().getUsername(), tus.getUserByUsername(userMention), reply);
-                            return reply.getUserWhoPost().getUsername() + " mention " + userMention + " in a reply";
-                        }else{
-                            return "Notification already send";
-                        }
-                    }
-                } else {
-                    return "User not found";
-                }
-            } else {
-                return "Invalid command";
-            }
-        }
-        return "Null parameter";
-    }
+//    public String addMentionPost(String userMention) {
+//        if (!userMention.isEmpty()) {
+//            if (checkStringTu(userMention)) {
+//                if (tus.usernameExists(userMention)) {
+//                    List<Reply> replies = rR.findMentionReply(userMention);
+//                    for (Reply reply : replies) {
+//                        if (!alreadyMention(reply, tus.getUserByUsername(userMention))) {
+//                            createAndSaveMentionReply(reply.getUserWhoPost().getUsername(), tus.getUserByUsername(userMention), reply);
+//                            return reply.getUserWhoPost().getUsername() + " mention " + userMention + " in a reply";
+//                        }else{
+//                            return "Notification already send";
+//                        }
+//                    }
+//                } else {
+//                    return "User not found";
+//                }
+//            } else {
+//                return "Invalid command";
+//            }
+//        }
+//        return "Null parameter";
+//    }
 
 
     public Reply getReplyById(Long id) {

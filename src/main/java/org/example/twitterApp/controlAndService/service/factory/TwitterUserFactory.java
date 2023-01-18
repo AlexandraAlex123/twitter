@@ -6,7 +6,7 @@ import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 public class TwitterUserFactory extends ValidateFactory implements ConvertDTO {
 
     @Override
-    public Object convertToDTO(Object o) {
+    public TwitterUserDtO convertToDTO(Object o) {
         TwitterUser tu = (TwitterUser) o;
         TwitterUserDtO tuDTO = new TwitterUserDtO();
         tuDTO.setAccount(tu.getUsername());
@@ -20,11 +20,6 @@ public class TwitterUserFactory extends ValidateFactory implements ConvertDTO {
             tuDTO.setYourPosts(getListPostsDTO(tu.getPosts()));
         } else {
             tuDTO.setYourPosts(null);
-        }
-        if (tu.getMentions() != null) {
-            tuDTO.setYourMentions(getListMentionsDTO(tu.getMentions()));
-        } else {
-            tuDTO.setYourMentions(null);
         }
         return tuDTO;
     }

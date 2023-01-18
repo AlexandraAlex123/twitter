@@ -1,10 +1,7 @@
 package org.example.twitterApp.controlAndService.service.factory;
 
-import org.example.twitterApp.objectClassAndRepository.model.Mention;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
-import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
 
 import javax.transaction.Transactional;
 import java.security.MessageDigest;
@@ -12,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Transactional
 public class ValidateFactory extends ConvertDTOFactory {
@@ -58,27 +54,6 @@ public class ValidateFactory extends ConvertDTOFactory {
 
     public boolean validUser(TwitterUser tu) {
         return checkStringTu(tu.getUsername()) && checkStringTu(tu.getPassword());
-    }
-
-    public boolean alreadyMention(Post post, TwitterUser tuMention) {
-        List<Mention> mentions = tuMention.getMentions();
-        for (Mention mention : mentions) {
-            if (mention.getPostMention().getCreateDate() == post.getCreateDate()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    public boolean alreadyMention(Reply reply, TwitterUser tuMention) {
-        List<Mention> mentions = tuMention.getMentions();
-        for (Mention mention : mentions) {
-            if (mention.getPostMention().getCreateDate() == reply.getCreateDate()) {
-                return true;
-            }
-        }
-        return false;
     }
 
 

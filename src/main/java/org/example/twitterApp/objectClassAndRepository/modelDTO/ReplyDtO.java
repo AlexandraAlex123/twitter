@@ -1,5 +1,7 @@
 package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
+import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
+
 import java.util.Set;
 
 public class ReplyDtO implements Comparable<ReplyDtO> {
@@ -10,13 +12,8 @@ public class ReplyDtO implements Comparable<ReplyDtO> {
     Set<PostDTOFeed> replyReplies;
     Set<LikeDtO> replyLikes;
 
-    public ReplyDtO(String message, String createDate, boolean onlyMe, Set<PostDTOFeed> replyReplies, Set<LikeDtO> replyLikes) {
-        this.message = message;
-        this.createDate = createDate;
-        this.onlyMe = onlyMe;
-        this.replyReplies = replyReplies;
-        this.replyLikes = replyLikes;
-    }
+    Set<MentionDtO> mentionReply;
+
 
     public ReplyDtO() {
     }
@@ -61,6 +58,14 @@ public class ReplyDtO implements Comparable<ReplyDtO> {
         this.replyLikes = replyLikes;
     }
 
+    public Set<MentionDtO> getMentionReply() {
+        return mentionReply;
+    }
+
+    public void setMentionReply(Set<MentionDtO> mentionReply) {
+        this.mentionReply = mentionReply;
+    }
+
     @Override
     public String toString() {
         return "ReplyDtO{" +
@@ -69,6 +74,7 @@ public class ReplyDtO implements Comparable<ReplyDtO> {
                 ", onlyMe=" + onlyMe +
                 ", replyReplies=" + replyReplies +
                 ", replyLikes=" + replyLikes +
+                ", mentionReply=" + mentionReply +
                 '}';
     }
 

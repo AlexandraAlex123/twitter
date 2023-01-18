@@ -28,7 +28,6 @@ public class RegisterUser implements Comparable<RegisterUser>{
     @JoinColumn(name = "account", referencedColumnName = "username")
     private TwitterUser account;
 
-
     public RegisterUser() {
     }
 

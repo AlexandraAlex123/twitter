@@ -2,7 +2,6 @@ package org.example.twitterApp.controlAndService.controler;
 
 import org.example.twitterApp.controlAndService.service.PostService;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOMention;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Timestamp;
 import java.util.Set;
 
 @RestController
@@ -19,6 +17,10 @@ public class PostController {
     @Autowired
     private PostService pS;
 
+    @GetMapping(path = "/getFeeds")
+    public Set<PostDTOFeed> getFeeds(@RequestParam String username) {
+        return pS.getFeeds(username);
+    }
 
     @GetMapping(path = "/searchUserPosts")
     public Set<PostDtO> searchUserPosts(@RequestParam String username) {
@@ -35,10 +37,9 @@ public class PostController {
         return pS.addPostReply(id, message, userWhoReply);
     }
 
-
-    @GetMapping(path = "/getFeeds")
-    public Set<PostDTOFeed> getFeeds(@RequestParam String username) {
-        return pS.getFeeds(username);
+    @PutMapping(path = "/likeAPost")
+    public String addLikePost(@RequestParam Long id,@RequestParam String userWhoGivesLike) {
+        return pS.addLikePost(id, userWhoGivesLike);
     }
 
 }

@@ -21,19 +21,16 @@ public class TwitterUser implements Comparable<TwitterUser> {
     @Column(name = "create_date")
     private Timestamp createDate;
 
-    @Column(name = "last_login" )
+    @Column(name = "last_login")
     private Timestamp lastLogin;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userFollowing", cascade = CascadeType.ALL)
     private List<Follow> follows;
 
     @JsonIgnore
     @OneToMany(mappedBy = "userWhoPost", cascade = CascadeType.ALL)
     private List<Post> posts;
-
-    @OneToMany(mappedBy = "userMention", cascade = CascadeType.ALL)
-    public List<Mention> mentions;
-
 
     public TwitterUser() {
     }
@@ -86,13 +83,6 @@ public class TwitterUser implements Comparable<TwitterUser> {
         this.posts = posts;
     }
 
-    public List<Mention> getMentions() {
-        return mentions;
-    }
-
-    public void setMentions(List<Mention> mentions) {
-        this.mentions = mentions;
-    }
 
     @Override
     public int compareTo(TwitterUser o) {
@@ -108,7 +98,6 @@ public class TwitterUser implements Comparable<TwitterUser> {
                 ", lastLogin=" + lastLogin +
                 ", follows=" + follows +
                 ", posts=" + posts +
-                ", mentions=" + mentions +
                 '}';
     }
 }
