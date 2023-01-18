@@ -15,7 +15,7 @@ public class ValidateFactory extends ConvertDTOFactory {
 
     public boolean checkStringRu(String stringToCheck) {
         char[] c = stringToCheck.toCharArray();
-        if (!stringToCheck.equals(" ")) {
+        if (!stringToCheck.isEmpty()) {
             return c.length >= 2;
         }
         return false;
@@ -41,11 +41,11 @@ public class ValidateFactory extends ConvertDTOFactory {
     }
 
     public boolean isNotNull(TwitterUser tu) {
-        return !tu.getUsername().isEmpty() && !tu.getPassword().isEmpty();
+        return tu.getUsername() != null && tu.getPassword() != null;
     }
 
     public boolean isNotNull(RegisterUser ru) {
-        return !ru.getFirstName().isEmpty() && !ru.getLastName().isEmpty() && !ru.getEmail().isEmpty();
+        return ru.getFirstName() != null && ru.getLastName() !=null && ru.getEmail() != null;
     }
 
     public boolean validUser(RegisterUser ru) {

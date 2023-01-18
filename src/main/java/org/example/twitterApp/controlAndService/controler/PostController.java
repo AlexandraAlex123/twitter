@@ -22,7 +22,7 @@ public class PostController {
         return pS.getFeeds(username);
     }
 
-    @GetMapping(path = "/searchUserPosts")
+    @GetMapping(path = "/getYouOwnPosts")
     public Set<PostDtO> searchUserPosts(@RequestParam String username) {
         return pS.searchOnlyUserPosts(username);
     }

@@ -69,10 +69,9 @@ public class PostService extends ValidateFactory {
                         Post post = pR.findPostById(id);
                         Reply reply = createAndSaveReply(message, tus.getUserByUsername(userWhoReply), post);
                         if (message.contains("@")) {
-                            return addMentionReply(tus.getUserByUsername(userWhoReply), reply);
-                        } else {
-                            return "Comment add";
+                            return rs.addMentionReply(tus.getUserByUsername(userWhoReply), reply);
                         }
+                        return "Comment add";
                     } else {
                         return "Post not found";
                     }
@@ -86,21 +85,6 @@ public class PostService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public String addMentionReply(TwitterUser tuWhoReply, Reply reply) {
-        if (tuWhoReply.getFollows() != null) {
-            List<Follow> follows = tuWhoReply.getFollows();
-            Set<String> followMentionS = new TreeSet<>();
-            for (Follow f : follows) {
-                if (reply.getMessage().contains("@" + f.getUserFollow())) {
-                    TwitterUser tuMention = tus.getUserByUsername(f.getUserFollow());
-                    createAndSaveMentionReply(tuMention, reply);
-                    followMentionS.add(f.getUserFollow());
-                }
-            }
-            return "Comment add. You mention in this reply " + followMentionS;
-        }
-        return "Comment add";
-    }
 
     public String addLikePost(Long id, String userWhoGivesLike) {
         if (id != null && userWhoGivesLike != null) {
@@ -112,7 +96,7 @@ public class PostService extends ValidateFactory {
                             TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
                             createAndSaveLikePost(tuWhoGivesLike, post);
                             return "Like send";
-                        }else{
+                        } else {
                             return "Already liked";
                         }
                     } else {
@@ -141,7 +125,17 @@ public class PostService extends ValidateFactory {
         return null;
     }
 
-    public boolean alreadyLike(TwitterUser tuWhoGivesLike, Post post) {
+    public Set<PostDTOFeed> getFallowPosts(String username) {
+        Set<PostDTOFeed> postsDTOFeed = new TreeSet<>();
+        if (tus.validUsername(username)) {
+            List<Post> posts = pR.findAllByUsernamePublic(username);
+            postsDTOFeed = getListPostsDTOF(posts);
+            return postsDTOFeed;
+        }
+        return postsDTOFeed;
+    }
+
+    public static boolean alreadyLike(TwitterUser tuWhoGivesLike, Post post) {
         if (post.getLikes() != null) {
             List<LikePost> likePosts = post.getLikes();
             for (LikePost l : likePosts) {
@@ -149,16 +143,6 @@ public class PostService extends ValidateFactory {
             }
         }
         return false;
-    }
-
-    public Set<PostDTOFeed> getFallowPosts(String username) {
-        Set<PostDTOFeed> postsDTOFeed = new TreeSet<>();
-        if (tus.validUsername(username)) {
-            List<Post> posts = pR.findAllByUsername(username);
-            postsDTOFeed = getListPostsDTOF(posts);
-            return postsDTOFeed;
-        }
-        return postsDTOFeed;
     }
 
     public boolean postExists(Long id) {

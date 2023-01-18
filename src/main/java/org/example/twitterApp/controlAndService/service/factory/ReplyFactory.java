@@ -9,8 +9,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Objects.isNull;
-
 public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create {
 
 
@@ -18,8 +16,8 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
     public Reply createAndSave(Object... objects) {
         Reply replyNew = new Reply();
         TwitterUser tuWhoPost = new TwitterUser();
-        Post post = new Post();
-        Reply reply = new Reply();
+        Post post = null;
+        Reply reply = null;
         String message = null;
         for (Object o : objects) {
             if (o instanceof TwitterUser) {
@@ -32,8 +30,7 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
                 message = (String) o;
             }
         }
-        try {
-            if (!isNull(post)) {
+            if (post != null) {
                 replyNew.setMessage(message);
                 replyNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
                 replyNew.setOnlyMe(false);
@@ -45,7 +42,7 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
                 replies.add(replyNew);
                 post.setReplies(replies);
                 return replyNew;
-            } else if (!isNull(reply)) {
+            } else if (reply != null) {
                 replyNew.setMessage(message);
                 replyNew.setCreateDate(new Timestamp(System.currentTimeMillis()));
                 replyNew.setOnlyMe(false);
@@ -58,9 +55,6 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
                 reply.setReplies(replies);
                 return replyNew;
             }
-        } catch (NullPointerException e) {
-            System.out.println("Caught NullPointerException" + e.getMessage());
-        }
         return replyNew;
     }
 
