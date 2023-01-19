@@ -77,7 +77,6 @@ public class TwitterUserService extends ValidateFactory {
         return "Null parameter";
     }
 
-
     public String addAPost(String userWhoPost, String message) {
         if (userWhoPost != null && message != null) {
             if (checkStringTu(userWhoPost) && !message.equals(" ")) {

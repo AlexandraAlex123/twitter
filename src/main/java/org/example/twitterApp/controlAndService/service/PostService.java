@@ -31,6 +31,7 @@ public class PostService extends ValidateFactory {
     @Autowired
     private PostRepository pR;
 
+
     public Set<PostDtO> searchOnlyUserPosts(String username) {
         Set<PostDtO> postDTOs = new TreeSet<>();
         if (tus.validUsername(username)) {

@@ -15,6 +15,7 @@ public class RegisterUserController {
     @Autowired
     private RegisterUserService rUs;
 
+
     @PostMapping(path = "/singUp")
     public String singUp(@RequestBody RegisterUser ru) {
         return rUs.singUp(ru);

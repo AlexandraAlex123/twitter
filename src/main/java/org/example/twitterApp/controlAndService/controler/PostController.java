@@ -18,6 +18,7 @@ public class PostController {
     @Autowired
     private PostService pS;
 
+
     @GetMapping(path = "/getFeeds")
     public Set<PostDTOFeed> getFeeds(@RequestParam String username) {
         return pS.getFeeds(username);

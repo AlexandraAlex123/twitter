@@ -27,6 +27,7 @@ public class MentionService extends ValidateFactory {
     @Autowired
     private MentionReplyRepository mRr;
 
+
     public Set<MentionDtO> getYourMentionsPosts(String userMention) {
         Set<MentionDtO> allMentions = new TreeSet<>();
         if (tus.validUsername(userMention)) {

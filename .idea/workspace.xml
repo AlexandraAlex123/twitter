@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c45cdb1b-14cf-43b2-954c-fc9223c60a2f" name="Changes" comment="TwitterApp">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndService/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/controlAndService/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/TwitterUserDtO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/modelDTO/TwitterUserDtO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/FollowRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/FollowRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/twitterApp/objectClassAndRepository/repository/PostRepository.java" afterDir="false" />
-    </list>
+    <list default="true" id="c45cdb1b-14cf-43b2-954c-fc9223c60a2f" name="Changes" comment="TwitterApp" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -294,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674158530299</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="TwitterApp">
+      <created>1674159295491</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1674159295491</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
