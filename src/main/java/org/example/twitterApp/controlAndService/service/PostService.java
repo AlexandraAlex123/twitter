@@ -31,7 +31,6 @@ public class PostService extends ValidateFactory {
     @Autowired
     private PostRepository pR;
 
-
     public Set<PostDtO> searchOnlyUserPosts(String username) {
         Set<PostDtO> postDTOs = new TreeSet<>();
         if (tus.validUsername(username)) {
@@ -144,7 +143,6 @@ public class PostService extends ValidateFactory {
         return "Null parameter";
     }
 
-
     public Set<PostDTOFeed> filterPostsByDate(Set<PostDTOFeed> posts, Timestamp ts, Timestamp ts2) {
         Set<PostDTOFeed> filterPosts = new TreeSet<>();
         for (PostDTOFeed post : posts) {
@@ -154,7 +152,6 @@ public class PostService extends ValidateFactory {
         }
         return filterPosts;
     }
-
 
     public Set<PostDTOFeed> getFallowsPosts(TwitterUser tu) {
         Set<PostDTOFeed> followPosts = new TreeSet<>();
@@ -168,11 +165,9 @@ public class PostService extends ValidateFactory {
         return followPosts;
     }
 
-
     public Post getPostById(Long id) {
         return pR.findPostById(id);
     }
-
 
     public boolean postExists(Long id) {
         return pR.findPostById(id) != null;

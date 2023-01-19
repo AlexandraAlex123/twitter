@@ -55,7 +55,7 @@ public class RegisterUserService extends ValidateFactory {
                         } else {
                             return "Username not available";
                         }
-                    }else {
+                    } else {
                         return "Email already confirmed";
                     }
                 } else {

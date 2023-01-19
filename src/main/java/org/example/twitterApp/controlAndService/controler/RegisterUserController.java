@@ -31,7 +31,7 @@ public class RegisterUserController {
     }
 
     @DeleteMapping(path = "/deleteUser")
-    public String deleteUser(@RequestParam Long id){
+    public String deleteUser(@RequestParam Long id) {
         return rUs.deleteRegisterUser(id);
     }
 

@@ -9,7 +9,6 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
     Set<FollowDtO> yourFollows;
     Set<PostDtO> yourPosts;
 
-
     public TwitterUserDtO() {
     }
 
@@ -44,7 +43,6 @@ public class TwitterUserDtO implements Comparable<TwitterUserDtO> {
     public void setYourPosts(Set<PostDtO> yourPosts) {
         this.yourPosts = yourPosts;
     }
-
 
     @Override
     public int compareTo(TwitterUserDtO o) {

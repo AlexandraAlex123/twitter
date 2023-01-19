@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "reply")
 public class Reply extends PostBase {
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "reply_id", referencedColumnName = "id")
@@ -21,7 +22,6 @@ public class Reply extends PostBase {
 
     @OneToMany(mappedBy = "replyLike", cascade = CascadeType.ALL)
     private List<LikeReply> likes;
-
 
     @OneToMany(mappedBy = "replyMention", cascade = CascadeType.ALL)
     private List<MentionReply> mentions;

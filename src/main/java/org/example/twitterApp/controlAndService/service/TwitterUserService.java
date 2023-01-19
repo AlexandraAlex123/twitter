@@ -124,7 +124,7 @@ public class TwitterUserService extends ValidateFactory {
                 } else {
                     return "Account not found";
                 }
-            }else {
+            } else {
                 return "Invalid command";
             }
         }

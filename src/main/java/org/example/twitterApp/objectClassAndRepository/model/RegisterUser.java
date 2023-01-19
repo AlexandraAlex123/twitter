@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table
-public class RegisterUser implements Comparable<RegisterUser>{
+public class RegisterUser implements Comparable<RegisterUser> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

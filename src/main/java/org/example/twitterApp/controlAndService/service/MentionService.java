@@ -48,25 +48,25 @@ public class MentionService extends ValidateFactory {
     }
 
     public String deleteMention(Long id) {
-        if (id != null){
-            if(existsMentionPost(id)){
+        if (id != null) {
+            if (existsMentionPost(id)) {
                 mPr.deleteById(id);
                 return "Mention deleted";
             } else if (existsMentionReply(id)) {
                 mRr.deleteById(id);
                 return "Mention deleted";
-            }else {
+            } else {
                 return "Mention not found";
             }
         }
         return " Null parameter";
     }
 
-    public boolean existsMentionPost(Long id){
+    public boolean existsMentionPost(Long id) {
         return mPr.findById(id).isPresent();
     }
 
-    public boolean existsMentionReply(Long id){
+    public boolean existsMentionReply(Long id) {
         return mRr.findById(id).isPresent();
     }
 }

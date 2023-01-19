@@ -71,7 +71,6 @@ public class PostBase implements Comparable<PostBase> {
         this.userWhoPost = userWhoPost;
     }
 
-
     @Override
     public int compareTo(PostBase o) {
         return this.createDate.compareTo(o.getCreateDate());

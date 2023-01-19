@@ -20,7 +20,7 @@ public class ReplyController {
     }
 
     @PutMapping(path = "/likeAComment")
-    public String addLikePost(@RequestParam Long id,@RequestParam String userWhoGivesLike) {
+    public String addLikePost(@RequestParam Long id, @RequestParam String userWhoGivesLike) {
         return rs.addLikeReply(id, userWhoGivesLike);
     }
 
@@ -30,7 +30,7 @@ public class ReplyController {
     }
 
     @DeleteMapping(path = "/deleteReply")
-    public String deleteReply(@RequestParam Long id){
+    public String deleteReply(@RequestParam Long id) {
         return rs.deleteReply(id);
     }
 }

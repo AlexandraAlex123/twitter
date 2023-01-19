@@ -34,7 +34,7 @@ public class PostController {
     }
 
     @PutMapping(path = "/likeAPost")
-    public String addLikePost(@RequestParam Long id,@RequestParam String userWhoGivesLike) {
+    public String addLikePost(@RequestParam Long id, @RequestParam String userWhoGivesLike) {
         return pS.addLikePost(id, userWhoGivesLike);
     }
 
@@ -44,12 +44,12 @@ public class PostController {
     }
 
     @DeleteMapping(path = "/deletePost")
-    public String deletePost(@RequestParam Long id){
+    public String deletePost(@RequestParam Long id) {
         return pS.deletePost(id);
     }
 
     @DeleteMapping(path = "/deleteLike")
-    public String deleteLike(@RequestParam Long id){
+    public String deleteLike(@RequestParam Long id) {
         return ls.deleteLike(id);
     }
 }

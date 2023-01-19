@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "mention_reply")
-public class MentionReply extends Mention{
+public class MentionReply extends Mention {
 
     @ManyToOne
     @JoinColumn(name = "reply_id")

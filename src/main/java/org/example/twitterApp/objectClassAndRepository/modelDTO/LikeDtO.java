@@ -2,9 +2,8 @@ package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
 public class LikeDtO implements Comparable<LikeDtO> {
 
-    private String whoGivesLike;
-    private String createDate;
-
+    String whoGivesLike;
+    String createDate;
 
     public LikeDtO() {
     }

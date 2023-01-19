@@ -13,6 +13,7 @@ public class TwitterUserController {
 
     @Autowired
     private FollowService fs;
+
     @Autowired
     private TwitterUserService tUs;
 
@@ -38,12 +39,12 @@ public class TwitterUserController {
     }
 
     @DeleteMapping(path = "/deleteAccount")
-    public String deleteAccount(@RequestParam String username){
+    public String deleteAccount(@RequestParam String username) {
         return tUs.deleteTwitterUser(username);
     }
 
     @DeleteMapping(path = "/unfollow")
-    public String deleteFollow(@RequestParam Long id){
+    public String deleteFollow(@RequestParam Long id) {
         return fs.deleteFollow(id);
     }
 

@@ -17,25 +17,25 @@ public class LikeService {
     private LikeReplyRepository lRr;
 
     public String deleteLike(Long id) {
-        if (id != null){
-            if(existsLikePost(id)){
+        if (id != null) {
+            if (existsLikePost(id)) {
                 lPr.deleteById(id);
                 return "Like deleted";
             } else if (existsLikeReply(id)) {
                 lRr.deleteById(id);
                 return "Like deleted";
-            }else {
+            } else {
                 return "Like not found";
             }
         }
         return " Null parameter";
     }
 
-    public boolean existsLikePost(Long id){
+    public boolean existsLikePost(Long id) {
         return lPr.findById(id).isPresent();
     }
 
-    public boolean existsLikeReply(Long id){
+    public boolean existsLikeReply(Long id) {
         return lRr.findById(id).isPresent();
     }
 }

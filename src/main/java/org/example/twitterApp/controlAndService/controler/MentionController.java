@@ -22,7 +22,7 @@ public class MentionController {
     }
 
     @DeleteMapping(path = "/deleteMention")
-    public String deleteMention(@RequestParam Long id){
+    public String deleteMention(@RequestParam Long id) {
         return mps.deleteMention(id);
     }
 }

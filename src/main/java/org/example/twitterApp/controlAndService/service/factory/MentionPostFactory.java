@@ -9,10 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MentionPostFactory extends ValidateFactory implements ConvertDTO, Create{
+public class MentionPostFactory extends ValidateFactory implements ConvertDTO, Create {
 
     @Override
-    public MentionPost createAndSave( Object... objects) {
+    public MentionPost createAndSave(Object... objects) {
         TwitterUser tuMention = new TwitterUser();
         Post post = new Post();
         for (Object o : objects) {
@@ -27,7 +27,7 @@ public class MentionPostFactory extends ValidateFactory implements ConvertDTO, C
         mentionPost.setUserMention(tuMention);
         mentionPost.setPostMention(post);
         List<MentionPost> mentions = new ArrayList<>();
-        if(post.getMentions() != null) {
+        if (post.getMentions() != null) {
             mentions = post.getMentions();
         }
         mentions.add(mentionPost);

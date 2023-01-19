@@ -21,7 +21,6 @@ public class Mention {
     @JoinColumn(name = "user_mention")
     private TwitterUser userMention;
 
-
     public Mention() {
     }
 
@@ -33,7 +32,6 @@ public class Mention {
         this.id = id;
     }
 
-
     public Timestamp getCreateDate() {
         return createDate;
     }
@@ -41,7 +39,6 @@ public class Mention {
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
-
 
     public TwitterUser getUserMention() {
         return userMention;

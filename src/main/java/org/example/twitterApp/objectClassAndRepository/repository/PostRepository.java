@@ -17,12 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                    "WHERE user_who_post = :username")
     List<Post> findAllByUsername(@Param("username") String username);
 
-    @Query(value = "SELECT p " +
-                   "FROM Post p " +
-                   "WHERE (date_of_posting " +
-                   "BETWEEN :timestamp and :timestamp2)")
-    List<Post> findPostsBetweenDates(@Param("timestamp") Timestamp timestamp, @Param("timestamp2") Timestamp timestamp2);
-
     @Query(value = "SELECT p FROM Post p WHERE p.id = :id")
     Post findPostById(@Param("id") Long id);
 

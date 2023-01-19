@@ -33,7 +33,6 @@ public class MentionDtO implements Comparable<MentionDtO> {
         this.mentionPost = mentionPost;
     }
 
-
     @Override
     public String toString() {
         return "MentionDtO{" +

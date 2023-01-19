@@ -26,7 +26,7 @@ public class FollowService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public boolean existsFollow(Long id){
+    public boolean existsFollow(Long id) {
         return fR.findById(id).isPresent();
     }
 

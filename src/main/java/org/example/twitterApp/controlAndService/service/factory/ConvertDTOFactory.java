@@ -46,7 +46,6 @@ public class ConvertDTOFactory extends CreateFactory {
         }
     }
 
-
     public Set<PostDtO> getListPostsDTO(List<Post> posts) {
         Set<PostDtO> postDTOs = new TreeSet<>();
         for (Post post : posts) {
@@ -88,7 +87,6 @@ public class ConvertDTOFactory extends CreateFactory {
         PostsMentionDTO postDTOM = (PostsMentionDTO) convertDTO.convertToDTO(reply);
         return postDTOM;
     }
-
 
     public Set<LikeDtO> getListLikesPostDTO(List<LikePost> likes) {
         Set<LikeDtO> likeDTOs = new TreeSet<>();

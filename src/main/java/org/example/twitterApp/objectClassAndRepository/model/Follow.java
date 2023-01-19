@@ -69,6 +69,6 @@ public class Follow implements Comparable<Follow> {
 
     @Override
     public int compareTo(Follow o) {
-       return this.createDate.compareTo(o.createDate);
+        return this.createDate.compareTo(o.createDate);
     }
 }

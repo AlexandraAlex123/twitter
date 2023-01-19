@@ -27,7 +27,7 @@ public class MentionReplyFactory extends ValidateFactory implements ConvertDTO, 
         mentionReply.setUserMention(tuMention);
         mentionReply.setReplyMention(reply);
         List<MentionReply> mentions = new ArrayList<>();
-        if(reply.getMentions() != null) {
+        if (reply.getMentions() != null) {
             mentions = reply.getMentions();
         }
         mentions.add(mentionReply);
