@@ -20,7 +20,6 @@ public class Post extends PostBase {
     @OneToMany(mappedBy = "postLike",cascade = CascadeType.ALL)
     private List<LikePost> likes;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "postMention",cascade = CascadeType.ALL)
     private List<MentionPost> mentions;
 

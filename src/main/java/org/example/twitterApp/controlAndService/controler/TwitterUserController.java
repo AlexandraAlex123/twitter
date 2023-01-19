@@ -1,7 +1,7 @@
 package org.example.twitterApp.controlAndService.controler;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.example.twitterApp.controlAndService.service.FollowService;
 import org.example.twitterApp.controlAndService.service.TwitterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +11,8 @@ import java.util.Set;
 @RestController
 public class TwitterUserController {
 
+    @Autowired
+    private FollowService fs;
     @Autowired
     private TwitterUserService tUs;
 
@@ -33,6 +35,16 @@ public class TwitterUserController {
     @PutMapping(path = "/addAPost")
     public String addAPost(@RequestParam String username, @RequestParam String message) {
         return tUs.addAPost(username, message);
+    }
+
+    @DeleteMapping(path = "/deleteAccount")
+    public String deleteAccount(@RequestParam String username){
+        return tUs.deleteTwitterUser(username);
+    }
+
+    @DeleteMapping(path = "/unfollow")
+    public String deleteFollow(@RequestParam Long id){
+        return fs.deleteFollow(id);
     }
 
 }

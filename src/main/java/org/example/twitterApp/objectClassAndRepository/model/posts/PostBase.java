@@ -23,7 +23,7 @@ public class PostBase implements Comparable<PostBase> {
     @Column(name = "not_public")
     private Boolean onlyMe;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_who_post")
     private TwitterUser userWhoPost;
 

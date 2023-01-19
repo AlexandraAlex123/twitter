@@ -77,6 +77,7 @@ public class TwitterUserService extends ValidateFactory {
         return "Null parameter";
     }
 
+
     public String addAPost(String userWhoPost, String message) {
         if (userWhoPost != null && message != null) {
             if (checkStringTu(userWhoPost) && !message.equals(" ")) {
@@ -99,16 +100,35 @@ public class TwitterUserService extends ValidateFactory {
     }
 
     public String addMentionPost(TwitterUser tuWhoPost, Post post) {
-        List<Follow> follows = tuWhoPost.getFollows();
-        List<String> followMentionS = new ArrayList<>();
-        for (Follow f : follows) {
-            if (post.getMessage().contains("@" + f.getUserFollow())) {
-                TwitterUser tuMention = getUserByUsername(f.getUserFollow());
-                createAndSaveMentionPost(tuMention, post);
-                followMentionS.add(f.getUserFollow());
+        if (tuWhoPost.getPosts() != null) {
+            List<Follow> follows = tuWhoPost.getFollows();
+            List<String> followMentionS = new ArrayList<>();
+            for (Follow f : follows) {
+                if (post.getMessage().contains("@" + f.getUserFollow())) {
+                    TwitterUser tuMention = getUserByUsername(f.getUserFollow());
+                    createAndSaveMentionPost(tuMention, post);
+                    followMentionS.add(f.getUserFollow());
+                }
+            }
+            return "Post uploaded. You mention in this post " + followMentionS;
+        }
+        return "Comment add";
+    }
+
+    public String deleteTwitterUser(String username) {
+        if (username != null) {
+            if (checkStringTu(username)) {
+                if (usernameExists(username)) {
+                    tUr.deleteById(username);
+                    return "Account deleted";
+                } else {
+                    return "Account not found";
+                }
+            }else {
+                return "Invalid command";
             }
         }
-        return "Post uploaded. You mention in this post " + followMentionS;
+        return "Null parameter";
     }
 
     public TwitterUser getUserByUsername(String username) {
@@ -120,7 +140,7 @@ public class TwitterUserService extends ValidateFactory {
     }
 
     public boolean validUsername(String username) {
-        return !username.isEmpty() && checkStringTu(username) && usernameExists(username);
+        return username != null && checkStringTu(username) && usernameExists(username);
     }
 
 }

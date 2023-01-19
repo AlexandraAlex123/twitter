@@ -53,7 +53,7 @@ public class PostFactory extends ValidateFactory implements ConvertDTO, Create {
             postDTO.setPostReplies(null);
         }
         if (post.getMentions() != null) {
-            postDTO.setMentionPost(getListMentionPostDTO(post.getMentions()));
+            postDTO.setMentionPost(getListMentionForPostDTO(post.getMentions()));
         }
         return postDTO;
     }

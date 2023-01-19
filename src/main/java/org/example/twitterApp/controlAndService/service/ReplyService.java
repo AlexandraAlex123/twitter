@@ -95,11 +95,27 @@ public class ReplyService extends ValidateFactory {
             if (replyExists(id)) {
                 Reply reply = getReplyById(id);
                 reply.setOnlyMe(true);
-                reply.getReplies().get(0).setOnlyMe(true);
-                reply.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
+                if (reply.getReplies().size() > 0) {
+                    reply.getReplies().get(0).setOnlyMe(true);
+                    if (reply.getReplies().get(0).getReplies().size() > 0) {
+                        reply.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
+                    }
+                }
                 return "Post not public";
             } else {
                 return "Post not found";
+            }
+        }
+        return "Null parameter";
+    }
+
+    public String deleteReply(Long id) {
+        if (id != null) {
+            if (replyExists(id)) {
+                rR.deleteById(id);
+                return "Comment deleted";
+            } else {
+                return "Comment not found";
             }
         }
         return "Null parameter";

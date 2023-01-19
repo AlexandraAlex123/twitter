@@ -30,4 +30,9 @@ public class RegisterUserController {
         return rUs.searchUser(keyWord);
     }
 
+    @DeleteMapping(path = "/deleteUser")
+    public String deleteUser(@RequestParam Long id){
+        return rUs.deleteRegisterUser(id);
+    }
+
 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "like_reply")
 public class LikeReply extends Like {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "reply_id")
     private Reply replyLike;
 

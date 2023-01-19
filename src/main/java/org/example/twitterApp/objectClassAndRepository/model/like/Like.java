@@ -16,7 +16,7 @@ public class Like {
     @Column(name = "create_date")
     private Timestamp createDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "who_gives_like")
     private TwitterUser whoGivesLike;
 

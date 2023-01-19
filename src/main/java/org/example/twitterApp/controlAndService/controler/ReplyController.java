@@ -3,6 +3,7 @@ package org.example.twitterApp.controlAndService.controler;
 
 import org.example.twitterApp.controlAndService.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +27,10 @@ public class ReplyController {
     @PutMapping(path = "makeCommentNotPublic")
     public String makeAReplyNotPublic(@RequestParam Long id) {
         return rs.makeAReplyNotPublic(id);
+    }
+
+    @DeleteMapping(path = "/deleteReply")
+    public String deleteReply(@RequestParam Long id){
+        return rs.deleteReply(id);
     }
 }

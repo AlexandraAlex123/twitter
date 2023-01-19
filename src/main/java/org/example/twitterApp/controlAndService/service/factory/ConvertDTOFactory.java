@@ -31,12 +31,16 @@ public class ConvertDTOFactory extends CreateFactory {
                 return new LikePostFactory();
             case "likeR":
                 return new LikeReplyFactory();
+            case "mention":
+                return new MentionForPostFactory();
             case "mentionP":
                 return new MentionPostFactory();
             case "mentionR":
                 return new MentionReplyFactory();
             case "postF":
                 return new PostFeedFactory();
+            case "postM":
+                return new PostsMentionFactory();
             default:
                 throw new IllegalArgumentException("Unknown channel " + channel);
         }
@@ -64,16 +68,27 @@ public class ConvertDTOFactory extends CreateFactory {
     }
 
     public Set<PostDTOFeed> getListPostsDTOF(List<Post> posts) {
-        Set<PostDTOFeed> postDTOs = new TreeSet<>();
+        Set<PostDTOFeed> postDTOFs = new TreeSet<>();
         for (Post post : posts) {
-            if (!post.getOnlyMe()) {
-                ConvertDTO convertDTO = factory("postF");
-                PostDTOFeed postDTOFeed = (PostDTOFeed) convertDTO.convertToDTO(post);
-                postDTOs.add(postDTOFeed);
-            }
+            ConvertDTO convertDTO = factory("postF");
+            PostDTOFeed postDTOF = (PostDTOFeed) convertDTO.convertToDTO(post);
+            postDTOFs.add(postDTOF);
         }
-        return postDTOs;
+        return postDTOFs;
     }
+
+    public PostsMentionDTO getPostMentionDTO(Post post) {
+        ConvertDTO convertDTO = factory("postM");
+        PostsMentionDTO postDTOM = (PostsMentionDTO) convertDTO.convertToDTO(post);
+        return postDTOM;
+    }
+
+    public PostsMentionDTO getPostMentionDTO(Reply reply) {
+        ConvertDTO convertDTO = factory("postM");
+        PostsMentionDTO postDTOM = (PostsMentionDTO) convertDTO.convertToDTO(reply);
+        return postDTOM;
+    }
+
 
     public Set<LikeDtO> getListLikesPostDTO(List<LikePost> likes) {
         Set<LikeDtO> likeDTOs = new TreeSet<>();
@@ -105,21 +120,41 @@ public class ConvertDTOFactory extends CreateFactory {
         return followDTOs;
     }
 
-    public Set<MentionDtO> getListMentionPostDTO(List<MentionPost> mentions) {
-        Set<MentionDtO> mentionDtOS = new TreeSet<>();
+    public Set<MentionForPostDTO> getListMentionForPostDTO(List<MentionPost> mentions) {
+        Set<MentionForPostDTO> mentionDtOS = new TreeSet<>();
         for (MentionPost mentionPost : mentions) {
-            ConvertDTO convertDTO = factory("mentionP");
-            MentionDtO mentionDtO = (MentionDtO) convertDTO.convertToDTO(mentionPost);
+            ConvertDTO convertDTO = factory("mention");
+            MentionForPostDTO mentionDtO = (MentionForPostDTO) convertDTO.convertToDTO(mentionPost);
             mentionDtOS.add(mentionDtO);
         }
         return mentionDtOS;
     }
 
-    public Set<MentionDtO> getListMentionReplyDTO(List<MentionReply> mentions) {
-        Set<MentionDtO> mentionDtOS = new TreeSet<>();
+    public Set<MentionForPostDTO> getListMentionForReplyDTO(List<MentionReply> mentions) {
+        Set<MentionForPostDTO> mentionDtOS = new TreeSet<>();
         for (MentionReply mentionReply : mentions) {
+            ConvertDTO convertDTO = factory("mention");
+            MentionForPostDTO mentionDtO = (MentionForPostDTO) convertDTO.convertToDTO(mentionReply);
+            mentionDtOS.add(mentionDtO);
+        }
+        return mentionDtOS;
+    }
+
+    public Set<MentionDtO> getListMentionPostDTO(List<MentionPost> mentionPs) {
+        Set<MentionDtO> mentionDtOS = new TreeSet<>();
+        for (MentionPost mentionP : mentionPs) {
+            ConvertDTO convertDTO = factory("mentionP");
+            MentionDtO mentionDtO = (MentionDtO) convertDTO.convertToDTO(mentionP);
+            mentionDtOS.add(mentionDtO);
+        }
+        return mentionDtOS;
+    }
+
+    public Set<MentionDtO> getListMentionReplyDTO(List<MentionReply> mentionRs) {
+        Set<MentionDtO> mentionDtOS = new TreeSet<>();
+        for (MentionReply mentionR : mentionRs) {
             ConvertDTO convertDTO = factory("mentionR");
-            MentionDtO mentionDtO = (MentionDtO) convertDTO.convertToDTO(mentionReply);
+            MentionDtO mentionDtO = (MentionDtO) convertDTO.convertToDTO(mentionR);
             mentionDtOS.add(mentionDtO);
         }
         return mentionDtOS;

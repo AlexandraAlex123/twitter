@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "mention_post")
 public class MentionPost extends Mention {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post postMention;
 

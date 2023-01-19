@@ -42,15 +42,22 @@ public class PostService extends ValidateFactory {
         return postDTOs;
     }
 
+    public Set<PostDTOFeed> getNewFeeds(String username) {
+        Set<PostDTOFeed> postDTOFs = new TreeSet<>();
+        if (tus.validUsername(username)) {
+            TwitterUser tu = tus.getUserByUsername(username);
+            Timestamp ts = tu.getLastLogin();
+            postDTOFs = filterPostsByDate(getFallowsPosts(tu), ts, new Timestamp(System.currentTimeMillis()));
+            return postDTOFs;
+        }
+        return postDTOFs;
+    }
+
     public Set<PostDTOFeed> getFeeds(String username) {
         Set<PostDTOFeed> allFollowPost = new TreeSet<>();
         if (tus.validUsername(username)) {
             TwitterUser tu = tus.getUserByUsername(username);
-            List<Follow> follows = tu.getFollows();
-            for (Follow f : follows) {
-                Set<PostDTOFeed> followPosts = getFallowPosts(f.getUserFollow());
-                allFollowPost.addAll(followPosts);
-            }
+            allFollowPost = getFallowsPosts(tu);
             return allFollowPost;
         }
         return allFollowPost;
@@ -61,7 +68,7 @@ public class PostService extends ValidateFactory {
             if (!message.equals(" ") && checkStringTu(userWhoReply)) {
                 if (tus.usernameExists(userWhoReply)) {
                     if (postExists(id)) {
-                        Post post = pR.findPostById(id);
+                        Post post = getPostById(id);
                         Reply reply = createAndSaveReply(message, tus.getUserByUsername(userWhoReply), post);
                         if (message.contains("@")) {
                             return rs.addMentionReply(tus.getUserByUsername(userWhoReply), reply);
@@ -84,7 +91,7 @@ public class PostService extends ValidateFactory {
         if (id != null && userWhoGivesLike != null) {
             if (checkStringTu(userWhoGivesLike)) {
                 if (tus.usernameExists(userWhoGivesLike)) {
-                    Post post = pR.findPostById(id);
+                    Post post = getPostById(id);
                     if (postExists(id)) {
                         if (!alreadyLike(tus.getUserByUsername(userWhoGivesLike), post)) {
                             TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
@@ -111,8 +118,12 @@ public class PostService extends ValidateFactory {
             if (postExists(id)) {
                 Post post = getPostById(id);
                 post.setOnlyMe(true);
-                post.getReplies().get(0).setOnlyMe(true);
-                post.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
+                if (post.getReplies().size() > 0) {
+                    post.getReplies().get(0).setOnlyMe(true);
+                    if (post.getReplies().get(0).getReplies().size() > 0) {
+                        post.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
+                    }
+                }
                 return "Post not public";
             } else {
                 return "Post not found";
@@ -121,32 +132,47 @@ public class PostService extends ValidateFactory {
         return "Null parameter";
     }
 
-    public Set<PostDtO> filterPostsByDate(Set<PostDtO> postDTOs, Timestamp ts, Timestamp ts2) {
-        if (ts != null && ts2 != null) {
-            Set<PostDtO> filterPosts = new TreeSet<>();
-            for (PostDtO postDTO : postDTOs) {
-                if (postDTO.getCreateDate().compareTo(getDateAndTime(ts)) <= -1 && postDTO.getCreateDate().compareTo(getDateAndTime(ts2)) >= 1) {
-                    filterPosts.add(postDTO);
-                }
+    public String deletePost(Long id) {
+        if (id != null) {
+            if (postExists(id)) {
+                pR.deleteById(id);
+                return "Post deleted";
+            } else {
+                return "Post not found";
             }
-            return filterPosts;
         }
-        return null;
+        return "Null parameter";
     }
 
-    public Set<PostDTOFeed> getFallowPosts(String username) {
-        Set<PostDTOFeed> postsDTOFeed = new TreeSet<>();
-        if (tus.validUsername(username)) {
-            List<Post> posts = pR.findAllByUsernamePublic(username);
-            postsDTOFeed = getListPostsDTOF(posts);
-            return postsDTOFeed;
+
+    public Set<PostDTOFeed> filterPostsByDate(Set<PostDTOFeed> posts, Timestamp ts, Timestamp ts2) {
+        Set<PostDTOFeed> filterPosts = new TreeSet<>();
+        for (PostDTOFeed post : posts) {
+            if (post.getCreateDate().compareTo(getDateAndTime(ts)) <= -1 && post.getCreateDate().compareTo(getDateAndTime(ts2)) >= 1) {
+                filterPosts.add(post);
+            }
         }
-        return postsDTOFeed;
+        return filterPosts;
     }
+
+
+    public Set<PostDTOFeed> getFallowsPosts(TwitterUser tu) {
+        Set<PostDTOFeed> followPosts = new TreeSet<>();
+        if (tu.getFollows() != null) {
+            List<Follow> follows = tu.getFollows();
+            for (Follow f : follows) {
+                List<Post> posts = pR.findAllByUsernamePublic(f.getUserFollow());
+                followPosts.addAll(getListPostsDTOF(posts));
+            }
+        }
+        return followPosts;
+    }
+
 
     public Post getPostById(Long id) {
         return pR.findPostById(id);
     }
+
 
     public boolean postExists(Long id) {
         return pR.findPostById(id) != null;

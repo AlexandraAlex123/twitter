@@ -17,7 +17,7 @@ public class Mention {
     @Column(name = "time_mention")
     private Timestamp createDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_mention")
     private TwitterUser userMention;
 

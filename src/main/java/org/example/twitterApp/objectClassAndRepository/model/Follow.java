@@ -18,7 +18,7 @@ public class Follow implements Comparable<Follow> {
     @Column(name = "user_follow")
     private String userFollow;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_following")
     private TwitterUser userFollowing;
 

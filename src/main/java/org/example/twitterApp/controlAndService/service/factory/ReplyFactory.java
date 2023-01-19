@@ -78,7 +78,7 @@ public class ReplyFactory extends ValidateFactory implements ConvertDTO, Create 
             replyDTO.setReplyReplies(null);
         }
         if (reply.getMentions() != null) {
-            replyDTO.setMentionReply(getListMentionReplyDTO(reply.getMentions()));
+            replyDTO.setMentionReply(this.getListMentionForReplyDTO(reply.getMentions()));
         }
         return replyDTO;
     }

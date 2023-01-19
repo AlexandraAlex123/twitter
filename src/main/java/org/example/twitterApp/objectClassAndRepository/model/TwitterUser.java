@@ -24,11 +24,9 @@ public class TwitterUser implements Comparable<TwitterUser> {
     @Column(name = "last_login")
     private Timestamp lastLogin;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "userFollowing", cascade = CascadeType.ALL)
     private List<Follow> follows;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "userWhoPost", cascade = CascadeType.ALL)
     private List<Post> posts;
 

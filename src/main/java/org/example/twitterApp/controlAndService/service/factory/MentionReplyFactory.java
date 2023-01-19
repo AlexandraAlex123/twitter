@@ -36,12 +36,13 @@ public class MentionReplyFactory extends ValidateFactory implements ConvertDTO, 
     }
 
     @Override
-    public MentionDtO convertToDTO(Object o) {
+    public Object convertToDTO(Object o) {
         MentionDtO mentionDTO = new MentionDtO();
-        MentionReply mentionReply = (MentionReply) o;
-        mentionDTO.setCreateDate(getDateAndTime(mentionReply.getCreateDate()));
-        mentionDTO.setUserMention(mentionReply.getUserMention().getUsername());
+        MentionReply mentionR = (MentionReply) o;
+        mentionDTO.setUserMention(mentionR.getUserMention().getUsername());
+        mentionDTO.setTimeMention(getDateAndTime(mentionR.getCreateDate()));
+        mentionDTO.setMentionPost(getPostMentionDTO(mentionR.getReplyMention()));
         return mentionDTO;
     }
-
 }
+

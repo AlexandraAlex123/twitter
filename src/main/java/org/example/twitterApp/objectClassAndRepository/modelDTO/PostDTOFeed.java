@@ -10,11 +10,9 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
     String message;
     String createDate;
     boolean onlyMe;
-    Set<ReplyDtO> postReplies;
     Set<LikeDtO> postLikes;
-
-    Set<MentionDtO> mentions;
-
+    Set<MentionForPostDTO> mentions;
+    Set<ReplyDtO> postReplies;
 
     public PostDTOFeed() {
     }
@@ -67,11 +65,11 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
         this.postLikes = postLikes;
     }
 
-    public Set<MentionDtO> getMentions() {
+    public Set<MentionForPostDTO> getMentions() {
         return mentions;
     }
 
-    public void setMentions(Set<MentionDtO> mentions) {
+    public void setMentions(Set<MentionForPostDTO> mentions) {
         this.mentions = mentions;
     }
 
@@ -88,9 +86,9 @@ public class PostDTOFeed implements Comparable<PostDTOFeed> {
                 ", message='" + message + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", onlyMe=" + onlyMe +
-                ", postReplies=" + postReplies +
                 ", postLikes=" + postLikes +
                 ", mentions=" + mentions +
+                ", postReplies=" + postReplies +
                 '}';
     }
 }

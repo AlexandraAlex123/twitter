@@ -10,21 +10,23 @@ import java.util.List;
 @Entity
 @Table(name = "reply")
 public class Reply extends PostBase {
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "reply_id", referencedColumnName = "id")
     private Reply replyReply;
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "replyReply")
     private List<Reply> replies;
 
     @OneToMany(mappedBy = "replyLike", cascade = CascadeType.ALL)
     private List<LikeReply> likes;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "replyMention", cascade = CascadeType.ALL)
     private List<MentionReply> mentions;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post replyPost;
 

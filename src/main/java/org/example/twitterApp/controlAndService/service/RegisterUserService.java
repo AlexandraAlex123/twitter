@@ -47,12 +47,16 @@ public class RegisterUserService extends ValidateFactory {
             if (valid(tu)) {
                 if (emailExists(email)) {
                     RegisterUser ru = rUr.findUserByEmail(email);
-                    if (!usernameExists(tu.getUsername())) {
-                        tu.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                        ru.setAccount(tu);
-                        return "Account created";
-                    } else {
-                        return "Username not available";
+                    if (ru.getAccount() == null) {
+                        if (!usernameExists(tu.getUsername())) {
+                            tu.setCreateDate(new Timestamp(System.currentTimeMillis()));
+                            ru.setAccount(tu);
+                            return "Account created";
+                        } else {
+                            return "Username not available";
+                        }
+                    }else {
+                        return "Email already confirmed";
                     }
                 } else {
                     return "User not found";
@@ -80,12 +84,28 @@ public class RegisterUserService extends ValidateFactory {
         return ruSFind;
     }
 
+    public String deleteRegisterUser(Long id) {
+        if (id != null) {
+            if (ruExists(id)) {
+                rUr.deleteById(id);
+                return "User deleted";
+            } else {
+                return "User not found";
+            }
+        }
+        return "Null parameter";
+    }
+
     public boolean usernameExists(String username) {
         return !isNull(rUr.findUserByUsername(username));
     }
 
     public boolean emailExists(String email) {
         return rUr.findUserByEmail(email) != null;
+    }
+
+    public boolean ruExists(Long id) {
+        return rUr.findById(id).isPresent();
     }
 
 }

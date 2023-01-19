@@ -1,18 +1,19 @@
 package org.example.twitterApp.controlAndService.controler;
 
+import org.example.twitterApp.controlAndService.service.LikeService;
 import org.example.twitterApp.controlAndService.service.PostService;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
 @RestController
 public class PostController {
+
+    @Autowired
+    private LikeService ls;
 
     @Autowired
     private PostService pS;
@@ -27,11 +28,6 @@ public class PostController {
         return pS.searchOnlyUserPosts(username);
     }
 
-//    @GetMapping(path = "/filterPosts")
-//    public Set<PostDtO> filterPosts(@RequestParam Set<PostDtO> postDTOs, @RequestParam Timestamp ts, @RequestParam Timestamp ts2) {
-//        return pS.filterPostsByDate(postDTOs, ts, ts2);
-//    }
-
     @PutMapping(path = "/leaveComment")
     public String addAReply(@RequestParam Long id, @RequestParam String message, @RequestParam String userWhoReply) {
         return pS.addPostReply(id, message, userWhoReply);
@@ -42,9 +38,18 @@ public class PostController {
         return pS.addLikePost(id, userWhoGivesLike);
     }
 
-    @PutMapping(path = "makePostNotPublic")
+    @PutMapping(path = "/makePostNotPublic")
     public String makeAPostNotPublic(@RequestParam Long id) {
         return pS.makeAPostNotPublic(id);
     }
 
+    @DeleteMapping(path = "/deletePost")
+    public String deletePost(@RequestParam Long id){
+        return pS.deletePost(id);
+    }
+
+    @DeleteMapping(path = "/deleteLike")
+    public String deleteLike(@RequestParam Long id){
+        return ls.deleteLike(id);
+    }
 }

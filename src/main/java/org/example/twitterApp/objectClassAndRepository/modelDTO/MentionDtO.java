@@ -3,18 +3,10 @@ package org.example.twitterApp.objectClassAndRepository.modelDTO;
 public class MentionDtO implements Comparable<MentionDtO> {
 
     String userMention;
-    String createDate;
+    String timeMention;
+    PostsMentionDTO mentionPost;
 
     public MentionDtO() {
-    }
-
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
     }
 
     public String getUserMention() {
@@ -25,17 +17,35 @@ public class MentionDtO implements Comparable<MentionDtO> {
         this.userMention = userMention;
     }
 
+    public String getTimeMention() {
+        return timeMention;
+    }
+
+    public void setTimeMention(String timeMention) {
+        this.timeMention = timeMention;
+    }
+
+    public PostsMentionDTO getMentionPost() {
+        return mentionPost;
+    }
+
+    public void setMentionPost(PostsMentionDTO mentionPost) {
+        this.mentionPost = mentionPost;
+    }
+
+
     @Override
     public String toString() {
         return "MentionDtO{" +
                 "userMention='" + userMention + '\'' +
-                ", createDate='" + createDate + '\'' +
+                ", timeMention='" + timeMention + '\'' +
+                ", mentionPost=" + mentionPost +
                 '}';
     }
 
     @Override
     public int compareTo(MentionDtO o) {
-        int i = this.createDate.compareTo(o.getCreateDate());
+        int i = this.timeMention.compareTo(o.getTimeMention());
         return Integer.compare(0, i);
     }
 }
