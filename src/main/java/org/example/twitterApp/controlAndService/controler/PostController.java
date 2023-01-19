@@ -24,6 +24,11 @@ public class PostController {
         return pS.getFeeds(username);
     }
 
+    @GetMapping(path = "/getNewFeed")
+    public Set<PostDTOFeed> getNewFeeds(@RequestParam String username) {
+        return pS.getNewFeeds(username);
+    }
+
     @GetMapping(path = "/getYouOwnPosts")
     public Set<PostDtO> searchUserPosts(@RequestParam String username) {
         return pS.searchOnlyUserPosts(username);
