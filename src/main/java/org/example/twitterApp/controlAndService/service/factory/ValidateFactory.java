@@ -54,10 +54,6 @@ public class ValidateFactory extends ConvertDTOFactory {
         return ru.getFirstName() != null && ru.getLastName() != null && ru.getEmail() != null;
     }
 
-    public boolean isNotNull(Post post) {
-        return post.getMessage() != null && post.getOnlyMe() != null && post.getUserWhoPost() != null;
-    }
-
     public boolean valid(RegisterUser ru) {
         return checkStringRu(ru.getFirstName()) && checkStringRu(ru.getLastName()) && checkStringE(ru.getEmail());
     }
