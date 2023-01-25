@@ -3,6 +3,8 @@ package org.example.twitterApp.objectClassAndRepository.model.posts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +19,8 @@ public class Reply extends PostBase {
     private Reply replyReply;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "replyReply")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "replyReply")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Reply> replies;
 
     @OneToMany(mappedBy = "replyLike", cascade = CascadeType.ALL)

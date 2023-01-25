@@ -25,27 +25,23 @@ public class ReplyService extends ValidateFactory {
 
 
     public String addReplyReply(Long id, String message, String userWhoReply) {
-        if (id != null && !message.isEmpty() && !userWhoReply.isEmpty()) {
-            if (!message.equals(" ") && checkStringTu(userWhoReply)) {
-                if (tus.usernameExists(userWhoReply)) {
-                    if (replyExists(id)) {
-                        Reply reply = getReplyById(id);
-                        Reply replyReply = createAndSaveReplyReply(message, tus.getUserByUsername(userWhoReply), reply);
-                        if (message.contains("@")) {
-                            return addMentionReply(tus.getUserByUsername(userWhoReply), replyReply);
-                        }
-                        return "Reply comment add";
-                    } else {
-                        return "Comment not found";
+        if (!message.equals(" ") && checkStringTu(userWhoReply)) {
+            if (tus.usernameExists(userWhoReply)) {
+                if (replyExists(id)) {
+                    Reply reply = getReplyById(id);
+                    Reply replyReply = createAndSaveReplyReply(message, tus.getUserByUsername(userWhoReply), reply);
+                    if (message.contains("@")) {
+                        return addMentionReply(tus.getUserByUsername(userWhoReply), replyReply);
                     }
+                    return "Reply comment add";
                 } else {
-                    return "User not found";
+                    return "Comment not found";
                 }
             } else {
-                return "Invalid command";
+                return "User not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public String addMentionReply(TwitterUser tuWhoReply, Reply reply) {
@@ -65,60 +61,48 @@ public class ReplyService extends ValidateFactory {
     }
 
     public String addLikeReply(Long id, String userWhoGivesLike) {
-        if (id != null && !userWhoGivesLike.isEmpty()) {
-            if (checkStringTu(userWhoGivesLike)) {
-                if (tus.usernameExists(userWhoGivesLike)) {
-                    Reply reply = rR.findReplyById(id);
-                    if (replyExists(id)) {
-                        if (!alreadyLike(tus.getUserByUsername(userWhoGivesLike), reply)) {
-                            TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
-                            createAndSaveLikeReply(tuWhoGivesLike, reply);
-                            return "Like send";
-                        } else {
-                            return "Already liked";
-                        }
+        if (checkStringTu(userWhoGivesLike)) {
+            if (tus.usernameExists(userWhoGivesLike)) {
+                Reply reply = rR.findReplyById(id);
+                if (replyExists(id)) {
+                    if (!alreadyLike(tus.getUserByUsername(userWhoGivesLike), reply)) {
+                        TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
+                        createAndSaveLikeReply(tuWhoGivesLike, reply);
+                        return "Like send";
                     } else {
-                        return "Comment not found";
+                        return "Already liked";
                     }
                 } else {
-                    return "User Not Found";
+                    return "Comment not found";
                 }
             } else {
-                return "Invalid command";
+                return "User Not Found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public String makeAReplyNotPublic(Long id) {
-        if (id != null) {
-            if (replyExists(id)) {
-                Reply reply = getReplyById(id);
-                reply.setOnlyMe(true);
-                if (reply.getReplies().size() > 0) {
-                    reply.getReplies().get(0).setOnlyMe(true);
-                    if (reply.getReplies().get(0).getReplies().size() > 0) {
-                        reply.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
-                    }
+        if (replyExists(id)) {
+            Reply reply = getReplyById(id);
+            reply.setOnlyMe(true);
+            if (reply.getReplies().size() > 0) {
+                reply.getReplies().get(0).setOnlyMe(true);
+                if (reply.getReplies().get(0).getReplies().size() > 0) {
+                    reply.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
                 }
-                return "Post not public";
-            } else {
-                return "Post not found";
             }
+            return "Post not public";
         }
-        return "Null parameter";
+        return "Post not found";
     }
 
     public String deleteReply(Long id) {
-        if (id != null) {
-            if (replyExists(id)) {
-                rR.deleteById(id);
-                return "Comment deleted";
-            } else {
-                return "Comment not found";
-            }
+        if (replyExists(id)) {
+            rR.deleteById(id);
+            return "Comment deleted";
         }
-        return "Null parameter";
+        return "Comment not found";
     }
 
     public Reply getReplyById(Long id) {

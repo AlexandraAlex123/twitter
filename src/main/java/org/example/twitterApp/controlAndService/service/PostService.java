@@ -5,8 +5,8 @@ import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.PostDTOFeed;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +53,7 @@ public class PostService extends ValidateFactory {
         return postDTOFs;
     }
 
+    // TODO -- make this pageable
     public Set<PostDTOFeed> getFeeds(String username) {
         Set<PostDTOFeed> allFollowPost = new TreeSet<>();
         if (tus.validUsername(username)) {
@@ -64,84 +65,68 @@ public class PostService extends ValidateFactory {
     }
 
     public String addPostReply(Long id, String message, String userWhoReply) {
-        if (id != null && message != null && userWhoReply != null) {
-            if (!message.equals(" ") && checkStringTu(userWhoReply)) {
-                if (tus.usernameExists(userWhoReply)) {
-                    if (postExists(id)) {
-                        Post post = getPostById(id);
-                        Reply reply = createAndSaveReply(message, tus.getUserByUsername(userWhoReply), post);
-                        if (message.contains("@")) {
-                            return rs.addMentionReply(tus.getUserByUsername(userWhoReply), reply);
-                        }
-                        return "Comment add";
-                    } else {
-                        return "Post not found";
+        if (!message.equals(" ") && checkStringTu(userWhoReply)) {
+            if (tus.usernameExists(userWhoReply)) {
+                if (postExists(id)) {
+                    Post post = getPostById(id);
+                    Reply reply = createAndSaveReply(message, tus.getUserByUsername(userWhoReply), post);
+                    if (message.contains("@")) {
+                        return rs.addMentionReply(tus.getUserByUsername(userWhoReply), reply);
                     }
+                    return "Comment add";
                 } else {
-                    return "User not found";
+                    return "Post not found";
                 }
             } else {
-                return "Invalid command";
+                return "User not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public String addLikePost(Long id, String userWhoGivesLike) {
-        if (id != null && userWhoGivesLike != null) {
-            if (checkStringTu(userWhoGivesLike)) {
-                if (tus.usernameExists(userWhoGivesLike)) {
-                    Post post = getPostById(id);
-                    if (postExists(id)) {
-                        if (!alreadyLike(tus.getUserByUsername(userWhoGivesLike), post)) {
-                            TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
-                            createAndSaveLikePost(tuWhoGivesLike, post);
-                            return "Like send";
-                        } else {
-                            return "Already liked";
-                        }
+        if (checkStringTu(userWhoGivesLike)) {
+            if (tus.usernameExists(userWhoGivesLike)) {
+                Post post = getPostById(id);
+                if (postExists(id)) {
+                    if (!alreadyLike(tus.getUserByUsername(userWhoGivesLike), post)) {
+                        TwitterUser tuWhoGivesLike = tus.getUserByUsername(userWhoGivesLike);
+                        createAndSaveLikePost(tuWhoGivesLike, post);
+                        return "Like send";
                     } else {
-                        return "Post not found";
+                        return "Already liked";
                     }
                 } else {
-                    return "User not found";
+                    return "Post not found";
                 }
             } else {
-                return "Invalid command";
+                return "User not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public String makeAPostNotPublic(Long id) {
-        if (id != null) {
-            if (postExists(id)) {
-                Post post = getPostById(id);
-                post.setOnlyMe(true);
-                if (post.getReplies().size() > 0) {
-                    post.getReplies().get(0).setOnlyMe(true);
-                    if (post.getReplies().get(0).getReplies().size() > 0) {
-                        post.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
-                    }
+        if (postExists(id)) {
+            Post post = getPostById(id);
+            post.setOnlyMe(true);
+            if (post.getReplies().size() > 0) {
+                post.getReplies().get(0).setOnlyMe(true);
+                if (post.getReplies().get(0).getReplies().size() > 0) {
+                    post.getReplies().get(0).getReplies().get(0).setOnlyMe(true);
                 }
-                return "Post not public";
-            } else {
-                return "Post not found";
             }
+            return "Post not public";
         }
-        return "Null parameter";
+        return "Post not found";
     }
 
     public String deletePost(Long id) {
-        if (id != null) {
-            if (postExists(id)) {
-                pR.deleteById(id);
-                return "Post deleted";
-            } else {
-                return "Post not found";
-            }
+        if (postExists(id)) {
+            pR.deleteById(id);
+            return "Post deleted";
         }
-        return "Null parameter";
+        return "Post not found";
     }
 
     public Set<PostDTOFeed> filterPostsByDate(Set<PostDTOFeed> posts, Timestamp ts, Timestamp ts2) {

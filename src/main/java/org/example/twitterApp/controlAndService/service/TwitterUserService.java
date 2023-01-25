@@ -4,10 +4,15 @@ import org.example.twitterApp.controlAndService.service.factory.ConvertDTO;
 import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.TwitterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,29 +27,34 @@ import java.util.TreeSet;
 public class TwitterUserService extends ValidateFactory {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager am;
+
+    @Autowired
     private TwitterUserRepository tUr;
 
 
     public String login(String username, String password) {
-        if (username != null && password != null) {
-            if (checkStringTu(username) && checkStringTu(password)) {
-                TwitterUser tu = tUr.findAccountByUsernameAndPassword(username, password);
-                if (tu != null) {
-                    tu.setLastLogin(new Timestamp(System.currentTimeMillis()));
-                    return "Login successful!";
-                } else {
-                    return "Username and password doesn't match";
-                }
+        if (checkStringTu(username) && checkStringTu(password)) {
+            TwitterUser tu = tUr.findByUsername(username);
+            if (tu != null) {
+                Authentication authentication = am.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                tu.setLastLogin(new Timestamp(System.currentTimeMillis()));
+                return "Login successful!";
             } else {
-                return "Invalid command";
+                return "User not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public Set<TwitterUserDtO> searchTwitterAccount(String keyWord) {
         Set<TwitterUserDtO> tuSFind = new TreeSet<>();
-        if (keyWord != null && !keyWord.equals(" ")) {
+        if (!keyWord.equals(" ")) {
+            //TODO -- n + 1
             List<TwitterUser> tuS = tUr.findAll();
             for (TwitterUser tu : tuS) {
                 if (tu.getUsername().toUpperCase().contains(keyWord.toUpperCase())) {
@@ -58,44 +68,37 @@ public class TwitterUserService extends ValidateFactory {
     }
 
     public String whoYouFollow(String userFollowing, String userFollow) {
-        if (userFollowing != null && userFollow != null) {
-            if (checkStringTu(userFollowing) && checkStringTu(userFollow)) {
-                if (usernameExists(userFollowing) && usernameExists(userFollow)) {
-                    if (!alreadyFollow(getUserByUsername(userFollowing), userFollow)) {
-                        createAndSaveFollow(userFollow, getUserByUsername(userFollowing));
-                        return "You fallow " + userFollow;
-                    } else {
-                        return "You already follow " + userFollow;
-                    }
+        if (checkStringTu(userFollowing) && checkStringTu(userFollow)) {
+            if (usernameExists(userFollowing) && usernameExists(userFollow)) {
+                if (!alreadyFollow(getUserByUsername(userFollowing), userFollow)) {
+                    createAndSaveFollow(userFollow, getUserByUsername(userFollowing));
+                    return "You fallow " + userFollow;
                 } else {
-                    return "User not found";
+                    return "You already follow " + userFollow;
                 }
             } else {
-                return "Invalid command";
+                return "User not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
+
     }
 
     public String addAPost(String userWhoPost, String message) {
-        if (userWhoPost != null && message != null) {
-            if (checkStringTu(userWhoPost) && !message.equals(" ")) {
-                if (usernameExists(userWhoPost)) {
-                    TwitterUser tuWhoPost = getUserByUsername(userWhoPost);
-                    Post post = createAndSavePost(message, tuWhoPost);
-                    if (message.contains("@")) {
-                        return addMentionPost(tuWhoPost, post);
-                    } else {
-                        return "Post uploaded";
-                    }
+        if (checkStringTu(userWhoPost) && !message.equals(" ")) {
+            if (usernameExists(userWhoPost)) {
+                TwitterUser tuWhoPost = getUserByUsername(userWhoPost);
+                Post post = createAndSavePost(message, tuWhoPost);
+                if (message.contains("@")) {
+                    return addMentionPost(tuWhoPost, post);
                 } else {
-                    return "User not found";
+                    return "Post uploaded";
                 }
             } else {
-                return "Invalid command";
+                return "User not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public String addMentionPost(TwitterUser tuWhoPost, Post post) {
@@ -115,19 +118,15 @@ public class TwitterUserService extends ValidateFactory {
     }
 
     public String deleteTwitterUser(String username) {
-        if (username != null) {
-            if (checkStringTu(username)) {
-                if (usernameExists(username)) {
-                    tUr.deleteById(username);
-                    return "Account deleted";
-                } else {
-                    return "Account not found";
-                }
+        if (checkStringTu(username)) {
+            if (usernameExists(username)) {
+                tUr.deleteById(username);
+                return "Account deleted";
             } else {
-                return "Invalid command";
+                return "Account not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public TwitterUser getUserByUsername(String username) {

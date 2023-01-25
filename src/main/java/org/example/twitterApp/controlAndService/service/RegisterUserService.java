@@ -3,14 +3,17 @@ package org.example.twitterApp.controlAndService.service;
 import org.example.twitterApp.controlAndService.service.factory.ConvertDTO;
 import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
+import org.example.twitterApp.objectClassAndRepository.model.Role;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.RegisterUserDtO;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.RegisterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.RegisterUserRepository;
+import org.example.twitterApp.objectClassAndRepository.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -18,59 +21,60 @@ import java.util.TreeSet;
 import static java.util.Objects.isNull;
 
 @Service
-@Transactional
 public class RegisterUserService extends ValidateFactory {
+
+    @Autowired
+    private PasswordEncoder pe;
 
     @Autowired
     private RegisterUserRepository rUr;
 
+    @Autowired
+    private RoleRepository roleR;
+
 
     public String singUp(RegisterUser ru) {
-        if (isNotNull(ru)) {
-            if (valid(ru)) {
-                if (!emailExists(ru.getEmail())) {
-                    ru.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                    rUr.save(ru);
-                    return "User registered";
-                } else {
-                    return "Email already exist";
-                }
+        if (valid(ru)) {
+            if (!emailExists(ru.getEmail())) {
+                ru.setCreateDate(new Timestamp(System.currentTimeMillis()));
+                rUr.save(ru);
+                return "User registered";
             } else {
-                return "Invalid command";
+                return "Email already exist";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public String createAccount(String email, TwitterUser tu) {
-        if (isNotNull(tu) && !email.isEmpty()) {
-            if (valid(tu)) {
-                if (emailExists(email)) {
-                    RegisterUser ru = rUr.findUserByEmail(email);
-                    if (ru.getAccount() == null) {
-                        if (!usernameExists(tu.getUsername())) {
-                            tu.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                            ru.setAccount(tu);
-                            return "Account created";
-                        } else {
-                            return "Username not available";
-                        }
+        if (valid(tu)) {
+            if (emailExists(email)) {
+                RegisterUser ru = rUr.findUserByEmail(email);
+                if (ru.getAccount() == null) {
+                    if (!usernameExists(tu.getUsername())) {
+                        tu.setCreateDate(new Timestamp(System.currentTimeMillis()));
+                        tu.setPassword(pe.encode((tu.getPassword())));
+                        Role role = roleR.findByName("USER");
+                        tu.setRoles(Collections.singletonList(role));
+                        ru.setAccount(tu);
+                        return "Account created";
                     } else {
-                        return "Email already confirmed";
+                        return "Username not available";
                     }
                 } else {
-                    return "User not found";
+                    return "Email already confirmed";
                 }
             } else {
-                return "Invalid command";
+                return "Email not found";
             }
         }
-        return "Null parameter";
+        return "Invalid command";
     }
 
     public Set<RegisterUserDtO> searchUser(String keyWord) {
         Set<RegisterUserDtO> ruSFind = new TreeSet<>();
-        if (!keyWord.isEmpty() && !keyWord.equals(" ")) {
+        if (!keyWord.equals(" ")) {
+            //TODO - read aboun n + 1 JPA problem and fix here
             List<RegisterUser> ruS = rUr.findAll();
             for (RegisterUser user : ruS) {
                 if ((user.getFirstName().toUpperCase() + " " + user.getLastName().toUpperCase()).
@@ -85,15 +89,11 @@ public class RegisterUserService extends ValidateFactory {
     }
 
     public String deleteRegisterUser(Long id) {
-        if (id != null) {
-            if (ruExists(id)) {
-                rUr.deleteById(id);
-                return "User deleted";
-            } else {
-                return "User not found";
-            }
+        if (ruExists(id)) {
+            rUr.deleteById(id);
+            return "User deleted";
         }
-        return "Null parameter";
+        return "User not found";
     }
 
     public boolean usernameExists(String username) {

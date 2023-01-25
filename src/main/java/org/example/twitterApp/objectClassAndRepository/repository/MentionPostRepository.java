@@ -16,4 +16,7 @@ public interface MentionPostRepository extends JpaRepository<MentionPost, Long> 
             "WHERE user_mention = :username")
     List<MentionPost> findAllMentionPostByUsername(@Param("username") String username);
 
+
+    @Query(value = "SELECT mp FROM MentionPost mp WHERE mp.id = :id")
+    MentionPost findMentionPostById(@Param("id") Long id);
 }

@@ -1,6 +1,5 @@
 package org.example.twitterApp.objectClassAndRepository.repository;
 
-import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +15,8 @@ public interface MentionReplyRepository extends JpaRepository<MentionReply, Long
             "FROM MentionReply mr " +
             "WHERE user_mention = :username")
     List<MentionReply> findAllMentionReplyByUsername(@Param("username") String username);
+
+    @Query(value = "SELECT mr FROM MentionReply mr WHERE mr.id = :id")
+    MentionReply findMentionReplyById(@Param("id") Long id);
+
 }

@@ -1,10 +1,10 @@
 package org.example.twitterApp.objectClassAndRepository.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +29,11 @@ public class TwitterUser implements Comparable<TwitterUser> {
 
     @OneToMany(mappedBy = "userWhoPost", cascade = CascadeType.ALL)
     private List<Post> posts;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
 
     public TwitterUser() {
     }
@@ -81,6 +86,14 @@ public class TwitterUser implements Comparable<TwitterUser> {
         this.posts = posts;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public int compareTo(TwitterUser o) {
         return this.createDate.compareTo(o.getCreateDate());
@@ -95,6 +108,7 @@ public class TwitterUser implements Comparable<TwitterUser> {
                 ", lastLogin=" + lastLogin +
                 ", follows=" + follows +
                 ", posts=" + posts +
+                ", roles=" + roles +
                 '}';
     }
 }

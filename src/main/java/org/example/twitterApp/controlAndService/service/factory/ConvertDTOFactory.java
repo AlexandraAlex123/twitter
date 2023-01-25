@@ -3,11 +3,11 @@ package org.example.twitterApp.controlAndService.service.factory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikePost;
 import org.example.twitterApp.objectClassAndRepository.model.like.LikeReply;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.*;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.*;
 
 import java.util.List;
 import java.util.Set;
@@ -69,23 +69,25 @@ public class ConvertDTOFactory extends CreateFactory {
     public Set<PostDTOFeed> getListPostsDTOF(List<Post> posts) {
         Set<PostDTOFeed> postDTOFs = new TreeSet<>();
         for (Post post : posts) {
-            ConvertDTO convertDTO = factory("postF");
-            PostDTOFeed postDTOF = (PostDTOFeed) convertDTO.convertToDTO(post);
+            PostDTOFeed postDTOF = createPostDTOF(post);
             postDTOFs.add(postDTOF);
         }
         return postDTOFs;
     }
 
+    public  PostDTOFeed createPostDTOF(Post post){
+        ConvertDTO convertDTO = factory("postF");
+        return (PostDTOFeed) convertDTO.convertToDTO(post);
+    }
+
     public PostsMentionDTO getPostMentionDTO(Post post) {
         ConvertDTO convertDTO = factory("postM");
-        PostsMentionDTO postDTOM = (PostsMentionDTO) convertDTO.convertToDTO(post);
-        return postDTOM;
+        return (PostsMentionDTO) convertDTO.convertToDTO(post);
     }
 
     public PostsMentionDTO getPostMentionDTO(Reply reply) {
         ConvertDTO convertDTO = factory("postM");
-        PostsMentionDTO postDTOM = (PostsMentionDTO) convertDTO.convertToDTO(reply);
-        return postDTOM;
+        return (PostsMentionDTO) convertDTO.convertToDTO(reply);
     }
 
     public Set<LikeDtO> getListLikesPostDTO(List<LikePost> likes) {

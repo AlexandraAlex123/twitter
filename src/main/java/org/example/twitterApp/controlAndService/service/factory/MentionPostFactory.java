@@ -3,7 +3,7 @@ package org.example.twitterApp.controlAndService.service.factory;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.MentionDtO;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.MentionDtO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

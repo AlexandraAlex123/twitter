@@ -1,17 +1,26 @@
-package org.example.twitterApp.objectClassAndRepository.modelDTO;
+package org.example.twitterApp.objectClassAndRepository.model.like.modelDTO;
 
 import java.util.Set;
 
-public class PostDtO implements Comparable<PostDtO> {
+public class PostDTOFeed implements Comparable<PostDTOFeed> {
 
+    String postBy;
     String message;
     String createDate;
     boolean onlyMe;
     Set<LikeDtO> postLikes;
-    Set<MentionForPostDTO> mentionPost;
+    Set<MentionForPostDTO> mentions;
     Set<ReplyDtO> postReplies;
 
-    public PostDtO() {
+    public PostDTOFeed() {
+    }
+
+    public String getPostBy() {
+        return postBy;
+    }
+
+    public void setPostBy(String postBy) {
+        this.postBy = postBy;
     }
 
     public String getMessage() {
@@ -54,28 +63,29 @@ public class PostDtO implements Comparable<PostDtO> {
         this.postLikes = postLikes;
     }
 
-    public Set<MentionForPostDTO> getMentionPost() {
-        return mentionPost;
+    public Set<MentionForPostDTO> getMentions() {
+        return mentions;
     }
 
-    public void setMentionPost(Set<MentionForPostDTO> mentionPost) {
-        this.mentionPost = mentionPost;
+    public void setMentions(Set<MentionForPostDTO> mentions) {
+        this.mentions = mentions;
     }
 
     @Override
-    public int compareTo(PostDtO o) {
+    public int compareTo(PostDTOFeed o) {
         int i = this.createDate.compareTo(o.getCreateDate());
         return Integer.compare(0, i);
     }
 
     @Override
     public String toString() {
-        return "PostDtO{" +
-                "message='" + message + '\'' +
+        return "PostDTOFeed{" +
+                "postBy='" + postBy + '\'' +
+                ", message='" + message + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", onlyMe=" + onlyMe +
                 ", postLikes=" + postLikes +
-                ", mentionPost=" + mentionPost +
+                ", mentions=" + mentions +
                 ", postReplies=" + postReplies +
                 '}';
     }

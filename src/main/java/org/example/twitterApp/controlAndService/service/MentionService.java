@@ -3,7 +3,9 @@ package org.example.twitterApp.controlAndService.service;
 import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
-import org.example.twitterApp.objectClassAndRepository.modelDTO.MentionDtO;
+import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.MentionDtO;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.PostDTOFeed;
 import org.example.twitterApp.objectClassAndRepository.repository.MentionPostRepository;
 import org.example.twitterApp.objectClassAndRepository.repository.MentionReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.TreeSet;
 @Service
 @Transactional
 public class MentionService extends ValidateFactory {
+
+    @Autowired
+    private PostService ps;
 
     @Autowired
     private TwitterUserService tus;
@@ -36,6 +41,22 @@ public class MentionService extends ValidateFactory {
             return allMentions;
         }
         return allMentions;
+    }
+
+    public PostDTOFeed getPostWhereYouGotMention(Long idMention) {
+        MentionPost mp = getMentionPost(idMention);
+        MentionReply mr = getMentionReply(idMention);
+        PostDTOFeed postDTOFeed = new PostDTOFeed();
+        if (mp != null) {
+            Long idPost = mp.getPostMention().getId();
+            Post post = ps.getPostById(idPost);
+            return createPostDTOF(post);
+        } else if (mr != null) {
+            Long idPost = mr.getReplyMention().getReplyPost().getId();
+            Post post = ps.getPostById(idPost);
+            return createPostDTOF(post);
+        }
+        return postDTOFeed;
     }
 
     public Set<MentionDtO> getMentionPosts(String userMention) {
@@ -63,11 +84,19 @@ public class MentionService extends ValidateFactory {
         return " Null parameter";
     }
 
+    public MentionPost getMentionPost(Long id) {
+        return mPr.findMentionPostById(id);
+    }
+
+    public MentionReply getMentionReply(Long id) {
+        return mRr.findMentionReplyById(id);
+    }
+
     public boolean existsMentionPost(Long id) {
         return mPr.findById(id).isPresent();
     }
 
     public boolean existsMentionReply(Long id) {
-        return mRr.findById(id).isPresent();
+        return mPr.findById(id).isPresent();
     }
 }

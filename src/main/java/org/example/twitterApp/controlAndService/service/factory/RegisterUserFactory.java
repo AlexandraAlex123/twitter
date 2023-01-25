@@ -1,6 +1,6 @@
 package org.example.twitterApp.controlAndService.service.factory;
 
-import org.example.twitterApp.objectClassAndRepository.modelDTO.RegisterUserDtO;
+import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.RegisterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 
 public class RegisterUserFactory extends ValidateFactory implements ConvertDTO {
