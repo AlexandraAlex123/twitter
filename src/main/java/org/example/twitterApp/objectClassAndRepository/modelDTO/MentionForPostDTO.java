@@ -1,4 +1,4 @@
-package org.example.twitterApp.objectClassAndRepository.model.like.modelDTO;
+package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
 public class MentionForPostDTO implements Comparable<MentionForPostDTO> {
 

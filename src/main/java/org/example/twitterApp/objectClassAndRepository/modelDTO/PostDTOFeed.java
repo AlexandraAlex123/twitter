@@ -1,18 +1,18 @@
-package org.example.twitterApp.objectClassAndRepository.model.like.modelDTO;
+package org.example.twitterApp.objectClassAndRepository.modelDTO;
 
 import java.util.Set;
 
-public class ReplyDtO implements Comparable<ReplyDtO> {
+public class PostDTOFeed implements Comparable<PostDTOFeed> {
 
     String postBy;
     String message;
     String createDate;
     boolean onlyMe;
-    Set<LikeDtO> replyLikes;
-    Set<MentionForPostDTO> mentionReply;
-    Set<ReplyDtO> replyReplies;
+    Set<LikeDtO> postLikes;
+    Set<MentionForPostDTO> mentions;
+    Set<ReplyDtO> postReplies;
 
-    public ReplyDtO() {
+    public PostDTOFeed() {
     }
 
     public String getPostBy() {
@@ -47,47 +47,46 @@ public class ReplyDtO implements Comparable<ReplyDtO> {
         this.onlyMe = onlyMe;
     }
 
-    public Set<ReplyDtO> getReplyReplies() {
-        return replyReplies;
+    public Set<ReplyDtO> getPostReplies() {
+        return postReplies;
     }
 
-    public void setReplyReplies(Set<ReplyDtO> replyReplies) {
-        this.replyReplies = replyReplies;
+    public void setPostReplies(Set<ReplyDtO> postReplies) {
+        this.postReplies = postReplies;
     }
 
-    public Set<LikeDtO> getReplyLikes() {
-        return replyLikes;
+    public Set<LikeDtO> getPostLikes() {
+        return postLikes;
     }
 
-    public void setReplyLikes(Set<LikeDtO> replyLikes) {
-        this.replyLikes = replyLikes;
+    public void setPostLikes(Set<LikeDtO> postLikes) {
+        this.postLikes = postLikes;
     }
 
-    public Set<MentionForPostDTO> getMentionReply() {
-        return mentionReply;
+    public Set<MentionForPostDTO> getMentions() {
+        return mentions;
     }
 
-    public void setMentionReply(Set<MentionForPostDTO> mentionReply) {
-        this.mentionReply = mentionReply;
+    public void setMentions(Set<MentionForPostDTO> mentions) {
+        this.mentions = mentions;
     }
 
     @Override
-    public int compareTo(ReplyDtO o) {
+    public int compareTo(PostDTOFeed o) {
         int i = this.createDate.compareTo(o.getCreateDate());
         return Integer.compare(0, i);
     }
 
     @Override
     public String toString() {
-        return "ReplyDtO{" +
+        return "PostDTOFeed{" +
                 "postBy='" + postBy + '\'' +
                 ", message='" + message + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", onlyMe=" + onlyMe +
-                ", replyLikes=" + replyLikes +
-                ", mentionReply=" + mentionReply +
-                ", replyReplies=" + replyReplies +
+                ", postLikes=" + postLikes +
+                ", mentions=" + mentions +
+                ", postReplies=" + postReplies +
                 '}';
     }
-
 }

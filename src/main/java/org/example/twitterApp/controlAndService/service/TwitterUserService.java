@@ -4,7 +4,7 @@ import org.example.twitterApp.controlAndService.service.factory.ConvertDTO;
 import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.TwitterUserDtO;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.TwitterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.repository.TwitterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

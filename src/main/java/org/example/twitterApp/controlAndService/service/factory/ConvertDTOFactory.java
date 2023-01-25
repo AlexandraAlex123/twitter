@@ -8,6 +8,7 @@ import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Reply;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.*;
 
 import java.util.List;
 import java.util.Set;

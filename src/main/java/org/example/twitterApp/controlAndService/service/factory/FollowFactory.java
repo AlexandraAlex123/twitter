@@ -2,7 +2,7 @@ package org.example.twitterApp.controlAndService.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.Follow;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.FollowDtO;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.FollowDtO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

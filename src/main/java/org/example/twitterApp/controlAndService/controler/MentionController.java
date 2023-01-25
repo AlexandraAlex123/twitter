@@ -1,8 +1,8 @@
 package org.example.twitterApp.controlAndService.controler;
 
 import org.example.twitterApp.controlAndService.service.MentionService;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.MentionDtO;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.PostDTOFeed;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.MentionDtO;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

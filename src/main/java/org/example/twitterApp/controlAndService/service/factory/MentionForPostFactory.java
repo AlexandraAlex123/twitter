@@ -2,7 +2,7 @@ package org.example.twitterApp.controlAndService.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionPost;
 import org.example.twitterApp.objectClassAndRepository.model.mention.MentionReply;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.MentionForPostDTO;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.MentionForPostDTO;
 
 public class MentionForPostFactory extends ValidateFactory implements ConvertDTO {
 

@@ -5,7 +5,7 @@ import org.example.twitterApp.controlAndService.service.factory.ValidateFactory;
 import org.example.twitterApp.objectClassAndRepository.model.RegisterUser;
 import org.example.twitterApp.objectClassAndRepository.model.Role;
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.RegisterUserDtO;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.RegisterUserDtO;
 import org.example.twitterApp.objectClassAndRepository.repository.RegisterUserRepository;
 import org.example.twitterApp.objectClassAndRepository.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

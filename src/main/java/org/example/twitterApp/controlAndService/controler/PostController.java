@@ -2,8 +2,8 @@ package org.example.twitterApp.controlAndService.controler;
 
 import org.example.twitterApp.controlAndService.service.LikeService;
 import org.example.twitterApp.controlAndService.service.PostService;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.PostDTOFeed;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.PostDtO;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDTOFeed;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

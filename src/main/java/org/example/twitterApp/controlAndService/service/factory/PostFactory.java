@@ -1,7 +1,7 @@
 package org.example.twitterApp.controlAndService.service.factory;
 
 import org.example.twitterApp.objectClassAndRepository.model.TwitterUser;
-import org.example.twitterApp.objectClassAndRepository.model.like.modelDTO.PostDtO;
+import org.example.twitterApp.objectClassAndRepository.modelDTO.PostDtO;
 import org.example.twitterApp.objectClassAndRepository.model.posts.Post;
 
 import java.sql.Timestamp;
